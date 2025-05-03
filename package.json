@@ -1,6 +1,6 @@
 {
   "name": "umami_house",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "This project is a presentation website for Umami House — a company that specializes in producing its own dishes, available both fresh and frozen. The company also supplies its products to other businesses and operates its own chain of restaurants across Ukraine.Umami House positions itself as a manufacturer of authentic Asian cuisine, offering high-quality meals with a focus on flavor and tradition.",
   "main": "index.js",
   "scripts": {
