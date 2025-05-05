@@ -17,9 +17,11 @@
     "cors": "^2.8.5",
     "express": "^5.1.0",
     "mysql2": "^3.14.1",
-    "tsc": "^2.0.4"
+    "tsc": "^2.0.4",
+    "zod": "^3.24.4"
   },
   "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
     "ts-node": "^10.9.2",
     "tsx": "^4.19.4",
     "typescript": "^5.8.3"

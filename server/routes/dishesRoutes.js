@@ -10,7 +10,7 @@ import {
 
 const router = express.Router()
 
-router.post("/dishes/add", handleAddDish)
+router.post("/dishes/add", validete(addDish), handleAddDish)
 router.post("/dishes/update", handleUpdateDish)
 router.post("/dishes/delete", handleDeleteDish)
 router.post("/dishes/add-image", handleAddImageByDish)
