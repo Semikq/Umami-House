@@ -11,7 +11,7 @@ interface AllSale extends RowDataPacket {
 
 export async function fetchAllSale(): Promise<AllSale[]> {
     try {
-        const [rows]: any = await pool.execute("SELECT * FROM sale");
+        const [rows] = await pool.execute<AllSale[]>("SELECT * FROM sale");
         return rows
     } catch (error) {
         throw new Error((error as Error).message)
