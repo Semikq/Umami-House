@@ -1,27 +1,6 @@
-import { RowDataPacket } from "mysql2"
 import { pool } from "../../pool.js"
 import bcrypt from "bcrypt"
-
-interface RegisterUser extends RowDataPacket{
-    email: string,
-    password: string,
-    name: string,
-    surname?: string,
-    phone: string,
-    role: string,
-    company_type?: string,
-    company_name?: string,
-    created_at: string
-}
-
-interface LoginUser{
-    userInput: string,
-    password: string
-}
-
-interface User extends RegisterUser{
-    id: number
-}
+import { RegisterUser, LoginUser, User } from "../TypesModel/userTypes.js"
 
 export async function registerUser({ email, password, name, surname, phone, role, company_type, company_name }: RegisterUser):Promise<void> {
     try {

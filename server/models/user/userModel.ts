@@ -1,23 +1,8 @@
 import { pool } from "../../pool";
+import { UpdateUser, DeleteUser, DeleteResult } from "../TypesModel/userTypes";
+import { ResultSetHeader } from 'mysql2'
 
-interface UpdateUser{
-    email: string,
-    password: string,
-    name: string,
-    surname?: string,
-    phone: string,
-    role: string,
-    company_type?: string,
-    company_name?: string,
-    created_at: string,
-    id: number
-}
-
-interface DeleteUser{
-    id: number
-}
-
-export async function updateUser({ email, password, name, surname, phone, company_type, company_name, id }:UpdateUser):Promise<void> {
+export async function updateUser({ email, password, name, surname, phone, company_type, company_name, id }: UpdateUser): Promise<void> {
     try {
         await pool.execute("UPDATE users SET email = ?, password = ?, name = ?, surname = ?, phone = ?, company_type = ?, company_name = ? WHERE id = ?", [email, password, name, surname, phone, company_type, company_name, id])
     } catch (error) {
@@ -25,9 +10,10 @@ export async function updateUser({ email, password, name, surname, phone, compan
     }
 }
 
-export async function deleteUser({ id }:DeleteUser):Promise<void> {
+export async function deleteUser({ id }: DeleteUser): Promise<DeleteResult> {
     try {
-        await pool.execute("DELETE FROM users WHERE id = ?", [id])
+        const [result] = await pool.execute<ResultSetHeader>("DELETE FROM users WHERE id = ?", [id])
+        return result
     } catch (error) {
         throw new Error((error as Error).message)
     }

@@ -1,24 +1,7 @@
 import { pool } from "../../pool";
+import { AddRestaurant, UpdateRestaurant, DeleteRestaurant } from "../TypesModel/restaurantsTypes";
 
-interface AddRestaurant{
-    name: string,
-    address: string,
-    phone: string,
-    description: string,
-    active: boolean,
-    latitude: string,
-    longitude: string
-}
-
-interface UpdateUser extends AddRestaurant{
-    id: number
-}
-
-interface DeleteUser{
-    id: number
-}
-
-export async function addRestaurant({ name, address, phone, description, active, latitude, longitude }:AddRestaurant):Promise<void> {
+export async function addRestaurant({ name, address, phone, description, active, latitude, longitude }: AddRestaurant): Promise<void> {
     try {
         await pool.execute("INSERT INTO restaurants (name, address, phone, description, active, latitude, longitude) VALUES (?, ?, ?, ?, ?, ?, ?)", [name, address, phone, description, active, latitude, longitude])
     } catch (error) {
@@ -26,7 +9,7 @@ export async function addRestaurant({ name, address, phone, description, active,
     }
 }
 
-export async function updateRestaurant({ name, address, phone, description, active, latitude, longitude, id }:UpdateUser):Promise<void> {
+export async function updateRestaurant({ name, address, phone, description, active, latitude, longitude, id }: UpdateRestaurant): Promise<void> {
     try {
         await pool.execute("UPDATE restaurants SET name = ?, address = ?, phone = ?, description = ?, active = ?, latitude = ?, longitude = ? WHERE id = ?", [name, address, phone, description, active, latitude, longitude, id])
     } catch (error) {
@@ -34,7 +17,7 @@ export async function updateRestaurant({ name, address, phone, description, acti
     }
 }
 
-export async function deleteRestaurant({ id }:DeleteUser):Promise<void> {
+export async function deleteRestaurant({ id }: DeleteRestaurant): Promise<void> {
     try {
         await pool.execute("DELETE FROM restaurants WHERE id = ?", [id])
     } catch (error) {

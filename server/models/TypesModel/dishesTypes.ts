@@ -1,37 +1,41 @@
 import { RowDataPacket } from "mysql2"
 
 interface DishType{
-    name: string,
-    weight: number,
-    price: number,
-    frozen: boolean,
-    spicy: boolean,
-    ingredients: string,
-    subcategories_id: number,
-    active: boolean,
+  name: string,
+  weight: number,
+  price: number,
+  frozen: boolean,
+  spicy: boolean,
+  ingredients: string,
+  subcategories_id: number,
+  active: boolean,
 }
 
-interface Photos{
-    title: string,
-    image_url: string
+interface Images{
+  title: string,
+  image_url: string
 }
 
 export interface AddDish extends DishType{
-    photos: Photos[]
+  images: Images[]
 }
 
 export interface UpdateDish extends AddDish{
-    id: number
+  id: number
 }
 
 export interface DeleteDish{
-    id: number
+  id: number
+}
+
+export interface DeleteCommentUserById{
+  id: number
 }
 
 export interface AllDishes extends RowDataPacket, DishType{
   id: number,
   created_at: string,
-  images: Photos[] | null
+  images: Images[] | null
 }
 
 export interface DishComments extends RowDataPacket{
@@ -46,12 +50,13 @@ export interface DishAndCommentsById{
 }
 
 export interface AddCommentByIdDishes{
-    dish_id: number,
-    user_id: number,
-    comment: string,
-    rating: number
-  }
+  dish_id: number,
+  user_id: number,
+  comment: string,
+  rating: number
+}
   
 export interface DeleteCommentByIdDishes{
-    id: number
+  user_id: number,
+  id: number
 }

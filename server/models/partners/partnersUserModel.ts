@@ -1,16 +1,7 @@
-import { RowDataPacket } from "mysql2"
 import { pool } from "../../pool.js"
+import { AllPartners } from "../TypesModel/partnersTypes.js"
 
-interface AllPartners extends RowDataPacket{
-    id: number,
-    name: string,
-    logo: string,
-    link_website?: string,
-    active: boolean,
-    created_at: string
-}
-
-export async function fetchAllPartners():Promise<AllPartners[]> {
+export async function fetchAllPartners(): Promise<AllPartners[]> {
     try {
         const [partners] = await pool.execute<AllPartners[]>("SELECT * FROM partners")
         return partners

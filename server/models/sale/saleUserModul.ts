@@ -1,13 +1,5 @@
-import { RowDataPacket } from "mysql2/promise"
 import { pool } from "../../pool"
-
-interface AllSale extends RowDataPacket {
-    id: number
-    title: string
-    image_url: string
-    active: boolean
-    created_at: string
-}
+import { AllSale } from "../TypesModel/saleTypes";
 
 export async function fetchAllSale(): Promise<AllSale[]> {
     try {

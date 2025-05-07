@@ -1,11 +1,10 @@
 import { pool } from "../../pool.js"
-import { AllDishes, DishComments, DishAndCommentsById, AddCommentByIdDishes, DeleteCommentByIdDishes } from "./dishTypes.js"
+import { AllDishes, DishComments, DishAndCommentsById, AddCommentByIdDishes, DeleteCommentByIdDishes } from "../TypesModel/dishesTypes.js"
 
 export async function fetchAllDishes(): Promise<AllDishes[]> {
   try {
     const [allDishes] = await pool.execute<AllDishes[]>(`
-      SELECT 
-        d.id, d.name, d.weight, d.price, d.frozen, d.spicy, d.ingredients, d.subcategories_id, d.active, d.created_at,
+      SELECT d.*,
         JSON_ARRAYAGG(
           JSON_OBJECT('title', di.title, 'image_url', di.image_url)
         ) AS images
@@ -19,11 +18,10 @@ export async function fetchAllDishes(): Promise<AllDishes[]> {
   }
 }
 
-export async function fetchDishById({ id }: DishAndCommentsById): Promise<AllDishes[]> {
+export async function fetchDishById({ id }: DishAndCommentsById): Promise<AllDishes> {
   try {
     const [dishById] = await pool.execute<AllDishes[]>(`
-      SELECT 
-        d.id, d.name, d.weight, d.price, d.frozen, d.spicy, d.ingredients, d.subcategories_id, d.active, d.created_at,
+      SELECT d.*,
         JSON_ARRAYAGG(
           JSON_OBJECT('title', di.title, 'image_url', di.image_url)
         ) AS images
@@ -32,7 +30,7 @@ export async function fetchDishById({ id }: DishAndCommentsById): Promise<AllDis
       WHERE d.id = ?
       GROUP BY d.id
     `, [id])
-    return dishById
+    return dishById[0]
   } catch (error) {
     throw new Error((error as Error).message)
   }
@@ -49,15 +47,15 @@ export async function fetchDishCommentsById({ id }: DishAndCommentsById):Promise
 
 export async function addCommentByIdDishes({ dish_id, user_id, comment, rating }: AddCommentByIdDishes):Promise<void> {
   try {
-    await pool.execute("INSERT INTO dish_comment (dish_id, user_id, comment, rating) VALUES (?, ?, ?, ?)", [dish_id, user_id, comment, rating])
+    await pool.execute("INSERT INTO dish_comments (dish_id, user_id, comment, rating) VALUES (?, ?, ?, ?)", [dish_id, user_id, comment, rating])
   } catch (error) {
     throw new Error((error as Error).message)
   }
 }
 
-export async function deleteCommentByIdDishes({ id }: DeleteCommentByIdDishes):Promise<void> {
+export async function deleteCommentByIdDishes({ user_id, id }: DeleteCommentByIdDishes):Promise<void> {
   try {
-    await pool.execute("DELETE dish_comment WHERE id = ?", [id])
+    await pool.execute("DELETE FROM dish_comments WHERE user_id = ? AND id = ?", [user_id, id])
   } catch (error) {
     throw new Error((error as Error).message)
   }

@@ -3,5 +3,5 @@ import { getDishesController, getDishIdController } from "./controllers/dishesCo
 
 export const router = express.Router()
 
-router.get("/dishes", getDishesController)
-router.post("/dish", getDishIdController)
+// router.get("/dishes", getDishesController)
+// router.post("/dish", getDishIdController)

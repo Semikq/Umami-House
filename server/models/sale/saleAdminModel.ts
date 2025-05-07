@@ -1,19 +1,5 @@
 import { pool } from "../../pool";
-
-interface AddSale{
-    title: string,
-    image_url: string,
-    active: boolean
-}
-
-interface UpdateSale{
-    active: boolean,
-    id: number
-}
-
-interface DeleteSale{
-    id: number
-}
+import { AddSale, UpdateSale, DeleteSale } from "../TypesModel/saleTypes";
 
 export async function addSale({ title, image_url, active}: AddSale):Promise<void> {
     try {

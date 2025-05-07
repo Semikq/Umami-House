@@ -1,27 +1,5 @@
-import { RowDataPacket } from "mysql2";
 import { pool } from "../../pool";
-
-interface AllUser extends RowDataPacket{
-    id: number,
-    email: string,
-    password: string,
-    name: string,
-    surname?: string,
-    phone: string,
-    role: string,
-    company_type?: string,
-    company_name?: string,
-    created_at: string
-}
-
-interface ChoiceRoleUser{
-    role: string,
-    id: number
-}
-
-interface DeleteUser{
-    id: string
-}
+import { AllUser, ChoiceRoleUser, DeleteUser } from "../TypesModel/userTypes";
 
 export async function fetchAllUsers():Promise<AllUser[]> {
     try {
