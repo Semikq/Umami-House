@@ -3,7 +3,7 @@ import { OrdersByFilter, Order, UpdateStatusOrder, DeleteOrder } from "../TypesM
 
 export async function fetchOrdersByFilter({ status }: OrdersByFilter): Promise<Order[]> {
     try {
-        const [rows] = await pool.execute<Order[]>(`
+        const [rows] = await pool.query<Order[]>(`
             SELECT o.*, 
             JSON_ARRAYAGG(
                 JSON_OBJECT(

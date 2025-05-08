@@ -3,7 +3,7 @@ import { AllFavorites, Favorites, Dish } from "../TypesModel/favoritesTypes.js"
 
 export async function fetchAllFavorites({ user_id }: AllFavorites): Promise<Dish[]> {
     try {
-        const [dishFavorites] = await pool.execute<Dish[]>(`
+        const [dishFavorites] = await pool.query<Dish[]>(`
             SELECT d.*,
                 JSON_ARRAYAGG(
                     IF(di.id IS NOT NULL, JSON_OBJECT('title', di.title, 'image_url', di.image_url), NULL)

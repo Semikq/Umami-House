@@ -4,7 +4,7 @@ import { OrdersByUser, Order, AddOrder, DeleteOrder } from "../TypesModel/orders
 
 export async function fetchOrdersByUser({ user_id }: OrdersByUser): Promise<Order[]> {
     try {
-        const [rows] = await pool.execute<Order[]>(`
+        const [rows] = await pool.query<Order[]>(`
            SELECT o.*, 
             JSON_ARRAYAGG(
                 JSON_OBJECT(

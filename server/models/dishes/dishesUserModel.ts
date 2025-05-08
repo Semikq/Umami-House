@@ -3,7 +3,7 @@ import { AllDishes, DishComments, DishAndCommentsById, AddCommentByIdDishes, Del
 
 export async function fetchAllDishes(): Promise<AllDishes[]> {
   try {
-    const [allDishes] = await pool.execute<AllDishes[]>(`
+    const [allDishes] = await pool.query<AllDishes[]>(`
       SELECT d.*,
         JSON_ARRAYAGG(
           JSON_OBJECT('title', di.title, 'image_url', di.image_url)
@@ -20,7 +20,7 @@ export async function fetchAllDishes(): Promise<AllDishes[]> {
 
 export async function fetchDishById({ id }: DishAndCommentsById): Promise<AllDishes> {
   try {
-    const [dishById] = await pool.execute<AllDishes[]>(`
+    const [dishById] = await pool.query<AllDishes[]>(`
       SELECT d.*,
         JSON_ARRAYAGG(
           JSON_OBJECT('title', di.title, 'image_url', di.image_url)
@@ -38,7 +38,7 @@ export async function fetchDishById({ id }: DishAndCommentsById): Promise<AllDis
 
 export async function fetchDishCommentsById({ id }: DishAndCommentsById):Promise<DishComments[]> {
   try {
-    const [rows] = await pool.execute<DishComments[]>("SELECT dc.comment, dc.rating, dc.created_at, u.name AS name FROM dish_comments dc JOIN users u ON dc.user_id = u.id WHERE dc.dish_id = ?", [id])
+    const [rows] = await pool.query<DishComments[]>("SELECT dc.comment, dc.rating, dc.created_at, u.name AS name FROM dish_comments dc JOIN users u ON dc.user_id = u.id WHERE dc.dish_id = ?", [id])
     return rows
   } catch (error) {
     throw new Error((error as Error).message)

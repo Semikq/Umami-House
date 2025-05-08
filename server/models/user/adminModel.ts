@@ -3,7 +3,7 @@ import { AllUser, ChoiceRoleUser, DeleteUser } from "../TypesModel/userTypes";
 
 export async function fetchAllUsers():Promise<AllUser[]> {
     try {
-        const [rows] = await pool.execute<AllUser[]>("SELECT * FROM users")
+        const [rows] = await pool.query<AllUser[]>("SELECT * FROM users")
         return rows
     } catch (error) {
         throw new Error((error as Error).message)
