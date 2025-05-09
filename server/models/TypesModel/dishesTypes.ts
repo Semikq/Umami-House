@@ -24,7 +24,7 @@ export interface UpdateDish extends AddDish{
   id: number
 }
 
-export interface DeleteDish{
+export interface DishId{
   id: number
 }
 

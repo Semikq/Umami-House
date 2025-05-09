@@ -1,5 +1,5 @@
 import { pool } from "../../pool"
-import { AddDish, UpdateDish, DeleteDish, DeleteCommentUserById } from "../TypesModel/dishesTypes"
+import { AddDish, UpdateDish, DishId, DeleteCommentUserById } from "../TypesModel/dishesTypes"
 import { ResultSetHeader } from "mysql2"
 
 export async function addDish({ name, weight, price, frozen, spicy, ingredients, subcategories_id, active, images }: AddDish): Promise<void> {
@@ -22,7 +22,7 @@ export async function addDish({ name, weight, price, frozen, spicy, ingredients,
     }
 }
 
-export async function updateDish({ name, weight, price, frozen, spicy, ingredients, subcategories_id, active, images, id }: UpdateDish): Promise<void> {
+export async function updateDish({ id }: DishId, { name, weight, price, frozen, spicy, ingredients, subcategories_id, active, images }: UpdateDish): Promise<void> {
     const conn = await pool.getConnection()
     try {
         await conn.beginTransaction()
@@ -42,7 +42,7 @@ export async function updateDish({ name, weight, price, frozen, spicy, ingredien
     }
 }
 
-export async function deleteDish({ id }: DeleteDish): Promise<void> {
+export async function deleteDish({ id }: DishId): Promise<void> {
     try {
         await pool.execute("DELETE FROM dishes WHERE id = ?", [id])
     } catch (error) {

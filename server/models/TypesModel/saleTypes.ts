@@ -11,7 +11,7 @@ export interface UpdateSale{
     id: number
 }
 
-export interface DeleteSale{
+export interface IdSale{
     id: number
 }
 

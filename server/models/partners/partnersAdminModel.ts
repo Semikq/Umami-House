@@ -1,5 +1,5 @@
 import { pool } from "../../pool";
-import { AddPartners, UpdatePartners, DeletePartners } from "../TypesModel/partnersTypes";
+import { AddPartners, UpdatePartners, IdPartners } from "../TypesModel/partnersTypes";
 
 export async function addPartners({ name, logo, link_website, active }: AddPartners): Promise<void> {
     try {
@@ -9,7 +9,7 @@ export async function addPartners({ name, logo, link_website, active }: AddPartn
     }
 }
 
-export async function updatePartners({ active, id }: UpdatePartners): Promise<void> {
+export async function updatePartners({ id }: IdPartners, { active }: UpdatePartners): Promise<void> {
     try {
         await pool.execute("UPDATE partners SET active = ? WHERE id = ?", [active, id])
     } catch (error) {
@@ -17,7 +17,7 @@ export async function updatePartners({ active, id }: UpdatePartners): Promise<vo
     }
 }
 
-export async function deletePartners({ id }: DeletePartners): Promise<void> {
+export async function deletePartners({ id }: IdPartners): Promise<void> {
     try {
         await pool.execute("DELETE FROM partners WHERE id = ?", [id])
     } catch (error) {

@@ -1,8 +1,8 @@
 import { ResultSetHeader } from "mysql2";
 import { pool } from "../../pool";
-import { OrdersByUser, Order, AddOrder, DeleteOrder } from "../TypesModel/ordersTypes";
+import { Order, AddOrder, OrderId } from "../TypesModel/ordersTypes";
 
-export async function fetchOrdersByUser({ user_id }: OrdersByUser): Promise<Order[]> {
+export async function fetchOrdersByUser({ id }: OrderId): Promise<Order[]> {
     try {
         const [rows] = await pool.query<Order[]>(`
            SELECT o.*, 
@@ -28,7 +28,7 @@ export async function fetchOrdersByUser({ user_id }: OrdersByUser): Promise<Orde
             JOIN dishes d ON od.dish_id = d.id
             WHERE o.user_id = ?
             GROUP BY o.id
-        `, [user_id])
+        `, [id])
         
         return rows.map(order =>({
             ...order,
@@ -39,11 +39,11 @@ export async function fetchOrdersByUser({ user_id }: OrdersByUser): Promise<Orde
     }
 }
 
-export async function addOrder({ user_id, status, delivery_address, payment_method, dishes }: AddOrder): Promise<void> {
+export async function addOrder({ id }: OrderId, { status, delivery_address, payment_method, dishes }: AddOrder): Promise<void> {
     const conn = await pool.getConnection()
     try {
         await conn.beginTransaction()
-        const [orderResult] = await conn.execute<ResultSetHeader>(`INSERT INTO orders (user_id, status, delivery_address, payment_method) VALUES(?, ?, ?, ?)`, [user_id, status, delivery_address, payment_method])
+        const [orderResult] = await conn.execute<ResultSetHeader>(`INSERT INTO orders (user_id, status, delivery_address, payment_method) VALUES(?, ?, ?, ?)`, [id, status, delivery_address, payment_method])
 
         for(const dish of dishes){
             const { dish_id, count } = dish
@@ -59,7 +59,7 @@ export async function addOrder({ user_id, status, delivery_address, payment_meth
     }
 }
 
-export async function deleteOrder({ id }: DeleteOrder): Promise<void> {
+export async function deleteOrder({ id }: OrderId): Promise<void> {
     try {
         await pool.execute("DELETE FROM orders WHERE id = ?", [id])
     } catch (error) {

@@ -12,7 +12,14 @@ export async function handleAddDish(req: Request, res: Response): Promise<void> 
 
 export async function handleUpdateDish(req: Request, res: Response): Promise<void> {
   try{
-    await updateDish(req.body)
+    const id = Number(req.params.id)
+
+    if(isNaN(id)){
+            res.status(400).json("Invalid dish id")
+      return
+    }
+
+    await updateDish({ id }, req.body)
     res.status(200).json("Dish successfully update")
   } catch (error) {
     res.status(500).json((error as Error).message)

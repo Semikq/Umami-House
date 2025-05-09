@@ -16,7 +16,7 @@ export interface UpdateRestaurant extends AddRestaurant{
     id: number
 }
 
-export interface DeleteRestaurant{
+export interface IdRestaurant{
     id: number
 }
 

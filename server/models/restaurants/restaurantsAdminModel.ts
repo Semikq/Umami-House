@@ -1,5 +1,5 @@
 import { pool } from "../../pool";
-import { AddRestaurant, UpdateRestaurant, DeleteRestaurant } from "../TypesModel/restaurantsTypes";
+import { AddRestaurant, UpdateRestaurant, IdRestaurant } from "../TypesModel/restaurantsTypes";
 
 export async function addRestaurant({ name, address, phone, description, active, latitude, longitude }: AddRestaurant): Promise<void> {
     try {
@@ -9,7 +9,7 @@ export async function addRestaurant({ name, address, phone, description, active,
     }
 }
 
-export async function updateRestaurant({ name, address, phone, description, active, latitude, longitude, id }: UpdateRestaurant): Promise<void> {
+export async function updateRestaurant({id}: IdRestaurant, { name, address, phone, description, active, latitude, longitude }: UpdateRestaurant): Promise<void> {
     try {
         await pool.execute("UPDATE restaurants SET name = ?, address = ?, phone = ?, description = ?, active = ?, latitude = ?, longitude = ? WHERE id = ?", [name, address, phone, description, active, latitude, longitude, id])
     } catch (error) {
@@ -17,7 +17,7 @@ export async function updateRestaurant({ name, address, phone, description, acti
     }
 }
 
-export async function deleteRestaurant({ id }: DeleteRestaurant): Promise<void> {
+export async function deleteRestaurant({ id }: IdRestaurant): Promise<void> {
     try {
         await pool.execute("DELETE FROM restaurants WHERE id = ?", [id])
     } catch (error) {

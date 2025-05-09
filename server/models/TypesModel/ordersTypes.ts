@@ -51,15 +51,8 @@ export interface UpdateStatusOrder extends OrdersByFilter{
     id: number
 }
 
-export interface DeleteOrder{
+export interface OrderId{
     id: number
-}
-
-
-
-
-export interface OrdersByUser{
-    user_id: number
 }
 
 export interface DishInOrder {
@@ -67,10 +60,6 @@ export interface DishInOrder {
     count: number;
   }
 
-export interface AddOrder extends OrdersByUser, OrderType{
+export interface AddOrder extends OrderId, OrderType{
     dishes: DishInOrder[]
-}
-
-export interface DeleteOrder extends RowDataPacket{
-    id: number
 }

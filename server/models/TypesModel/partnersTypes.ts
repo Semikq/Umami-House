@@ -14,7 +14,7 @@ export interface UpdatePartners{
     id:number
 }
 
-export interface DeletePartners{
+export interface IdPartners{
     id:number
 }
 

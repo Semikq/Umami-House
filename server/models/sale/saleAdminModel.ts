@@ -1,5 +1,5 @@
 import { pool } from "../../pool";
-import { AddSale, UpdateSale, DeleteSale } from "../TypesModel/saleTypes";
+import { AddSale, UpdateSale, IdSale } from "../TypesModel/saleTypes";
 
 export async function addSale({ title, image_url, active}: AddSale):Promise<void> {
     try {
@@ -9,7 +9,7 @@ export async function addSale({ title, image_url, active}: AddSale):Promise<void
     }
 }
 
-export async function updateSale({ active, id }: UpdateSale):Promise<void> {
+export async function updateSale({ id }: IdSale, { active }: UpdateSale):Promise<void> {
     try {
         await pool.execute("UPDATE sale SET active = ? WHERE id = ?", [active, id])
     } catch (error) {
@@ -17,7 +17,7 @@ export async function updateSale({ active, id }: UpdateSale):Promise<void> {
     }
 }
 
-export async function deleteSale({ id }: DeleteSale):Promise<void> {
+export async function deleteSale({ id }: IdSale):Promise<void> {
     try {
         await pool.execute("DELETE FROM sale WHERE id = ?", [id])
     } catch (error) {

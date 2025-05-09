@@ -12,7 +12,14 @@ export async function handleOrdersByFilter(req: Request, res: Response): Promise
 
 export async function handleUpdateStatusOrder(req: Request, res: Response): Promise<void> {
     try {
-        await updateStatusOrder(req.body)
+        const id = Number(req.params.id)
+
+        if(isNaN(id)){
+            res.status(400).json("Invalid user id")
+            return
+        }
+
+        await updateStatusOrder({ id }, req.body)
         res.status(200).json("Status Order successfully update")
     } catch (error) {
         res.status(500).json((error as Error).message)
@@ -21,7 +28,14 @@ export async function handleUpdateStatusOrder(req: Request, res: Response): Prom
 
 export async function handleDeleteOrder(req: Request, res: Response): Promise<void> {
     try {
-        await deleteOrder(req.body)
+        const id = Number(req.params.id)
+
+        if(isNaN(id)){
+            res.status(400).json("Invalid user id")
+            return
+        }
+
+        await deleteOrder({ id })
         res.status(204).send()
     } catch (error) {
         res.status(500).json((error as Error).message)

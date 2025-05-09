@@ -5,7 +5,7 @@ import { validate } from "../middleware/validation";
 const route = Router()
 
 route.get("/user/:id/favorites", validate(), handleGetAllFavorites)
-route.post("/addFavorites", validate(), handleAddFavorites)
-route.post("/deleteFavorites", validate(), handleDeleteFavorites)
+route.post("/favorites", validate(), handleAddFavorites)
+route.delete("/favorites", validate(), handleDeleteFavorites)
 
 export default route

@@ -1,5 +1,5 @@
 import { pool } from "../../pool";
-import { OrdersByFilter, Order, UpdateStatusOrder, DeleteOrder } from "../TypesModel/ordersTypes";
+import { OrdersByFilter, Order, UpdateStatusOrder, OrderId } from "../TypesModel/ordersTypes";
 
 export async function fetchOrdersByFilter({ status }: OrdersByFilter): Promise<Order[]> {
     try {
@@ -38,7 +38,7 @@ export async function fetchOrdersByFilter({ status }: OrdersByFilter): Promise<O
     }
 }
 
-export async function updateStatusOrder({ status, id }: UpdateStatusOrder): Promise<void> {
+export async function updateStatusOrder({ id }: OrderId, { status }: UpdateStatusOrder): Promise<void> {
     try {
         await pool.execute("UPDATE orders SET status = ? WHERE id = ?", [status, id])
     } catch (error) {
@@ -46,7 +46,7 @@ export async function updateStatusOrder({ status, id }: UpdateStatusOrder): Prom
     }
 }
 
-export async function deleteOrder({ id }: DeleteOrder): Promise<void> {
+export async function deleteOrder({ id }: OrderId): Promise<void> {
     try {
         await pool.execute("DELETE FROM orders WHERE id = ?", [id])
     } catch (error) {
