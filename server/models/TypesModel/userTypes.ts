@@ -21,7 +21,7 @@ export interface ChoiceRoleUser{
     id: number
 }
 
-export interface DeleteUser{
+export interface IdUser{
     id: number
 }
 

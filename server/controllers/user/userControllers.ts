@@ -3,7 +3,14 @@ import { Request, Response } from "express"
 
 export async function handleUpdateUser(req: Request , res: Response): Promise<void> {
     try {
-        const result = await updateUser(req.body)
+        const id = Number(req.params.id)
+
+        if(isNaN(id)){
+            res.status(400).json("Invalid user id")
+            return
+        }
+
+        const result = await updateUser({ id }, req.body)
         res.status(200).json({ message: "User successfully updated", user: result })
     } catch (error) {
         res.status(500).json((error as Error).message)

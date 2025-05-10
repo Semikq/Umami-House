@@ -1,7 +1,7 @@
 import { pool } from "../../pool";
-import { AllUser, ChoiceRoleUser, DeleteUser } from "../TypesModel/userTypes";
+import { AllUser, ChoiceRoleUser, IdUser } from "../TypesModel/userTypes";
 
-export async function fetchAllUsers():Promise<AllUser[]> {
+export async function fetchAllUsers(): Promise<AllUser[]> {
     try {
         const [rows] = await pool.query<AllUser[]>("SELECT * FROM users")
         return rows
@@ -10,7 +10,7 @@ export async function fetchAllUsers():Promise<AllUser[]> {
     }
 }
 
-export async function choiceRoleUser({ role, id }:ChoiceRoleUser):Promise<void> {
+export async function choiceRoleUser({ id }: IdUser, { role }: ChoiceRoleUser): Promise<void> {
     try {
         await pool.execute("UPDATE users SET role = ? WHERE id = ?", [role, id])
     } catch (error) {
@@ -18,7 +18,7 @@ export async function choiceRoleUser({ role, id }:ChoiceRoleUser):Promise<void> 
     }
 }
 
-export async function deleteUser({ id }:DeleteUser):Promise<void> {
+export async function deleteUser({ id }: IdUser): Promise<void> {
     try {
         await pool.execute("DELETE FROM users WHERE id = ?", [id])
     } catch (error) {
