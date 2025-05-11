@@ -1,4 +1,4 @@
-import { pool } from "../../pool.js"
+import { pool } from "../../config/dbConfig.js"
 import { AllDishes, DishComments, DishAndCommentsById, AddCommentByIdDishes, DeleteCommentByIdDishes } from "../TypesModel/dishesTypes.js"
 
 export async function fetchAllDishes(): Promise<AllDishes[]> {
@@ -53,9 +53,9 @@ export async function addCommentByIdDishes({ dish_id, user_id, comment, rating }
   }
 }
 
-export async function deleteCommentByIdDishes({ user_id, id }: DeleteCommentByIdDishes):Promise<void> {
+export async function deleteCommentByIdDishes({ user_id, dish_id }: DeleteCommentByIdDishes):Promise<void> {
   try {
-    await pool.execute("DELETE FROM dish_comments WHERE user_id = ? AND id = ?", [user_id, id])
+    await pool.execute("DELETE FROM dish_comments WHERE user_id = ? AND dish_id = ?", [user_id, dish_id])
   } catch (error) {
     throw new Error((error as Error).message)
   }

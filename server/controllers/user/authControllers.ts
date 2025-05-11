@@ -1,10 +1,17 @@
 import { registerUser, loginUser } from "../../models/user/authModel";
 import { Request, Response } from "express";
+import { generateToken } from "../../config/jwttoken";
 
 export async function handleRegisterUser(req: Request , res: Response): Promise<void> {
     try {
-        await registerUser(req.body)
-        res.status(201).send()
+        const user = await registerUser(req.body)
+        const { password, ...PublicUser } = user
+        const token = generateToken({ id: user.id, email: user.email, role: user.role })
+
+        res.status(200).json({
+            user: PublicUser,
+            token,
+        })
     } catch (error) {
         res.status(500).json((error as Error).message)
     }
@@ -12,8 +19,14 @@ export async function handleRegisterUser(req: Request , res: Response): Promise<
 
 export async function handleLoginUsers(req: Request , res: Response): Promise<void> {
     try {
-        await loginUser(req.body)
-        res.status(200).send()
+        const user = await loginUser(req.body)
+        const { password, ...PublicUser } = user
+        const token = generateToken({ id: user.id, email: user.email, role: user.role })
+
+        res.status(200).json({
+            user: PublicUser,
+            token,
+        })
     } catch (error) {
         res.status(500).json((error as Error).message)
     }

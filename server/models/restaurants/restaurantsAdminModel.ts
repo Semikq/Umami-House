@@ -1,4 +1,4 @@
-import { pool } from "../../pool";
+import { pool } from "../../config/dbConfig";
 import { AddRestaurant, UpdateRestaurant, IdRestaurant } from "../TypesModel/restaurantsTypes";
 
 export async function addRestaurant({ name, address, phone, description, active, latitude, longitude }: AddRestaurant): Promise<void> {
@@ -9,7 +9,7 @@ export async function addRestaurant({ name, address, phone, description, active,
     }
 }
 
-export async function updateRestaurant({id}: IdRestaurant, { name, address, phone, description, active, latitude, longitude }: UpdateRestaurant): Promise<void> {
+export async function updateRestaurant({ id }: IdRestaurant, { name, address, phone, description, active, latitude, longitude }: UpdateRestaurant): Promise<void> {
     try {
         await pool.execute("UPDATE restaurants SET name = ?, address = ?, phone = ?, description = ?, active = ?, latitude = ?, longitude = ? WHERE id = ?", [name, address, phone, description, active, latitude, longitude, id])
     } catch (error) {

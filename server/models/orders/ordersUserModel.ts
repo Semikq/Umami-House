@@ -1,5 +1,5 @@
 import { ResultSetHeader } from "mysql2";
-import { pool } from "../../pool";
+import { pool } from "../../config/dbConfig";
 import { Order, AddOrder, OrderId } from "../TypesModel/ordersTypes";
 
 export async function fetchOrdersByUser({ id }: OrderId): Promise<Order[]> {

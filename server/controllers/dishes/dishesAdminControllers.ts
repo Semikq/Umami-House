@@ -14,11 +14,6 @@ export async function handleUpdateDish(req: Request, res: Response): Promise<voi
   try{
     const id = Number(req.params.id)
 
-    if(isNaN(id)){
-            res.status(400).json("Invalid dish id")
-      return
-    }
-
     await updateDish({ id }, req.body)
     res.status(200).json("Dish successfully update")
   } catch (error) {
@@ -29,11 +24,6 @@ export async function handleUpdateDish(req: Request, res: Response): Promise<voi
 export async function handleDeleteDish(req: Request, res: Response): Promise<void> {
   try{
     const id = Number(req.params.id)
-    
-    if (isNaN(id)){
-      res.status(400).json("Invalid dish id")
-      return
-    }
 
     await deleteDish({ id })
     res.status(204).send()

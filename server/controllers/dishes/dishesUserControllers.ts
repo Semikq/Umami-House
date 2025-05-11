@@ -14,11 +14,6 @@ export async function handleGetDishById(req: Request, res: Response): Promise<vo
     try {
         const id = Number(req.params.id)
 
-        if(isNaN(id)){
-            res.status(400).json("Invalid dish id")
-            return
-        }
-
         const result = await fetchDishById({ id })
         res.status(200).json(result)
     } catch (error) {
@@ -29,11 +24,6 @@ export async function handleGetDishById(req: Request, res: Response): Promise<vo
 export async function handleDishCommentsById(req: Request, res: Response): Promise<void> {
     try {
         const id = Number(req.params.id)
-
-        if(isNaN(id)){
-            res.status(400).json("Invalid dish id")
-            return
-        }
 
         const result = await fetchDishCommentsById({ id })
         res.status(200).json(result)

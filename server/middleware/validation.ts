@@ -1,12 +1,17 @@
-import { ZodSchema } from "zod"
+import { ZodTypeAny } from "zod"
 import { Request, Response, NextFunction } from "express"
-import { saleShemas } from "../schemas/saleShemas"
 
-export const validate = (schema: ZodSchema) => (req: Request, res: Response, next: NextFunction) => {
-    const result = schema.safeParse(req.body)
+type Schemas = {
+  body?: ZodTypeAny;
+  params?: ZodTypeAny;
+};
 
-    if (!result.success) return res.status(400).json({ error: result.error.errors })
-
-    req.body = result.data
+export const validate = (schema: Schemas) => (req: Request, res: Response, next: NextFunction): void => {
+  try {
+    if(schema.params) req.params = schema.params.parse(req.params)
+    if(schema.body) req.body = schema.body.parse(req.body)
     next()
+  } catch (error) {
+    res.status(400).json({ message: error })
+  }
 }

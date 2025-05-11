@@ -1,4 +1,4 @@
-import { pool } from "../../pool"
+import { pool } from "../../config/dbConfig"
 import { AddDish, UpdateDish, DishId, DeleteCommentUserById } from "../TypesModel/dishesTypes"
 import { ResultSetHeader } from "mysql2"
 

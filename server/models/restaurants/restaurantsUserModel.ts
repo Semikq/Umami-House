@@ -1,5 +1,5 @@
-import { pool } from "../../pool"
-import { AllCities, RestaurantByCity } from "../TypesModel/restaurantsTypes"
+import { pool } from "../../config/dbConfig"
+import { AllCities, RestaurantsByCity } from "../TypesModel/restaurantsTypes"
 
 export async function fetchAllCities(): Promise<AllCities[]> {
     try {
@@ -10,10 +10,10 @@ export async function fetchAllCities(): Promise<AllCities[]> {
     }
 }
 
-export async function fetchRestaurantByCity({ city }: RestaurantByCity ): Promise<AllCities[]> {
+export async function fetchRestaurantsByCity({ city }: RestaurantsByCity ): Promise<AllCities[]> {
     try {
-        const [restaurantByCity] = await pool.query<AllCities[]>("SELECT r.* FROM restaurants r JOIN cities c ON r.city_id = c.id WHERE c.name = ?", [city])
-        return restaurantByCity
+        const [restaurantsByCity] = await pool.query<AllCities[]>("SELECT r.* FROM restaurants r JOIN cities c ON r.city_id = c.id WHERE c.name = ?", [city])
+        return restaurantsByCity
     } catch (error) {
         throw new Error((error as Error).message)
     }

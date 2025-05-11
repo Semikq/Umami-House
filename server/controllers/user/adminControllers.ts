@@ -14,11 +14,6 @@ export async function handleChoiceRoleUserById(req: Request , res: Response): Pr
     try {
         const id = Number(req.params.id)
 
-        if(isNaN(id)){
-            res.status(400).json("Invalid user id")
-            return
-        }
-
         await choiceRoleUser({ id }, req.body)
         res.status(200).json("Choice user successfully added")
     } catch (error) {
@@ -29,11 +24,6 @@ export async function handleChoiceRoleUserById(req: Request , res: Response): Pr
 export async function handleDeleteUserById(req: Request , res: Response): Promise<void> {
     try {
         const id = Number(req.params.id)
-
-        if(isNaN(id)){
-            res.status(400).json("Invalid user id")
-            return
-        }
         
         await deleteUser({ id })
         res.status(204).send()

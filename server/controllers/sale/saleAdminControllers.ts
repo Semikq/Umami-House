@@ -14,11 +14,6 @@ export async function handleUpdateSale(req: Request, res: Response): Promise<voi
     try {
         const id = Number(req.params.id)
 
-        if(isNaN(id)){
-            res.status(400).json("Invalid sale id")
-            return
-        }
-
         await updateSale({ id },req.body)
         res.status(200).json("Sale successfully updated")
     } catch (error) {
@@ -29,11 +24,6 @@ export async function handleUpdateSale(req: Request, res: Response): Promise<voi
 export async function handleDeleteSale(req: Request, res: Response): Promise<void> {
     try {
         const id = Number(req.params.id)
-
-        if(isNaN(id)){
-            res.status(400).json("Invalid sale id")
-            return
-        }
 
         await deleteSale({ id })
         res.status(204).send()

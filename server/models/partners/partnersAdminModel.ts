@@ -1,4 +1,4 @@
-import { pool } from "../../pool";
+import { pool } from "../../config/dbConfig";
 import { AddPartners, UpdatePartners, IdPartners } from "../TypesModel/partnersTypes";
 
 export async function addPartners({ name, logo, link_website, active }: AddPartners): Promise<void> {
@@ -9,9 +9,9 @@ export async function addPartners({ name, logo, link_website, active }: AddPartn
     }
 }
 
-export async function updatePartners({ id }: IdPartners, { active }: UpdatePartners): Promise<void> {
+export async function updatePartners({ id }: IdPartners, { name, logo, link_website, active }: UpdatePartners): Promise<void> {
     try {
-        await pool.execute("UPDATE partners SET active = ? WHERE id = ?", [active, id])
+        await pool.execute("UPDATE partners SET name = ?, logo = ?, link_website = ?, active = ? WHERE id = ?", [name, logo, link_website, active, id])
     } catch (error) {
         throw new Error((error as Error).message)
     }

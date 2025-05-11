@@ -6,8 +6,8 @@ interface RestaurantType{
     phone: string,
     description: string,
     active: boolean,
-    latitude: string,
-    longitude: string
+    latitude: number,
+    longitude: number
 }
 
 export interface AddRestaurant extends RestaurantType{}
@@ -26,6 +26,6 @@ export interface AllCities extends RowDataPacket, RestaurantType{
     created_at: string
 }
 
-export interface RestaurantByCity{
+export interface RestaurantsByCity{
     city: string
 }

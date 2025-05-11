@@ -58,5 +58,5 @@ export interface AddCommentByIdDishes{
   
 export interface DeleteCommentByIdDishes{
   user_id: number,
-  id: number
+  dish_id: number
 }

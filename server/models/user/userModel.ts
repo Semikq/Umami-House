@@ -1,10 +1,17 @@
-import { pool } from "../../pool";
-import { UpdateUser, IdUser, DeleteResult } from "../TypesModel/userTypes";
+import { pool } from "../../config/dbConfig";
+import { UpdateUser, IdUser, DeleteResult, User } from "../TypesModel/userTypes";
 import { ResultSetHeader } from 'mysql2'
 
-export async function updateUser({ id }: IdUser, { email, password, name, surname, phone, company_type, company_name }: UpdateUser): Promise<void> {
+export async function updateUser({ id }: IdUser, { email, password, name, surname, phone, company_type, company_name }: UpdateUser): Promise<User> {
     try {
-        await pool.execute("UPDATE users SET email = ?, password = ?, name = ?, surname = ?, phone = ?, company_type = ?, company_name = ? WHERE id = ?", [email, password, name, surname, phone, company_type, company_name, id])
+        const [result] = await pool.execute<ResultSetHeader>("UPDATE users SET email = ?, password = ?, name = ?, surname = ?, phone = ?, company_type = ?, company_name = ? WHERE id = ?", [email, password, name, surname, phone, company_type, company_name, id])
+
+        if (result.affectedRows === 0) {
+            throw new Error("User not found or no changes made")
+        }
+
+        const [rows] = await pool.execute<User[]>("SELECT * FROM users WHERE id = ?", [id])
+        return rows[0]
     } catch (error) {
         throw new Error((error as Error).message)
     }

@@ -1,4 +1,4 @@
-import { pool } from "../../pool.js"
+import { pool } from "../../config/dbConfig.js"
 import { AllFavorites, Favorites, Dish } from "../TypesModel/favoritesTypes.js"
 
 export async function fetchAllFavorites({ user_id }: AllFavorites): Promise<Dish[]> {
@@ -21,7 +21,7 @@ export async function fetchAllFavorites({ user_id }: AllFavorites): Promise<Dish
     }
 }
 
-export async function addFavorites({ user_id, dish_id }: Favorites): Promise<void> {
+export async function addFavorite({ user_id, dish_id }: Favorites): Promise<void> {
     try {
         await pool.execute(`INSERT INTO favorites (user_id, dish_id) VALUES(?, ?)`, [user_id, dish_id])
     } catch (error) {
@@ -29,7 +29,7 @@ export async function addFavorites({ user_id, dish_id }: Favorites): Promise<voi
     }
 }
 
-export async function deleteFavorites({ user_id, dish_id }: Favorites): Promise<void> {
+export async function deleteFavorite({ user_id, dish_id }: Favorites): Promise<void> {
     try {
         await pool.execute("DELETE FROM favorites WHERE user_id = ? AND dish_id = ?", [user_id, dish_id])
     } catch (error) {

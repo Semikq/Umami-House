@@ -9,8 +9,7 @@ interface PartnersType{
 
 export interface AddPartners extends PartnersType {}
 
-export interface UpdatePartners{
-    active: boolean,
+export interface UpdatePartners extends PartnersType{
     id:number
 }
 

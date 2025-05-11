@@ -1,4 +1,4 @@
-import { pool } from "../../pool"
+import { pool } from "../../config/dbConfig"
 import { AllSale } from "../TypesModel/saleTypes";
 
 export async function fetchAllSale(): Promise<AllSale[]> {

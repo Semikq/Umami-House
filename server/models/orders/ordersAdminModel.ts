@@ -1,4 +1,4 @@
-import { pool } from "../../pool";
+import { pool } from "../../config/dbConfig";
 import { OrdersByFilter, Order, UpdateStatusOrder, OrderId } from "../TypesModel/ordersTypes";
 
 export async function fetchOrdersByFilter({ status }: OrdersByFilter): Promise<Order[]> {

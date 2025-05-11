@@ -26,7 +26,7 @@ export async function handleUpdateStatusOrder(req: Request, res: Response): Prom
     }
 }
 
-export async function handleDeleteOrder(req: Request, res: Response): Promise<void> {
+export async function handleDeleteOrderById(req: Request, res: Response): Promise<void> {
     try {
         const id = Number(req.params.id)
 

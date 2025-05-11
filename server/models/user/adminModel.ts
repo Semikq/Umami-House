@@ -1,4 +1,4 @@
-import { pool } from "../../pool";
+import { pool } from "../../config/dbConfig";
 import { AllUser, ChoiceRoleUser, IdUser } from "../TypesModel/userTypes";
 
 export async function fetchAllUsers(): Promise<AllUser[]> {

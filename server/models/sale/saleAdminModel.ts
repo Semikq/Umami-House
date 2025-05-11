@@ -1,4 +1,4 @@
-import { pool } from "../../pool";
+import { pool } from "../../config/dbConfig";
 import { AddSale, UpdateSale, IdSale } from "../TypesModel/saleTypes";
 
 export async function addSale({ title, image_url, active}: AddSale):Promise<void> {
