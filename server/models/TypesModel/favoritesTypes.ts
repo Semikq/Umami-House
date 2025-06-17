@@ -1,5 +1,3 @@
-import { RowDataPacket } from "mysql2"
-
 export interface AllFavorites{
     user_id: number
 }
@@ -13,7 +11,7 @@ interface Images{
     image_url: string
 }
 
-export interface Dish extends RowDataPacket {
+export interface Dish {
     id: number,
     name: string,
     weight: number,

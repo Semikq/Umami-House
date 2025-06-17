@@ -1,5 +1,3 @@
-import { RowDataPacket } from "mysql2"
-
 interface DishType{
   name: string,
   weight: number,
@@ -16,7 +14,7 @@ interface Images{
   image_url: string 
 }
 
-export interface AllCategories extends RowDataPacket{
+export interface AllCategories{
   id: number,
   title: string,
   image_url: string 
@@ -38,13 +36,13 @@ export interface DeleteCommentUserById{
   id: number
 }
 
-export interface AllDishes extends RowDataPacket, DishType{
+export interface AllDishes extends DishType{
   id: number,
   created_at: string,
   images: Images[] | null
 }
 
-export interface DishComments extends RowDataPacket{
+export interface DishComments{
   comment: string,
   rating: number,
   created_at: string

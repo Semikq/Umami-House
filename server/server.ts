@@ -38,10 +38,16 @@ app.post('/upload', upload.single('image'), (req: any, res) => {
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Тепер можна використовувати __dirname далі
-const clientDist = path.join(__dirname, '../client/build');
+const clientDist = path.join(__dirname, '../../client/build');
 
+app.use(express.static(clientDist));
 
-app.listen(3001, () => {
-    console.log("Server is running on port 3001")
+app.get('*', (req, res) => {
+  res.sendFile(path.join(clientDist, 'index.html'));
+});
+
+const PORT = process.env.PORT || 3001;
+
+app.listen(PORT, () => {
+    console.log(PORT)
 })

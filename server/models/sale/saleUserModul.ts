@@ -1,5 +1,5 @@
-import { pool } from "../../config/dbConfig"
-import { AllSale } from "../TypesModel/saleTypes";
+import { pool } from "../../config/dbConfig.js"
+import { AllSale } from "../TypesModel/saleTypes.js";
 
 export async function fetchAllSale(): Promise<AllSale[]> {
   try {

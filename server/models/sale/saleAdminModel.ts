@@ -1,5 +1,5 @@
-import { pool } from "../../config/dbConfig";
-import { AddSale, UpdateSale, IdSale } from "../TypesModel/saleTypes";
+import { pool } from "../../config/dbConfig.js";
+import { AddSale, UpdateSale, IdSale } from "../TypesModel/saleTypes.js";
 
 export async function addSale({ title, image_url, active }: AddSale): Promise<void> {
     try {

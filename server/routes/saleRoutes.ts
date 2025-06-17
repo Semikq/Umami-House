@@ -1,8 +1,8 @@
 import { Router } from "express";
-import { handleAddSale, handleUpdateSale, handleDeleteSale } from "../controllers/sale/saleAdminControllers";
-import { handleAllSale } from "../controllers/sale/saleUserControllers";
-import { validate } from "../middleware/validation";
-import { saleShemas } from "../schemas/saleSchemas";
+import { handleAddSale, handleUpdateSale, handleDeleteSale } from "../controllers/sale/saleAdminControllers.js";
+import { handleAllSale } from "../controllers/sale/saleUserControllers.js";
+import { validate } from "../middleware/validation.js";
+import { saleShemas } from "../schemas/saleSchemas.js";
 
 const route = Router()
 

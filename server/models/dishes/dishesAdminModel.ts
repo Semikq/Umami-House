@@ -1,6 +1,5 @@
-import { pool } from "../../config/dbConfig"
-import { AddDish, UpdateDish, DishId, DeleteCommentUserById } from "../TypesModel/dishesTypes"
-import { ResultSetHeader } from "mysql2"
+import { pool } from "../../config/dbConfig.js"
+import { AddDish, UpdateDish, DishId, DeleteCommentUserById } from "../TypesModel/dishesTypes.js"
 
 export async function addDish({
   name, weight, price, frozen, spicy,

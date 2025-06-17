@@ -1,4 +1,4 @@
-import { fetchAllUsers, choiceRoleUser, deleteUser } from "../../models/user/adminModel";
+import { fetchAllUsers, choiceRoleUser, deleteUser } from "../../models/user/adminModel.js";
 import { Request, Response } from "express";
 
 export async function handleAllUsers(req: Request , res: Response): Promise<void> {

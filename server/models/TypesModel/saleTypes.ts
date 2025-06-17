@@ -1,5 +1,3 @@
-import { RowDataPacket } from "mysql2"
-
 export interface AddSale{
     title: string,
     image_url: string,
@@ -15,7 +13,7 @@ export interface IdSale{
     id: number
 }
 
-export interface AllSale extends RowDataPacket {
+export interface AllSale {
     id: number
     title: string
     image_url: string

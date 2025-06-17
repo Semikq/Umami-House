@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { addSale, updateSale, deleteSale } from "../../models/sale/saleAdminModel";
+import { addSale, updateSale, deleteSale } from "../../models/sale/saleAdminModel.js";
 
 export async function handleAddSale(req: Request, res: Response): Promise<void> {
     try {

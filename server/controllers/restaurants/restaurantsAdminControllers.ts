@@ -1,4 +1,4 @@
-import { addRestaurant , updateRestaurant, deleteRestaurant } from "../../models/restaurants/restaurantsAdminModel";
+import { addRestaurant , updateRestaurant, deleteRestaurant } from "../../models/restaurants/restaurantsAdminModel.js";
 import { Request, Response } from "express";
 
 export async function handleAddRestaurant(req: Request, res: Response): Promise<void> {

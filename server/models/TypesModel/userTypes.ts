@@ -1,5 +1,3 @@
-import { RowDataPacket } from "mysql2"
-
 interface UserType{
     email: string,
     password: string,
@@ -12,7 +10,7 @@ interface UserType{
     created_at: string
 }
 
-export interface AllUser extends RowDataPacket, UserType{
+export interface AllUser extends UserType{
     id: number,
 }
 
@@ -25,7 +23,7 @@ export interface IdUser{
     id: number
 }
 
-export interface RegisterUser extends RowDataPacket, UserType{}
+export interface RegisterUser extends UserType{}
 
 export interface LoginUser{
     userInput: string,
@@ -41,5 +39,5 @@ export interface UpdateUser extends UserType{
 }
 
 export interface DeleteResult {
-    affectedRows: number;
+    rowCount: number;
 }

@@ -1,4 +1,4 @@
-import { addPartners, updatePartners, deletePartners } from "../../models/partners/partnersAdminModel";
+import { addPartners, updatePartners, deletePartners } from "../../models/partners/partnersAdminModel.js";
 import { Request, Response } from "express";
 
 export async function handleAddPartners(req: Request, res: Response): Promise<void> {

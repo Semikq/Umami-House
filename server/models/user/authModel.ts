@@ -1,29 +1,52 @@
 import { pool } from "../../config/dbConfig.js"
 import bcrypt from "bcrypt"
 import { RegisterUser, LoginUser, User, } from "../TypesModel/userTypes.js"
-import { ResultSetHeader } from "mysql2"
 
-export async function registerUser({ email, password, name, surname, phone, role, company_type, company_name }: RegisterUser): Promise<User> {
+export async function registerUser({
+    email,
+    password,
+    name,
+    surname,
+    phone,
+    role,
+    company_type,
+    company_name
+}: RegisterUser): Promise<User> {
     try {
-        const [result] = await pool.execute<ResultSetHeader>("INSERT INTO users (email, password, name, surname, phone, role, company_type, company_name) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", [email, password, name, surname, phone, role, company_type, company_name])
+        const insertQuery = `
+            INSERT INTO users (email, password, name, surname, phone, role, company_type, company_name)
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+            RETURNING *
+        `;
+        const values = [email, password, name, surname, phone, role, company_type, company_name];
 
-        const [rows] = await pool.execute<User[]>("SELECT * FROM users WHERE id = ?", [result.insertId])
-        return rows[0]
+        const result = await pool.query<User>(insertQuery, values);
+        return result.rows[0]; // result.rows — це масив обʼєктів
+
     } catch (error) {
-        throw new Error((error as Error).message)
+        throw new Error((error as Error).message);
     }
 }
 
+
 export async function loginUser({ userInput, password }: LoginUser): Promise<User> {
     try {
-        const [result] = await pool.execute<User[]>("SELECT * FROM users WHERE (email = ? OR phone = ?)", [userInput, userInput])
-        if (result.length === 0) throw new Error("User not found")
+        const query = `SELECT * FROM users WHERE email = $1 OR phone = $2`;
+        const result = await pool.query<User>(query, [userInput, userInput]);
 
-        const isPasswordCorrect = await bcrypt.compare(password, result[0].password)
-        if (!isPasswordCorrect) throw new Error('Invalid password')
-            
-        return result[0]
+        if (result.rows.length === 0) {
+            throw new Error("User not found");
+        }
+
+        const user = result.rows[0];
+        const isPasswordCorrect = await bcrypt.compare(password, user.password);
+
+        if (!isPasswordCorrect) {
+            throw new Error("Invalid password");
+        }
+
+        return user;
     } catch (error) {
-        throw new Error((error as Error).message)
+        throw new Error((error as Error).message);
     }
 }

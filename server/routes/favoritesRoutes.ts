@@ -1,7 +1,7 @@
 import { Router } from "express";
-import { handleGetAllFavorites, handleAddFavorite, handleDeleteFavorite } from "../controllers/favorites/favoritesUserControllers";
-import { validate } from "../middleware/validation";
-import { favoritesSchemas } from "../schemas/favoritesSchemas";
+import { handleGetAllFavorites, handleAddFavorite, handleDeleteFavorite } from "../controllers/favorites/favoritesUserControllers.js";
+import { validate } from "../middleware/validation.js";
+import { favoritesSchemas } from "../schemas/favoritesSchemas.js";
 
 const route = Router()
 

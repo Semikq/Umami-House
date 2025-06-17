@@ -1,5 +1,5 @@
-import { pool } from "../../config/dbConfig"
-import { AllCities, RestaurantsByCity } from "../TypesModel/restaurantsTypes"
+import { pool } from "../../config/dbConfig.js"
+import { AllCities, RestaurantsByCity } from "../TypesModel/restaurantsTypes.js"
 
 export async function fetchAllCities(): Promise<AllCities[]> {
     try {

@@ -1,5 +1,5 @@
-import { pool } from "../../config/dbConfig";
-import { AddRestaurant, UpdateRestaurant, IdRestaurant } from "../TypesModel/restaurantsTypes";
+import { pool } from "../../config/dbConfig.js";
+import { AddRestaurant, UpdateRestaurant, IdRestaurant } from "../TypesModel/restaurantsTypes.js";
 
 export async function addRestaurant({ name, address, phone, description, active, latitude, longitude }: AddRestaurant): Promise<void> {
   try {

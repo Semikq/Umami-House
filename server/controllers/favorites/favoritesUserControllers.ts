@@ -1,4 +1,4 @@
-import { fetchAllFavorites, addFavorite, deleteFavorite } from "../../models/favorites/favoritesUserModel";
+import { fetchAllFavorites, addFavorite, deleteFavorite } from "../../models/favorites/favoritesUserModel.js";
 import { Request, Response } from "express";
 
 export async function handleGetAllFavorites(req: Request, res: Response): Promise<void> {

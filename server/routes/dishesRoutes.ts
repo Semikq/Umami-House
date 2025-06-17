@@ -1,8 +1,8 @@
 import { Router } from "express"
-import { handleAddDish, handleUpdateDish, handleDeleteDish, handleDeleteCommentUserById } from "../controllers/dishes/dishesAdminControllers"
-import { handleGetAllCategories, handleGetAllDishesByCategory, handleGetDishById, handleDishCommentsById, handleAddCommentByIdDishes, handleDeleteCommentByIdDishes } from "../controllers/dishes/dishesUserControllers"
-import { validate } from "../middleware/validation"
-import { dishesSchemas } from "../schemas/dishesSchemas"
+import { handleAddDish, handleUpdateDish, handleDeleteDish, handleDeleteCommentUserById } from "../controllers/dishes/dishesAdminControllers.js"
+import { handleGetAllCategories, handleGetAllDishesByCategory, handleGetDishById, handleDishCommentsById, handleAddCommentByIdDishes, handleDeleteCommentByIdDishes } from "../controllers/dishes/dishesUserControllers.js"
+import { validate } from "../middleware/validation.js";
+import { dishesSchemas } from "../schemas/dishesSchemas.js";
 
 const route = Router()
 

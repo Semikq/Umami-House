@@ -1,5 +1,5 @@
-import { pool } from "../../config/dbConfig";
-import { AddPartners, UpdatePartners, IdPartners } from "../TypesModel/partnersTypes";
+import { pool } from "../../config/dbConfig.js";
+import { AddPartners, UpdatePartners, IdPartners } from "../TypesModel/partnersTypes.js";
 
 export async function addPartners({ name, logo, link_website, active }: AddPartners): Promise<void> {
   try {

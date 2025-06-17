@@ -1,8 +1,8 @@
 import { Router } from "express";
-import { handleAddRestaurant, handleUpdateRestaurant, handleDeleteRestaurant } from "../controllers/restaurants/restaurantsAdminControllers";
-import { handleAllCities, handleRestaurantsByCity } from "../controllers/restaurants/restaurantsUserControllers";
-import { validate } from "../middleware/validation";
-import { restaurantsShemas } from "../schemas/restaurantsSchemas";
+import { handleAddRestaurant, handleUpdateRestaurant, handleDeleteRestaurant } from "../controllers/restaurants/restaurantsAdminControllers.js";
+import { handleAllCities, handleRestaurantsByCity } from "../controllers/restaurants/restaurantsUserControllers.js";
+import { validate } from "../middleware/validation.js";
+import { restaurantsShemas } from "../schemas/restaurantsSchemas.js";
 
 const route = Router()
 

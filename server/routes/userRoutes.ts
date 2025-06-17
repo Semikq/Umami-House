@@ -1,10 +1,10 @@
 import { Router } from "express";
-import { handleAllUsers, handleChoiceRoleUserById, handleDeleteUserById } from "../controllers/user/adminControllers";
-import { handleRegisterUser, handleLoginUsers } from "../controllers/user/authControllers";
-import { handleUpdateUser, handleDeleteUser } from "../controllers/user/userControllers";
-import { validate } from "../middleware/validation";
-import { userSchemas } from "../schemas/userSchemas";
-import { hashPassword } from "../middleware/hashPassword";
+import { handleAllUsers, handleChoiceRoleUserById, handleDeleteUserById } from "../controllers/user/adminControllers.js";
+import { handleRegisterUser, handleLoginUsers } from "../controllers/user/authControllers.js";
+import { handleUpdateUser, handleDeleteUser } from "../controllers/user/userControllers.js";
+import { validate } from "../middleware/validation.js";
+import { userSchemas } from "../schemas/userSchemas.js";
+import { hashPassword } from "../middleware/hashPassword.js";
 
 const route = Router()
 

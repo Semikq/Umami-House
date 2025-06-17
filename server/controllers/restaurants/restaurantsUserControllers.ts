@@ -1,4 +1,4 @@
-import { fetchAllCities, fetchRestaurantsByCity } from "../../models/restaurants/restaurantsUserModel";
+import { fetchAllCities, fetchRestaurantsByCity } from "../../models/restaurants/restaurantsUserModel.js";
 import { Request, Response } from "express";
 
 export async function handleAllCities(req: Request, res: Response): Promise<void> {

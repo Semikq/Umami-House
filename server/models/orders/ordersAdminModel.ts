@@ -1,5 +1,5 @@
-import { pool } from "../../config/dbConfig";
-import { OrdersByFilter, Order, UpdateStatusOrder, OrderId } from "../TypesModel/ordersTypes";
+import { pool } from "../../config/dbConfig.js";
+import { OrdersByFilter, Order, UpdateStatusOrder, OrderId } from "../TypesModel/ordersTypes.js";
 
 export async function fetchOrdersByFilter({ status }: OrdersByFilter): Promise<Order[]> {
   try {

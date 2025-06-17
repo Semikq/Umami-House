@@ -1,27 +1,32 @@
-import { pool } from "../../config/dbConfig";
-import { AllUser, ChoiceRoleUser, IdUser } from "../TypesModel/userTypes";
+import { pool } from "../../config/dbConfig.js";
+import { AllUser, ChoiceRoleUser, IdUser } from "../TypesModel/userTypes.js";
 
 export async function fetchAllUsers(): Promise<AllUser[]> {
     try {
-        const [rows] = await pool.query<AllUser[]>("SELECT * FROM users")
-        return rows
+        const result = await pool.query<AllUser>("SELECT * FROM users");
+        return result.rows;
     } catch (error) {
-        throw new Error((error as Error).message)
+        throw new Error((error as Error).message);
     }
 }
 
-export async function choiceRoleUser({ id }: IdUser, { role }: ChoiceRoleUser): Promise<void> {
+
+export async function choiceRoleUser(
+    { id }: IdUser,
+    { role }: ChoiceRoleUser
+): Promise<void> {
     try {
-        await pool.execute("UPDATE users SET role = ? WHERE id = ?", [role, id])
+        await pool.query("UPDATE users SET role = $1 WHERE id = $2", [role, id]);
     } catch (error) {
-        throw new Error((error as Error).message)
+        throw new Error((error as Error).message);
     }
 }
+
 
 export async function deleteUser({ id }: IdUser): Promise<void> {
     try {
-        await pool.execute("DELETE FROM users WHERE id = ?", [id])
+        await pool.query("DELETE FROM users WHERE id = $1", [id]);
     } catch (error) {
-        throw new Error((error as Error).message)
+        throw new Error((error as Error).message);
     }
 }

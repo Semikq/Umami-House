@@ -1,4 +1,4 @@
-import { addDish, updateDish, deleteDish, deleteCommentUserById } from "../../models/dishes/dishesAdminModel";
+import { addDish, updateDish, deleteDish, deleteCommentUserById } from "../../models/dishes/dishesAdminModel.js";
 import { Request, Response } from "express";
 
 export async function handleAddDish(req: Request, res: Response): Promise<void> {

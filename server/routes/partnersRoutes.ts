@@ -1,8 +1,8 @@
 import { Router } from "express";
-import { handleAddPartners, handleUpdatePartners, handleDeletePartners } from "../controllers/partners/partnersAdminControllers";
-import { handleAllPartners } from "../controllers/partners/partnersUserControllers";
-import { validate } from "../middleware/validation";
-import { partnersSchemas } from "../schemas/partnersSchemas";
+import { handleAddPartners, handleUpdatePartners, handleDeletePartners } from "../controllers/partners/partnersAdminControllers.js";
+import { handleAllPartners } from "../controllers/partners/partnersUserControllers.js";
+import { validate } from "../middleware/validation.js";
+import { partnersSchemas } from "../schemas/partnersSchemas.js";
 
 const route = Router()
 

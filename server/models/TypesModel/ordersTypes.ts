@@ -1,5 +1,3 @@
-import { RowDataPacket } from "mysql2"
-
 enum Status{
     PROCESSING = 'processing',
     CONFIRMED = 'confirmed',
@@ -36,7 +34,7 @@ export interface DishByFilter{
     images: Images[] | null
 }
 
-export interface Order extends RowDataPacket, OrderType{
+export interface Order extends OrderType{
     id: number,
     user_id: number,
     created_at: string,
