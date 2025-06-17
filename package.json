@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "tsx server/server.ts",
+    "start": "npx tsx server/server.ts",
     "install": "cd client && npm install && cd ../server && npm install",
     "build": "npm install && cd server && npm install && cd .. && cd client && npm run build"
   },
@@ -21,9 +21,8 @@
   "homepage": "https://github.com/Semikq/Umami-House#readme",
   "dependencies": {
     "express": "^5.1.0",
-    "mysql": "^2.18.1"
-  },
-  "devDependencies": {
+    "mysql": "^2.18.1",
     "tsx": "^4.20.3"
-  }
+  },
+  "devDependencies": {}
 }
