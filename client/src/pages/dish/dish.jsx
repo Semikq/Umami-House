@@ -13,7 +13,7 @@ function RenderDishPage({dish}){
         <main>
             <div className="blockProduct">
                 <div className="blockPhoto">
-                    <img src={`http://localhost:3001${dish.images[0]?.image_url}`} alt="" />
+                    <img src={`${dish.images[0]?.image_url}`} alt="" />
                 </div>
                 <div className="infoDish">
                     <h1>{dish.name}</h1>

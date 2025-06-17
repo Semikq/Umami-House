@@ -27,9 +27,9 @@ function CreateSlider () {
             </div>
             {sale.length > 0 && (
                 <>
-                    <img className="afisha" src={`http://localhost:3001${sale[(index - 1 + sale.length) % sale.length].image_url}`}/>
-                    <img className="afisha" src={`http://localhost:3001${sale[index].image_url}`}/>
-                    <img className="afisha" src={`http://localhost:3001${sale[(index + 1) % sale.length].image_url}`}/>
+                    <img className="afisha" src={`${sale[(index - 1 + sale.length) % sale.length].image_url}`}/>
+                    <img className="afisha" src={`${sale[index].image_url}`}/>
+                    <img className="afisha" src={`${sale[(index + 1) % sale.length].image_url}`}/>
                 </>
             )}
         </div>
@@ -45,7 +45,7 @@ function CreateMenu() {
         <div className="menu" id="menu">
             {categories.map((category) => {
                 return (
-                    <Link to={`/dishes/${category.id}`} className="menu-item" style={{ backgroundImage: `url("http://localhost:3001${category.image_url}")` }}>
+                    <Link to={`/dishes/${category.id}`} className="menu-item" style={{ backgroundImage: `url("${category.image_url}")` }}>
                         <div className="shadow"></div>
                         <p>{category.title}</p>
                     </Link>
@@ -85,7 +85,7 @@ export function CreateOurPartners() {
 
             <div className="slider-track">
                 {getVisiblePartners().map((partner, index) => (
-                    <img key={index} src={`http://localhost:3001${partner.logo}`} alt={partner.name} />
+                    <img key={index} src={`${partner.logo}`} alt={partner.name} />
                 ))}
             </div>
         </div>
@@ -128,7 +128,7 @@ export function CreateMainPage() {
             <CreateMenu/>
             <div className="restaurantInfo">
                 <div>
-                    <img src="http://localhost:3001/uploads/photoCompany/restaurant.jpg" alt="restaurant"/>
+                    <img src="/uploads/photoCompany/restaurant.jpg" alt="restaurant"/>
                     <div>
                         <h2>Для наших гостей</h2>
                         <p>Umami House – ваш квиток у світ гастрономічних насолод! Ми поєднуємо традиції азіатської кухні з сучасним підходом до зручності та якості. Наші продукти створені для тих, хто цінує час, але не готовий жертвувати якістю. Ми ретельно відбираємо інгредієнти, щоб кожна страва дарувала справжнє гастрономічне задоволення. Завдяки шоковому заморожуванню ми зберігаємо природний смак, свіжість та користь кожного продукту. Наша місія – зробити ваш обід чи вечерю смачними та простими. Залиште час на важливе, а про смачну їжу подбаємо ми! А ще ви можете завітати до наших ресторанів, щоб насолодитися свіжими стравами азіатської кухні, або придбати заморожені страви, які зручно приготувати вдома.</p>
@@ -139,7 +139,7 @@ export function CreateMainPage() {
                         <h2>Для наших партнерів</h2>
                         <p>Запрошуємо до співпраці власників магазинів, заправок, кафе та інших закладів! У нашому асортименті ви знайдете продукцію азіатської кухні, що задовольнить найвибагливіших клієнтів – як заморожені, так і свіжі страви.Ми використовуємо лише добірні інгредієнти та дотримуємося високих стандартів якості. Шокове заморожування гарантує збереження смаку, свіжості та корисних властивостей продукції. Свіжі страви також проходять суворий контроль, щоб кожен ваш клієнт насолоджувався неперевершеним смаком і ароматом.Обираючи нашу продукцію, ви отримуєте можливість розширити асортимент, збільшити прибуток і подарувати своїм клієнтам справжню гастрономічну насолоду. Ваш успіх – наша мета!</p>
                     </div>
-                    <img src="http://localhost:3001/uploads/photoCompany/kitchen.jpg" alt="kitchen" />
+                    <img src="/uploads/photoCompany/kitchen.jpg" alt="kitchen" />
                 </div>
             </div>
             <CreateOurPartners/>

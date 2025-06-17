@@ -50,7 +50,7 @@ export function CreateContactPage() {
                         <h2>Доставка</h2>
                         <Icon width={35} icon="material-symbols:delivery-truck-speed-outline-rounded" color="#333333"></Icon>
                     </div>
-                    <div className="card" style={{backgroundImage: 'url("http://localhost:3001/uploads/banner/deliveryBanner.jpg")'}}>
+                    <div className="card" style={{backgroundImage: 'url("uploads/banner/deliveryBanner.jpg")'}}>
                         <p>Мінімальна сума замовлення – 1000 грн. Кожне замовлення ретельно комплектується та доставляється у бездоганному стані – гарячим чи холодним, збереженим у найкращому вигляді. Якщо ви обрали заморожену страву, вона буде привезена у спеціальній термосумці, гарантуючи ідеальну якість.</p>
                     </div>
                 </div>
@@ -59,7 +59,7 @@ export function CreateContactPage() {
                         <h2>Самовивіз</h2>
                         <Icon width={35} icon="icon-park-outline:delivery" color="#333333"></Icon>
                     </div>
-                    <div className="card" style={{backgroundImage: 'url("http://localhost:3001/uploads/banner/selfPickupBanner.jpg")',}}>
+                    <div className="card" style={{backgroundImage: 'url("uploads/banner/selfPickupBanner.jpg")',}}>
                         <p>Самовивіз доступний з нашого ресторану без обмежень по сумі – навіть до 1000 грн! При оформленні замовлення оберіть найближчий ресторан, де вам зручно забрати страви. Якщо виникнуть будь-які питання, ми обов’язково зателефонуємо за номером, вказаним під час замовлення.</p>
                     </div>
                 </div>
@@ -68,7 +68,7 @@ export function CreateContactPage() {
                         <h2>Бонуси</h2>
                         <Icon width={35} icon="mingcute:check-2-fill" color="#333333"></Icon>
                     </div>
-                    <div className="card" style={{backgroundImage: 'url("http://localhost:3001/uploads/banner/bonusBanner.jpg")',}}>
+                    <div className="card" style={{backgroundImage: 'url("uploads/banner/bonusBanner.jpg")',}}>
                         <p>За кожне замовлення ви отримуєте 1% бонусів від його суми, які зможете використати для знижки на страви або покриття вартості доставки.
                             Також діє наша система лояльності: чим більше ви замовляєте, тим більше ми покриваємо вартість ваших страв у процентах! </p>
                     </div>

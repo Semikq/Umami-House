@@ -5,7 +5,7 @@ function UploadForm() {
     const formData = new FormData();
     formData.append('image', event.target.files[0]);
 
-    const res = await fetch('http://localhost:3001/upload', {
+    const res = await fetch('/uploads', {
       method: 'POST',
       body: formData,
     });

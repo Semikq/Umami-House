@@ -28,7 +28,7 @@ export function RenderListDishesPage({listCategory, listDishes}){
                     </div>
                     <div className="listDishes">
                         {listDishes.filter((dish) => dish.subcategories_id === subcategory.id).map((dish) => (
-                            <Link to={`/dish/${dish.id}`} key={dish.id} className="cardDish" style={{backgroundImage: `url(http://localhost:3001${dish.images[0]?.image_url})`}}>
+                            <Link to={`/dish/${dish.id}`} key={dish.id} className="cardDish" style={{backgroundImage: `url(${dish.images[0]?.image_url})`}}>
                                 <div className="dishInfo">
                                     <h3>{dish.name}</h3>
                                     <p>({dish.weight}/10г)</p>
