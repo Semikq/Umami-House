@@ -6,7 +6,7 @@ import { favoritesSchemas } from "../schemas/favoritesSchemas";
 const route = Router()
 
 route.get("/user/:id/favorites", validate({ params: favoritesSchemas.allfavorites.params }), handleGetAllFavorites)
-route.post("/favorites", validate({ body: favoritesSchemas.addFavorite.body }), handleAddFavorite)
-route.delete("/favorites", validate({ body: favoritesSchemas.deleteFavorite.body }), handleDeleteFavorite)
+route.post("/", validate({ body: favoritesSchemas.addFavorite.body }), handleAddFavorite)
+route.delete("/", validate({ body: favoritesSchemas.deleteFavorite.body }), handleDeleteFavorite)
 
 export default route

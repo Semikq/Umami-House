@@ -2,7 +2,7 @@ import { z } from "zod";
 
 export const dishesSchemas = {
     dishById: {
-        params: z.object({ id: z.number() })
+        params: z.object({ id: z.coerce.number() })
     },
     create: {
         body: z.object({

@@ -1,9 +1,20 @@
-import { fetchAllDishes, fetchDishById, fetchDishCommentsById, addCommentByIdDishes, deleteCommentByIdDishes } from "../../models/dishes/dishesUserModel";
+import { fetchAllCategories, fetchAllDishesByCategory, fetchDishById, fetchDishCommentsById, addCommentByIdDishes, deleteCommentByIdDishes } from "../../models/dishes/dishesUserModel";
 import { Request, Response } from "express";
 
-export async function handleGetAllDishes(req: Request, res: Response): Promise<void> {
+export async function handleGetAllCategories(req: Request, res: Response): Promise<void> {
     try {
-        const result = await fetchAllDishes()
+        const result = await fetchAllCategories()
+        res.status(200).json(result)
+    } catch (error) {
+        res.status(500).json((error as Error).message)
+    }
+}
+
+export async function handleGetAllDishesByCategory(req: Request, res: Response): Promise<void> {
+    try {
+        const id = Number(req.params.id)
+
+        const result = await fetchAllDishesByCategory({ id })
         res.status(200).json(result)
     } catch (error) {
         res.status(500).json((error as Error).message)

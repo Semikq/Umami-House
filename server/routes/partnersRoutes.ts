@@ -6,10 +6,10 @@ import { partnersSchemas } from "../schemas/partnersSchemas";
 
 const route = Router()
 
-route.get("/partners", handleAllPartners)
+route.get("/", handleAllPartners)
 
-route.post("/partners", validate({ body: partnersSchemas.create.body }), handleAddPartners)
-route.put("/partners/:id", validate({ params: partnersSchemas.update.params, body: partnersSchemas.update.body }), handleUpdatePartners)
-route.delete("/partners/:id", validate({ params: partnersSchemas.delete.params }), handleDeletePartners)
+route.post("/", validate({ body: partnersSchemas.create.body }), handleAddPartners)
+route.put("/:id", validate({ params: partnersSchemas.update.params, body: partnersSchemas.update.body }), handleUpdatePartners)
+route.delete("/:id", validate({ params: partnersSchemas.delete.params }), handleDeletePartners)
 
 export default route

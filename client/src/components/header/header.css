@@ -1,0 +1,344 @@
+@import url('https://fonts.googleapis.com/css2?family=Delius&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Delius&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+header{
+    height: 70px;
+}
+
+.bar{
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+}
+
+.primaryAppBar{
+    height: 70px;
+    width: 100%;
+    background-color: #B75F6D;
+    border-bottom-left-radius: 30px;
+    border-bottom-right-radius: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 33px;
+    box-sizing: border-box;
+    z-index: 99;
+}
+
+.position{
+    display: flex;
+    align-items: center;
+    height: 100%;
+    gap: 7px;
+    position: relative;
+    box-sizing: border-box;
+    text-decoration: none;
+}
+
+.primaryAppBar .position:nth-child(1){
+    gap: 0;
+}
+
+.primaryAppBar .position:nth-child(1) h1{
+    position: absolute;
+    transform: translate(35px, -10px);
+    width: auto;
+    font-size: 12px;
+    color: #333333;
+}
+
+.primaryAppBar .position:nth-child(1) select{
+    font-size: 18px;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    padding: 15px 0px 0px 9px;
+    width: fit-content;
+    appearance: none;
+    transform: none;
+    color: #F1C232;
+}
+
+.position h1{
+    font-size: 16px;
+    font-family: Robot;
+    flex: 1;
+    text-align: center;
+    color: #F1C232;
+    font-weight: 400;
+    margin: 0;
+}
+
+.primaryAppBar a {
+    text-decoration: none;
+}
+
+.primaryAppBar h2{
+    font-size: 34px;
+    font-family: Delius;
+    display: flex;
+    align-items: center;
+    letter-spacing: 2px;
+    color: #333333;
+}
+
+.primaryAppBar h2 img{
+    padding: 0 4px;
+}
+
+.primaryAppBar .user{
+    height: 38px;
+    width: 115px;
+    border-radius: 27px;
+    border: solid 2px black;
+    background-color: #F1C232;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    gap: 7px;
+}
+
+.position:nth-child(1){
+    max-width: 115px;
+}
+
+.position:nth-child(2){
+    max-width: 122px;
+}
+
+.position:nth-child(3){
+    max-width: 115px;
+}
+
+.position:nth-child(4){
+    max-width: 130px;
+}
+
+.position:nth-child(6){
+    max-width: 127px;
+}
+
+.position:nth-child(7){
+    max-width: 108px;
+}
+
+.position:nth-child(8){
+    max-width: 134px;
+    font-family: Robot;
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+}
+
+.primaryAppBar div:nth-child(8) select{
+    border: none;
+    font-size: 20px;
+    background-color: transparent;
+    color: #F1C232;
+}
+
+.chooseCountry{
+    display: none;
+}
+
+@media screen and (max-width: 1399px) {
+    .primaryAppBar .position:nth-child(4) .icon,
+    .primaryAppBar .position:nth-child(6) .icon{
+        background-color: #F1C232;
+        border-radius: 10px;
+        padding: 4px;
+    }
+
+    .primaryAppBar .position:nth-child(4) h1,
+    .primaryAppBar .position:nth-child(6) h1{
+        display: none;
+    }
+}
+
+.menuBar{
+    display: none;
+}
+
+@media screen and (max-width: 1199px) {
+    .primaryAppBar h2{
+        font-size: 30px;
+    }
+
+    .primaryAppBar .position:nth-child(3) .icon,
+    .primaryAppBar .position:nth-child(7) .icon{
+        background-color: #F1C232;
+        border-radius: 10px;
+        padding: 4px;
+    }
+
+    .primaryAppBar .position:nth-child(3) h1,
+    .primaryAppBar .position:nth-child(7) h1{
+        display: none;
+    }
+
+    .primaryAppBar div:nth-child(8){
+        gap: 4px;
+    }
+
+    .primaryAppBar{
+        padding: 0 20px;
+    }
+}
+
+@media screen and (max-width: 992px){
+    header{
+        height: 110px;
+    }
+    
+    .primaryAppBar div:nth-child(2),
+    .primaryAppBar div:nth-child(3),
+    .primaryAppBar div:nth-child(4),
+    .primaryAppBar div:nth-child(6),
+    .primaryAppBar div:nth-child(7),
+    .primaryAppBar div:nth-child(8){
+        display: none;
+    }
+    
+    .primaryAppBar a:nth-child(3),
+    .primaryAppBar a:nth-child(4) {
+        display: none;
+    }
+
+    .primaryAppBar{
+        position: absolute;
+        z-index: 1;
+    }
+
+    .menuBar{
+        position: absolute;
+        height: 120px;
+        width: 100%;
+        background-color: #F1C232;
+        border-bottom-left-radius: 30px;
+        border-bottom-right-radius: 30px;
+        display: flex;
+        flex-direction: column;
+        transition: all ease-in-out 0.5s;
+        transform: translateY(-10px);
+    }
+
+    .menuBar > div{
+        display: flex;
+        justify-content: space-around;
+        align-items: end;
+        padding: 0 10px;
+        flex: 1;
+    }
+
+    .menuBar > div .position{
+        display: flex;
+        align-items: end;
+    }
+
+    .menuBar > div .position .icon{
+        transform: translateY(-2px);
+    }
+
+    .menuBar > div .position h1{
+        margin: 0;
+    }
+
+    .menuBar > .icon{
+        width: 100%;
+        height: 40px;
+    }
+
+    .hidden{
+        transform: translate(0, 40px);
+    }
+
+    .position h1{
+        color: #B75F6D;
+    }
+
+    .menuBar .position:nth-child(1){
+        max-width: 122px;
+    }
+
+    .menuBar .position:nth-child(2){
+        max-width: 115px;
+    }
+
+    .menuBar .position:nth-child(3){
+        max-width: 130px;
+    }
+
+    .menuBar .position:nth-child(4){
+        max-width: 127px;
+    }
+
+    .menuBar .position:nth-child(5){
+        max-width: 108px;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .primaryAppBar{
+        padding: 10px;
+    }
+
+    .menuBar .position:nth-child(1) .icon,
+    .menuBar .position:nth-child(2) .icon,
+    .menuBar .position:nth-child(3) .icon,
+    .menuBar .position:nth-child(4) .icon,
+    .menuBar .position:nth-child(5) .icon{
+        background-color: #B75F6D;
+        border-radius: 10px;
+        padding: 4px;
+    }
+
+    .menuBar .position:nth-child(1) h1,
+    .menuBar .position:nth-child(2) h1,
+    .menuBar .position:nth-child(3) h1,
+    .menuBar .position:nth-child(4) h1,
+    .menuBar .position:nth-child(5) h1{
+        display: none;
+    }
+
+    .primaryAppBar h2{
+        font-size: 20px;
+    }
+
+    .primaryAppBar h2 img{
+        height: 50px;
+        width: 50px;
+    }
+
+    .primaryAppBar .user{
+        height: auto;
+        width: auto;
+        height: 30px;
+        width: 30px;
+    }
+
+    .primaryAppBar .user p{
+        display: none;
+    }
+
+    .primaryAppBar .position:nth-child(1) .icon{
+        background-color: #F1C232;
+        border: solid 2px #333333;
+        box-sizing: border-box;
+        border-radius: 100%;
+        height: 34px;
+        width: 34px;
+        padding: 2px;
+        
+    }
+
+    .primaryAppBar .position:nth-child(1) h1{
+        display: none;
+    }
+
+    .primaryAppBar .position:nth-child(1) select{
+        display: none;
+        font-size: 16px;
+        padding: 0;
+    }
+}

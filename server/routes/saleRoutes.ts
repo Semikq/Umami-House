@@ -6,9 +6,9 @@ import { saleShemas } from "../schemas/saleSchemas";
 
 const route = Router()
 
-route.get("/sale", handleAllSale)
-route.post("/sale", validate({ body: saleShemas.create.body }), handleAddSale)
-route.put("/sale/:id", validate({ params: saleShemas.update.params, body: saleShemas.update.body }), handleUpdateSale)
-route.delete("/sale/:id", validate({ params: saleShemas.delete.params }), handleDeleteSale)
+route.get("/", handleAllSale)
+route.post("/", validate({ body: saleShemas.create.body }), handleAddSale)
+route.put("/:id", validate({ params: saleShemas.update.params, body: saleShemas.update.body }), handleUpdateSale)
+route.delete("/:id", validate({ params: saleShemas.delete.params }), handleDeleteSale)
 
 export default route

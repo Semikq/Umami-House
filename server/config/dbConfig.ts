@@ -1,8 +1,14 @@
-import mysql from 'mysql2/promise'
+import dotenv from 'dotenv';
+dotenv.config({ path: './bd.env' });
 
-export const pool = mysql.createPool({
-    host: "localhost",
-    user: "root",
-    password: "1234",
-    database: "UmamiHouse"
-})
+import pkg from 'pg';
+const { Pool } = pkg;
+
+const CONNECTION_STRING = process.env.CONNECTION_STRING;
+
+export const pool = new Pool({
+  connectionString: CONNECTION_STRING,
+  ssl: {
+    rejectUnauthorized: false
+  }
+});

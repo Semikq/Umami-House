@@ -13,7 +13,13 @@ interface DishType{
 
 interface Images{
   title: string,
-  image_url: string
+  image_url: string 
+}
+
+export interface AllCategories extends RowDataPacket{
+  id: number,
+  title: string,
+  image_url: string 
 }
 
 export interface AddDish extends DishType{

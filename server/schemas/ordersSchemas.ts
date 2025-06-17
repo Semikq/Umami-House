@@ -2,7 +2,7 @@ import { z } from "zod";
 
 export const ordersSchemas = {
     ordersByFilter: {
-        body: z.object({
+        query: z.object({
             status: z.string()
         })
     },

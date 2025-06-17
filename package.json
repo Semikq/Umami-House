@@ -4,7 +4,10 @@
   "description": "This project is a presentation website for Umami House — a company that specializes in producing its own dishes, available both fresh and frozen. The company also supplies its products to other businesses and operates its own chain of restaurants across Ukraine.Umami House positions itself as a manufacturer of authentic Asian cuisine, offering high-quality meals with a focus on flavor and tradition.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "tsx server/server.ts",
+    "install": "cd client && npm install && cd ../server && npm install",
+    "build": "npm install && cd server && npm install && cd .. && cd client && npm run build"
   },
   "repository": {
     "type": "git",
@@ -19,5 +22,8 @@
   "dependencies": {
     "express": "^5.1.0",
     "mysql": "^2.18.1"
+  },
+  "devDependencies": {
+    "tsx": "^4.20.3"
   }
 }

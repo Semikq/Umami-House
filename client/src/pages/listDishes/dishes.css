@@ -1,0 +1,174 @@
+@import url('https://fonts.googleapis.com/css2?family=Delius&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+.menuCategories{
+    grid-column: 2 / span 10;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #B75F6D;
+    height: 56px;
+    border-radius: 20px;
+    user-select: none;
+    grid-row: 1 / 2;
+    user-select: none;
+}
+
+.menuCategories > div{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.menuCategories .active{
+    background-color: #F1C232;
+    height: 80%;
+    padding: 10px;
+    box-sizing: border-box;
+    border-radius: 20px;
+}
+
+.menuCategories .active h2{
+    color: #333333;
+}
+
+.menuCategories .active .icon{
+    color: #333333;
+}
+
+.menuCategories > div h2{
+    font-family: Roboto;
+    font-weight: 400;
+    color: white;
+    font-size: clamp(8px, 1vw, 20px);
+}
+
+.menuCategories > div .icon{
+    font-size: clamp(8px, 2vw, 24px);
+    color: white;
+}
+
+main > h1{
+    grid-row: 2 / 3;
+    padding: 15px 0 10px 0;
+}
+
+.section{
+    grid-column: 2 / span 10;
+}
+
+.subcategories{
+    border-bottom: solid 2px #333333;
+    height: 40px;
+    padding-left: 10px;
+}
+
+.subcategories h2{
+    font-size: 24px;
+    color: #333333;
+    margin: 0;
+}
+
+@media screen and (max-width: 1499px) {
+    .menuCategories{
+        grid-column: 1 / -1;
+    }
+
+    .section{
+        grid-column: 1 / -1;
+    }
+}
+
+.listDishes {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(483px, 1fr)); /* Автоматична сітка */
+    gap: 10px;
+    padding: 10px;
+    user-select: none;
+}
+
+.cardDish {
+    height: 270px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    width: 100%;
+    box-sizing: border-box;
+    border-radius: 25px;
+    display: flex;
+    transition: all ease-in-out 0.4s;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.cardDish:hover{
+    transform: scale(1.02);
+}
+
+.cardDish div{
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.cardDish div:nth-child(1){
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    gap: 10px;
+    color: white;
+    border-top-left-radius: 25px;
+    border-bottom-left-radius: 25px;
+}
+
+.cardDish div:nth-child(1) h3{
+    max-width: 180px;
+    font-size: 22px;
+    height: 80px;
+    font-family: Roboto;
+    font-weight: 400;
+    padding: 0 20px;
+    margin: 0;
+}
+
+.cardDish div:nth-child(1) p{
+    margin: 0;
+    padding: 0px 0px 20px 20px;
+    font-size: 20px;
+}
+
+.cardDish div:nth-child(2){
+    display: flex;
+    align-items: end;
+    justify-content: end;
+    gap: 10px;
+    padding-bottom: 20px;
+    padding-right: 20px;
+    box-sizing: border-box;
+    border-top-right-radius: 25px;
+    border-bottom-right-radius: 25px;
+}
+
+.cardDish div:nth-child(2) p {
+    color: white;
+    font-size: 20px;
+    margin: 0;
+    height: 35px;
+}
+
+.cardDish div:nth-child(2) input{
+    height: 35px;
+    width: 80px;
+    border: none;
+    background-color: #B75F6D;
+    border-radius: 10px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.cardDish div:nth-child(2) .icon{
+    background-color: #62DAFB;
+    padding: 5px;
+    border-radius: 10px;
+    cursor: pointer;
+}
