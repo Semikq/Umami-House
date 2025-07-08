@@ -1,5 +1,3 @@
-import { RowDataPacket } from "mysql2"
-
 interface DishType{
   name: string,
   weight: number,
@@ -7,7 +5,7 @@ interface DishType{
   frozen: boolean,
   spicy: boolean,
   ingredients: string,
-  subcategories_id: number,
+  sub_category_id: number,
   active: boolean,
 }
 
@@ -16,8 +14,16 @@ interface Images{
   image_url: string
 }
 
+export interface AllDishes extends DishType{
+  id: number,
+  created_at: string,
+  dish_images: Images[] | null
+}
+
+
+
 export interface AddDish extends DishType{
-  images: Images[]
+  dish_images: Images[]
 }
 
 export interface UpdateDish extends AddDish{
@@ -32,13 +38,7 @@ export interface DeleteCommentUserById{
   id: number
 }
 
-export interface AllDishes extends RowDataPacket, DishType{
-  id: number,
-  created_at: string,
-  images: Images[] | null
-}
-
-export interface DishComments extends RowDataPacket{
+export interface DishComments{
   comment: string,
   rating: number,
   created_at: string

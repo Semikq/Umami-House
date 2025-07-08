@@ -10,7 +10,7 @@ export async function fetchAllFavorites({ user_id }: AllFavorites): Promise<Dish
                 ) AS images
             FROM favorites f
             JOIN dishes d ON f.dish_id = d.id
-            LEFT JOIN dish_image di ON di.dish_id = d.id
+            LEFT JOIN dish_images di ON di.dish_id = d.id
             WHERE f.user_id = ?
             GROUP BY d.id
         `, [user_id])

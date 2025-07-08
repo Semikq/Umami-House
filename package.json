@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/Semikq/Umami-House#readme",
   "dependencies": {
+    "dotenv": "^17.1.0",
     "express": "^5.1.0",
     "mysql": "^2.18.1"
   }

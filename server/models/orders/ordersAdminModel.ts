@@ -17,7 +17,7 @@ export async function fetchOrdersByFilter({ status }: OrdersByFilter): Promise<O
                         SELECT JSON_ARRAYAGG(
                            IF(di.id IS NOT NULL, JSON_OBJECT('title', di.title, 'image_url', di.image_url), NULL)
                         )
-                        FROM dish_image di
+                        FROM dish_images di
                         WHERE di.dish_id = d.id
                     )
                 )

@@ -1,0 +1,154 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model categories {
+  id             Int              @id @default(autoincrement())
+  title          String           @db.VarChar(128)
+  image_url      String           @db.VarChar(255)
+  created_at     DateTime         @default(now()) @db.Timestamptz(6)
+  sub_categories sub_categories[]
+}
+
+model cities {
+  id          Int           @id(map: "city_pkey") @default(autoincrement())
+  name        String        @db.VarChar(128)
+  created_at  DateTime      @default(now()) @db.Timestamptz(6)
+  restaurants restaurants[]
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model dish_comments {
+  id         Int      @id @default(autoincrement())
+  dish_id    Int
+  user_id    Int
+  comment    String?
+  rating     Int      @db.SmallInt
+  created_at DateTime @default(now()) @db.Timestamptz(6)
+  dishes     dishes   @relation(fields: [dish_id], references: [id], onDelete: Cascade, map: "fk_dishid_dishcomments")
+  users      users    @relation(fields: [user_id], references: [id], onDelete: Cascade, map: "fk_userid_dishcomments")
+}
+
+model dish_images {
+  id         Int      @id @default(autoincrement())
+  title      String   @db.VarChar(128)
+  image_url  String   @db.VarChar(255)
+  dish_id    Int
+  created_at DateTime @default(now()) @db.Timestamptz(6)
+  dishes     dishes   @relation(fields: [dish_id], references: [id], onDelete: Cascade, map: "fk_dishimages_dishes")
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model dishes {
+  id              Int             @id @default(autoincrement())
+  name            String          @db.VarChar(255)
+  weight          Int
+  price           Int
+  frozen          Boolean         @default(false)
+  spicy           Boolean         @default(false)
+  ingredients     String
+  sub_category_id Int
+  active          Boolean         @default(false)
+  created_at      DateTime        @default(now()) @db.Timestamptz(6)
+  dish_comments   dish_comments[]
+  dish_images     dish_images[]
+  sub_categories  sub_categories  @relation(fields: [sub_category_id], references: [id], onDelete: Cascade, map: "fk_dishes_subcategory")
+  favorites       favorites[]
+  order_dish      order_dish[]
+
+  @@index([sub_category_id], map: "fk_dishes_subcategories")
+}
+
+model favorites {
+  user_id    Int
+  dish_id    Int
+  created_id DateTime @default(now()) @db.Timestamptz(6)
+  dishes     dishes   @relation(fields: [dish_id], references: [id], onDelete: Cascade, map: "fk_favorites_dishes")
+  users      users    @relation(fields: [user_id], references: [id], onDelete: Cascade, map: "fk_favorites_users")
+
+  @@id([user_id, dish_id], map: "pk_favorites")
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model order_dish {
+  id       Int    @id @default(autoincrement())
+  order_id Int
+  dish_id  Int
+  count    Int
+  dishes   dishes @relation(fields: [dish_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_dishes_orderdish")
+  orders   orders @relation(fields: [order_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_orders_orderdish")
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model orders {
+  id               Int          @id @default(autoincrement())
+  user_id          Int
+  status           String       @default("processing")
+  delivery_address String       @db.VarChar(255)
+  payment_method   String
+  created_at       DateTime     @default(now()) @db.Timestamptz(6)
+  order_dish       order_dish[]
+  users            users        @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_users_orders")
+}
+
+model partners {
+  id           Int      @id @default(autoincrement())
+  name         String   @db.VarChar(255)
+  logo_img     String   @db.VarChar(255)
+  link_website String?  @db.VarChar(255)
+  active       Boolean  @default(false)
+  created_at   DateTime @default(now()) @db.Timestamptz(6)
+}
+
+model restaurants {
+  id          Int      @id @default(autoincrement())
+  city_id     Int
+  name        String   @db.VarChar(128)
+  description String   @db.VarChar(255)
+  address     String   @db.VarChar(255)
+  phone       String   @db.VarChar(64)
+  latitude    Decimal  @db.Decimal(10, 8)
+  longitude   Decimal  @db.Decimal(10, 8)
+  active      Boolean  @default(false)
+  created_at  DateTime @default(now()) @db.Timestamptz(6)
+  cities      cities   @relation(fields: [city_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "restaurant_city")
+}
+
+model sale {
+  id         Int      @id @default(autoincrement())
+  active     Boolean  @default(false)
+  title      String   @db.VarChar(128)
+  image_url  String   @db.VarChar(255)
+  created_at DateTime @default(now()) @db.Timestamptz(6)
+}
+
+model sub_categories {
+  id          Int        @id(map: "subcategories_pkey") @default(autoincrement())
+  name        String     @db.VarChar(128)
+  category_id Int
+  created_at  DateTime   @default(now()) @db.Timestamptz(6)
+  dishes      dishes[]
+  categories  categories @relation(fields: [category_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_subcategories_categories")
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model users {
+  id            Int             @id @default(autoincrement())
+  email         String          @db.VarChar(128)
+  name          String          @db.VarChar(64)
+  surname       String          @db.VarChar(64)
+  password      String          @db.VarChar(255)
+  phone         String          @db.VarChar(64)
+  role          String          @default("user")
+  company_name  String?         @db.VarChar(255)
+  company_type  String?         @db.VarChar(255)
+  created_at    DateTime        @default(now()) @db.Timestamptz(6)
+  dish_comments dish_comments[]
+  favorites     favorites[]
+  orders        orders[]
+}

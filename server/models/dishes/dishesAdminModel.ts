@@ -10,7 +10,7 @@ export async function addDish({ name, weight, price, frozen, spicy, ingredients,
         
         for(const image of images){
             const { title, image_url } = image
-            await conn.execute("INSERT INTO dish_image (title, image_url, dish_id) VALUES (?, ?, ?)", [title, image_url, addDishResult.insertId])
+            await conn.execute("INSERT INTO dish_images (title, image_url, dish_id) VALUES (?, ?, ?)", [title, image_url, addDishResult.insertId])
         }
 
         await conn.commit()
@@ -30,7 +30,7 @@ export async function updateDish({ id }: DishId, { name, weight, price, frozen, 
     
         for(const image of images){
             const { title, image_url } = image
-            await conn.execute("INSERT INTO dish_image (title, image_url, dish_id) VALUES (?, ?, ?)", [title, image_url, id])
+            await conn.execute("INSERT INTO dish_images (title, image_url, dish_id) VALUES (?, ?, ?)", [title, image_url, id])
         }
 
         await conn.commit()

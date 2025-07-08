@@ -1,40 +1,63 @@
 import { pool } from "../../config/dbConfig.js"
 import { AllDishes, DishComments, DishAndCommentsById, AddCommentByIdDishes, DeleteCommentByIdDishes } from "../TypesModel/dishesTypes.js"
+import { PrismaClient, Prisma } from '@prisma/client'
+const prisma = new PrismaClient()
 
-export async function fetchAllDishes(): Promise<AllDishes[]> {
+export async function fetchAllDishes(): Promise<Prisma.dishesGetPayload<{ include: { dish_images: true }}>[]> {
   try {
-    const [allDishes] = await pool.query<AllDishes[]>(`
-      SELECT d.*,
-        JSON_ARRAYAGG(
-          JSON_OBJECT('title', di.title, 'image_url', di.image_url)
-        ) AS images
-      FROM dishes d
-      LEFT JOIN dish_image di ON d.id = di.dish_id
-      GROUP BY d.id
-    `)
-    return allDishes
+    return await prisma.dishes.findMany({
+      include: { dish_images: true}
+    })
   } catch (error) {
     throw new Error((error as Error).message)
   }
 }
 
-export async function fetchDishById({ id }: DishAndCommentsById): Promise<AllDishes> {
-  try {
-    const [dishById] = await pool.query<AllDishes[]>(`
-      SELECT d.*,
-        JSON_ARRAYAGG(
-          JSON_OBJECT('title', di.title, 'image_url', di.image_url)
-        ) AS images
-      FROM dishes d
-      LEFT JOIN dish_image di ON d.id = di.dish_id
-      WHERE d.id = ?
-      GROUP BY d.id
-    `, [id])
-    return dishById[0]
-  } catch (error) {
+export async function fetchDishById({ id }: { id: number }): Promise<Prisma.dishesGetPayload<{ include: { dish_images: true }}>| null> {
+  try{
+    return await prisma.dishes.findUnique({
+      where: { id },
+      include: { dish_images: true }
+    })
+  }catch (error) {
     throw new Error((error as Error).message)
   }
 }
+
+// export async function fetchAllDishes(): Promise<AllDishes[]> {
+//   try {
+//     const { rows } = await pool.query<AllDishes>(`
+//     //   SELECT d.*,
+//     //     JSON_ARRAYAGG(
+//     //       JSON_OBJECT('title', di.title, 'image_url', di.image_url)
+//     //     ) AS images
+//     //   FROM dishes d
+//     //   LEFT JOIN dish_images di ON d.id = di.dish_id
+//     //   GROUP BY d.id
+//     // `)
+//     return rows
+//   } catch (error) {
+//     throw new Error((error as Error).message)
+//   }
+// }
+
+//export async function fetchDishById({ id }: DishAndCommentsById): Promise<AllDishes> {
+//  try {
+//    const { rows } = await pool.query<AllDishes>(`
+//      SELECT d.*,
+//        JSON_ARRAYAGG(
+//         JSON_OBJECT('title', di.title, 'image_url', di.image_url)
+//       ) AS images
+//     FROM dishes d
+//     LEFT JOIN dish_images di ON d.id = di.dish_id
+//     WHERE d.id = ?
+//     GROUP BY d.id
+//  `, [id])
+//   return rows[0]
+// } catch (error) {
+//   throw new Error((error as Error).message)
+// }
+//}
 
 export async function fetchDishCommentsById({ id }: DishAndCommentsById):Promise<DishComments[]> {
   try {
