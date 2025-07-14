@@ -1,23 +1,14 @@
-import { RowDataPacket } from "mysql2"
+export interface Id{
+    id:number
+}
 
 interface PartnersType{
     name: string,
-    logo: string,
+    logo_img: string,
     link_website?: string,
     active: boolean
 }
 
 export interface AddPartners extends PartnersType {}
 
-export interface UpdatePartners extends PartnersType{
-    id:number
-}
-
-export interface IdPartners{
-    id:number
-}
-
-export interface AllPartners extends RowDataPacket, PartnersType{
-    id: number,
-    created_at: string
-}
+export interface UpdatePartners extends Id, PartnersType{}

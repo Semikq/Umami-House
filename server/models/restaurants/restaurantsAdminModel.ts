@@ -1,25 +1,45 @@
-import { pool } from "../../config/dbConfig";
-import { AddRestaurant, UpdateRestaurant, IdRestaurant } from "../TypesModel/restaurantsTypes";
+import { Id, AddRestaurant, UpdateRestaurant, addCity } from "../TypesModel/restaurantsTypes";
+import { PrismaClient, Prisma } from "@prisma/client"
+const prisma = new PrismaClient()
 
-export async function addRestaurant({ name, address, phone, description, active, latitude, longitude }: AddRestaurant): Promise<void> {
+export async function addRestaurant({ city_id, name, address, phone, description, active, latitude, longitude }: AddRestaurant): Promise<Prisma.restaurantsGetPayload<{}>> {
     try {
-        await pool.execute("INSERT INTO restaurants (name, address, phone, description, active, latitude, longitude) VALUES (?, ?, ?, ?, ?, ?, ?)", [name, address, phone, description, active, latitude, longitude])
+        return await prisma.restaurants.create({ data: { city_id, name, address, phone, description, active, latitude, longitude }})
     } catch (error) {
         throw new Error((error as Error).message)
     }
 }
 
-export async function updateRestaurant({ id }: IdRestaurant, { name, address, phone, description, active, latitude, longitude }: UpdateRestaurant): Promise<void> {
+export async function updateRestaurant({ id }: Id, { city_id, name, address, phone, description, active, latitude, longitude }: UpdateRestaurant): Promise<Prisma.restaurantsGetPayload<{}>> {
     try {
-        await pool.execute("UPDATE restaurants SET name = ?, address = ?, phone = ?, description = ?, active = ?, latitude = ?, longitude = ? WHERE id = ?", [name, address, phone, description, active, latitude, longitude, id])
+        return await prisma.restaurants.update({
+            where: { id },
+            data: { city_id, name, address, phone, description, active, latitude, longitude }
+        })
     } catch (error) {
         throw new Error((error as Error).message)
     }
 }
 
-export async function deleteRestaurant({ id }: IdRestaurant): Promise<void> {
+export async function deleteRestaurant({ id }: Id): Promise<void> {
     try {
-        await pool.execute("DELETE FROM restaurants WHERE id = ?", [id])
+        await prisma.restaurants.delete({ where: { id } })
+    } catch (error) {
+        throw new Error((error as Error).message)
+    }
+}
+
+export async function addCity({ city_name }: addCity): Promise<Prisma.citiesGetPayload<{}>> {
+    try {
+        return await prisma.cities.create({ data: { name: city_name } })
+    } catch (error) {
+        throw new Error((error as Error).message)
+    }
+}
+
+export async function deleteCity({ id }: Id): Promise<void> {
+    try {
+        await prisma.cities.delete({ where: { id } })
     } catch (error) {
         throw new Error((error as Error).message)
     }

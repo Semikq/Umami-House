@@ -1,25 +1,29 @@
-import { pool } from "../../config/dbConfig";
-import { AddPartners, UpdatePartners, IdPartners } from "../TypesModel/partnersTypes";
+import { Id, AddPartners, UpdatePartners } from "../TypesModel/partnersTypes";
+import { Prisma, PrismaClient } from "@prisma/client"
+const prisma = new PrismaClient()
 
-export async function addPartners({ name, logo, link_website, active }: AddPartners): Promise<void> {
+export async function addPartners({ name, logo_img, link_website, active }: AddPartners): Promise<Prisma.partnersGetPayload<{}>> {
     try {
-        await pool.execute("INSERT INTO partners (name, logo, link_website, active) VALUES (?, ?, ?, ?)", [name, logo, link_website, active])
+        return await prisma.partners.create({ data: { name, logo_img, link_website, active } })
     } catch (error) {
         throw new Error((error as Error).message)
     }
 }
 
-export async function updatePartners({ id }: IdPartners, { name, logo, link_website, active }: UpdatePartners): Promise<void> {
+export async function updatePartners({ id }: Id, { name, logo_img, link_website, active }: UpdatePartners): Promise<Prisma.partnersGetPayload<{}>> {
     try {
-        await pool.execute("UPDATE partners SET name = ?, logo = ?, link_website = ?, active = ? WHERE id = ?", [name, logo, link_website, active, id])
+        return await prisma.partners.update({
+            where: { id },
+            data: { name, logo_img, link_website, active }
+        })
     } catch (error) {
         throw new Error((error as Error).message)
     }
 }
 
-export async function deletePartners({ id }: IdPartners): Promise<void> {
+export async function deletePartners({ id }: Id): Promise<void> {
     try {
-        await pool.execute("DELETE FROM partners WHERE id = ?", [id])
+        await prisma.partners.delete({ where: { id } })
     } catch (error) {
         throw new Error((error as Error).message)
     }

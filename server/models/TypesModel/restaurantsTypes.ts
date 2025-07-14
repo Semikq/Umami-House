@@ -1,6 +1,9 @@
-import { RowDataPacket } from "mysql2"
+export interface Id {
+    id: number
+}
 
-interface RestaurantType{
+interface RestaurantType {
+    city_id: number,
     name: string,
     address: string,
     phone: string,
@@ -10,22 +13,16 @@ interface RestaurantType{
     longitude: number
 }
 
-export interface AddRestaurant extends RestaurantType{}
+export interface AddRestaurant extends RestaurantType {}
 
-export interface UpdateRestaurant extends AddRestaurant{
+export interface UpdateRestaurant extends AddRestaurant {
     id: number
 }
 
-export interface IdRestaurant{
-    id: number
+export interface RestaurantsByCity {
+    city_id: number
 }
 
-export interface AllCities extends RowDataPacket, RestaurantType{
-    id: number,
-    city_id: number,
-    created_at: string
-}
-
-export interface RestaurantsByCity{
-    city: string
+export interface addCity{
+    city_name: string
 }

@@ -1,10 +1,9 @@
-import { pool } from "../../config/dbConfig.js"
-import { AllPartners } from "../TypesModel/partnersTypes.js"
+import { PrismaClient, Prisma } from "@prisma/client";
+const prisma = new PrismaClient()
 
-export async function fetchAllPartners(): Promise<AllPartners[]> {
+export async function fetchAllPartners(): Promise<Prisma.partnersGetPayload<{}>[]> {
     try {
-        const [partners] = await pool.query<AllPartners[]>("SELECT * FROM partners")
-        return partners
+        return await prisma.partners.findMany()
     } catch (error) {
         throw new Error((error as Error).message)
     }

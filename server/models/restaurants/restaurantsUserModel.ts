@@ -1,19 +1,20 @@
-import { pool } from "../../config/dbConfig"
-import { AllCities, RestaurantsByCity } from "../TypesModel/restaurantsTypes"
+import { RestaurantsByCity } from "../TypesModel/restaurantsTypes"
+import { PrismaClient, Prisma } from "@prisma/client"
+const prisma = new PrismaClient()
 
-export async function fetchAllCities(): Promise<AllCities[]> {
+export async function fetchAllCities(): Promise<Prisma.restaurantsGetPayload<{}>[]> {
     try {
-        const [allCities] = await pool.query<AllCities[]>("SELECT * FROM cities")
-        return allCities
+        return prisma.restaurants.findMany()
     } catch (error) {
         throw new Error((error as Error).message)
     }
 }
 
-export async function fetchRestaurantsByCity({ city }: RestaurantsByCity ): Promise<AllCities[]> {
+export async function fetchRestaurantsByCity({ city_id }: RestaurantsByCity ): Promise<Prisma.restaurantsGetPayload<{}>[]> {
     try {
-        const [restaurantsByCity] = await pool.query<AllCities[]>("SELECT r.* FROM restaurants r JOIN cities c ON r.city_id = c.id WHERE c.name = ?", [city])
-        return restaurantsByCity
+        return prisma.restaurants.findMany({
+            where: { city_id }
+        })
     } catch (error) {
         throw new Error((error as Error).message)
     }

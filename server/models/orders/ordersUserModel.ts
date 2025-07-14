@@ -1,67 +1,51 @@
-import { ResultSetHeader } from "mysql2";
-import { pool } from "../../config/dbConfig";
-import { Order, AddOrder, OrderId } from "../TypesModel/ordersTypes";
+import { Id, AddOrder } from "../TypesModel/ordersTypes";
+import { PrismaClient, Prisma } from "@prisma/client";
+const prisma = new PrismaClient()
 
-export async function fetchOrdersByUser({ id }: OrderId): Promise<Order[]> {
+export async function fetchOrdersByUser({ id }: Id) {
     try {
-        const [rows] = await pool.query<Order[]>(`
-           SELECT o.*, 
-            JSON_ARRAYAGG(
-                JSON_OBJECT(
-                    'id', d.id,
-                    'name', d.name,
-                    'weight', d.weight,
-                    'price', d.price,
-                    'frozen', d.frozen,
-                    'spicy', d.spicy,
-                    'images', (
-                        SELECT JSON_ARRAYAGG(
-                           IF(di.id IS NOT NULL, JSON_OBJECT('title', di.title, 'image_url', di.image_url), NULL)
-                        )
-                        FROM dish_images di
-                        WHERE di.dish_id = d.id
-                    )
-                )
-            ) AS dishes
-            FROM orders o
-            JOIN order_dish od ON o.id = od.order_id
-            JOIN dishes d ON od.dish_id = d.id
-            WHERE o.user_id = ?
-            GROUP BY o.id
-        `, [id])
-        
-        return rows.map(order =>({
-            ...order,
-            dishes: JSON.parse(order.dishes as unknown as string)
-        }))
+        return await prisma.orders.findMany({
+            where: { user_id: id },
+            include: {
+                order_dish: {
+                    include: {
+                        dishes: {
+                            include: {
+                                dish_images: true
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    } catch (error) {
+        throw new Error((error as Error).message);
+    }
+}
+
+export async function addOrder({ id }: Id, { user_id, status, delivery_address, payment_method, dishes }: AddOrder): Promise<void> {
+    try {
+        await prisma.$transaction(async tx => {
+            await tx.orders.create({ data: { id, user_id, status, delivery_address, payment_method }})
+
+            const orderDishesData: Prisma.order_dishCreateManyInput[] = dishes.map((dish) => ({
+                order_id: id,
+                dish_id: dish.dish_id,
+                count: dish.count
+            }));
+
+            await tx.order_dish.createMany({
+                data: orderDishesData
+            });
+        })
     } catch (error) {
         throw new Error((error as Error).message)
     }
 }
 
-export async function addOrder({ id }: OrderId, { status, delivery_address, payment_method, dishes }: AddOrder): Promise<void> {
-    const conn = await pool.getConnection()
+export async function deleteOrder({ id }: Id): Promise<void> {
     try {
-        await conn.beginTransaction()
-        const [orderResult] = await conn.execute<ResultSetHeader>(`INSERT INTO orders (user_id, status, delivery_address, payment_method) VALUES(?, ?, ?, ?)`, [id, status, delivery_address, payment_method])
-
-        for(const dish of dishes){
-            const { dish_id, count } = dish
-            await conn.execute("INSERT INTO order_dish (order_id, dish_id, count) VALUES(?, ?, ?)", [orderResult.insertId, dish_id, count])
-        }
-        
-        await conn.commit()
-    } catch (error) {
-        await conn.rollback()
-        throw new Error((error as Error).message)
-    } finally{
-        conn.release()
-    }
-}
-
-export async function deleteOrder({ id }: OrderId): Promise<void> {
-    try {
-        await pool.execute("DELETE FROM orders WHERE id = ?", [id])
+        await prisma.orders.delete({ where: { id } })
     } catch (error) {
         throw new Error((error as Error).message)
     }

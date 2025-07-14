@@ -1,54 +1,54 @@
-import { pool } from "../../config/dbConfig";
-import { OrdersByFilter, Order, UpdateStatusOrder, OrderId } from "../TypesModel/ordersTypes";
+import { Id, OrdersByFilter, UpdateStatusOrder } from "../TypesModel/ordersTypes";
+import { PrismaClient, Prisma } from "@prisma/client"
+const prisma = new PrismaClient()
 
-export async function fetchOrdersByFilter({ status }: OrdersByFilter): Promise<Order[]> {
+export async function fetchOrdersByFilter({ status }: OrdersByFilter): Promise<Prisma.ordersGetPayload<{
+    include: {
+        order_dish: {
+            include: {
+                dishes: {
+                    include: {
+                        dish_images: true
+                    }
+                }
+            }
+        }
+    }
+}>[]> {
     try {
-        const [rows] = await pool.query<Order[]>(`
-            SELECT o.*, 
-            JSON_ARRAYAGG(
-                JSON_OBJECT(
-                    'id', d.id,
-                    'name', d.name,
-                    'weight', d.weight,
-                    'price', d.price,
-                    'frozen', d.frozen,
-                    'spicy', d.spicy,
-                    'images', (
-                        SELECT JSON_ARRAYAGG(
-                           IF(di.id IS NOT NULL, JSON_OBJECT('title', di.title, 'image_url', di.image_url), NULL)
-                        )
-                        FROM dish_images di
-                        WHERE di.dish_id = d.id
-                    )
-                )
-            ) AS dishes
-            FROM orders o
-            JOIN order_dish od ON o.id = od.order_id
-            JOIN dishes d ON od.dish_id = d.id
-            WHERE o.status = ?
-            GROUP BY o.id
-        `, [status])
-        
-        return rows.map(order =>({
-            ...order,
-            dishes: JSON.parse(order.dishes as unknown as string)
-        }))
+        return await prisma.orders.findMany({
+            where: { status },
+            include: {
+                order_dish: {
+                    include: {
+                        dishes: {
+                            include: {
+                                dish_images: true
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    } catch (error) {
+        throw new Error((error as Error).message);
+    }
+}
+
+export async function updateStatusOrder({ id }: Id, { status }: UpdateStatusOrder): Promise<Prisma.ordersGetPayload<{}>> {
+    try {
+        return await prisma.orders.update({
+            data: { status },
+            where: { id }
+        })
     } catch (error) {
         throw new Error((error as Error).message)
     }
 }
 
-export async function updateStatusOrder({ id }: OrderId, { status }: UpdateStatusOrder): Promise<void> {
+export async function deleteOrder({ id }: Id): Promise<void> {
     try {
-        await pool.execute("UPDATE orders SET status = ? WHERE id = ?", [status, id])
-    } catch (error) {
-        throw new Error((error as Error).message)
-    }
-}
-
-export async function deleteOrder({ id }: OrderId): Promise<void> {
-    try {
-        await pool.execute("DELETE FROM orders WHERE id = ?", [id])
+        await prisma.orders.delete({ where: { id } })
     } catch (error) {
         throw new Error((error as Error).message)
     }

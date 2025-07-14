@@ -1,25 +1,26 @@
-import { pool } from "../../config/dbConfig";
-import { AddSale, UpdateSale, IdSale } from "../TypesModel/saleTypes";
+import { Id, AddSale, UpdateSale } from "../TypesModel/saleTypes";
+import { PrismaClient, Prisma } from "@prisma/client";
+const prisma = new PrismaClient()
 
-export async function addSale({ title, image_url, active}: AddSale):Promise<void> {
+export async function addSale({ title, image_url, active}: AddSale): Promise<Prisma.saleGetPayload<{}>> {
     try {
-        await pool.execute("INSERT INTO sale (title, image_url, active) VALUES (?, ?, ?)", [title, image_url, active])
+        return await prisma.sale.create({ data: { title, image_url, active } })
     } catch (error) {
         throw new Error((error as Error).message)
     }
 }
 
-export async function updateSale({ id }: IdSale, { active }: UpdateSale):Promise<void> {
+export async function updateSale({ id }: Id, { active }: UpdateSale): Promise<Prisma.saleGetPayload<{}>> {
     try {
-        await pool.execute("UPDATE sale SET active = ? WHERE id = ?", [active, id])
+        return await prisma.sale.update({ where: { id }, data: { active } })
     } catch (error) {
         throw new Error((error as Error).message)
     }
 }
 
-export async function deleteSale({ id }: IdSale):Promise<void> {
+export async function deleteSale({ id }: Id): Promise<void> {
     try {
-        await pool.execute("DELETE FROM sale WHERE id = ?", [id])
+        await prisma.sale.delete({ where: { id } })
     } catch (error) {
         throw new Error((error as Error).message)
     }
