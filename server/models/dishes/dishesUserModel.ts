@@ -1,5 +1,4 @@
-import { pool } from "../../config/dbConfig.js"
-import { AllDishes, DishComments, DishAndCommentsById, AddCommentByIdDishes, DeleteCommentByIdDishes } from "../TypesModel/dishesTypes.js"
+import { Id, AddCommentByIdDishes, DeleteCommentByIdDishes } from "../TypesModel/dishesTypes.js"
 import { PrismaClient, Prisma } from '@prisma/client'
 const prisma = new PrismaClient()
 
@@ -13,9 +12,9 @@ export async function fetchAllDishes(): Promise<Prisma.dishesGetPayload<{ includ
   }
 }
 
-export async function fetchDishById({ id }: { id: number }): Promise<Prisma.dishesGetPayload<{ include: { dish_images: true }}>| null> {
+export async function fetchDishById({ id }: Id): Promise<Prisma.dishesGetPayload<{ include: { dish_images: true }}>> {
   try{
-    return await prisma.dishes.findUnique({
+    return await prisma.dishes.findUniqueOrThrow({
       where: { id },
       include: { dish_images: true }
     })
@@ -24,61 +23,33 @@ export async function fetchDishById({ id }: { id: number }): Promise<Prisma.dish
   }
 }
 
-// export async function fetchAllDishes(): Promise<AllDishes[]> {
-//   try {
-//     const { rows } = await pool.query<AllDishes>(`
-//     //   SELECT d.*,
-//     //     JSON_ARRAYAGG(
-//     //       JSON_OBJECT('title', di.title, 'image_url', di.image_url)
-//     //     ) AS images
-//     //   FROM dishes d
-//     //   LEFT JOIN dish_images di ON d.id = di.dish_id
-//     //   GROUP BY d.id
-//     // `)
-//     return rows
-//   } catch (error) {
-//     throw new Error((error as Error).message)
-//   }
-// }
-
-//export async function fetchDishById({ id }: DishAndCommentsById): Promise<AllDishes> {
-//  try {
-//    const { rows } = await pool.query<AllDishes>(`
-//      SELECT d.*,
-//        JSON_ARRAYAGG(
-//         JSON_OBJECT('title', di.title, 'image_url', di.image_url)
-//       ) AS images
-//     FROM dishes d
-//     LEFT JOIN dish_images di ON d.id = di.dish_id
-//     WHERE d.id = ?
-//     GROUP BY d.id
-//  `, [id])
-//   return rows[0]
-// } catch (error) {
-//   throw new Error((error as Error).message)
-// }
-//}
-
-export async function fetchDishCommentsById({ id }: DishAndCommentsById):Promise<DishComments[]> {
+export async function fetchDishCommentsById({ id }: Id): Promise<Prisma.dish_commentsGetPayload<{ include: { users: true }}>[]> {
   try {
-    const [rows] = await pool.query<DishComments[]>("SELECT dc.comment, dc.rating, dc.created_at, u.name AS name FROM dish_comments dc JOIN users u ON dc.user_id = u.id WHERE dc.dish_id = ?", [id])
-    return rows
+    return await prisma.dish_comments.findMany({
+      where: { dish_id: id },
+      include: { users: true }
+    })
   } catch (error) {
     throw new Error((error as Error).message)
   }
 }
 
-export async function addCommentByIdDishes({ dish_id, user_id, comment, rating }: AddCommentByIdDishes):Promise<void> {
+export async function addCommentByIdDishes({ dish_id, user_id, comment, rating }: AddCommentByIdDishes): Promise<Prisma.dish_commentsGetPayload<{ include: { users: true } }>> {
   try {
-    await pool.execute("INSERT INTO dish_comments (dish_id, user_id, comment, rating) VALUES (?, ?, ?, ?)", [dish_id, user_id, comment, rating])
+    return await prisma.dish_comments.create({
+      data: { dish_id, user_id, comment, rating },
+      include: { users: true }
+    })
   } catch (error) {
     throw new Error((error as Error).message)
   }
 }
 
-export async function deleteCommentByIdDishes({ user_id, dish_id }: DeleteCommentByIdDishes):Promise<void> {
+export async function deleteCommentByIdDishes({ user_id, dish_id }: DeleteCommentByIdDishes): Promise<void> {
   try {
-    await pool.execute("DELETE FROM dish_comments WHERE user_id = ? AND dish_id = ?", [user_id, dish_id])
+    await prisma.dish_comments.deleteMany({
+      where: { user_id, dish_id }
+    })
   } catch (error) {
     throw new Error((error as Error).message)
   }

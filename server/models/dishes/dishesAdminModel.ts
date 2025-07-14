@@ -1,58 +1,75 @@
-import { pool } from "../../config/dbConfig"
-import { AddDish, UpdateDish, DishId, DeleteCommentUserById } from "../TypesModel/dishesTypes"
-import { ResultSetHeader } from "mysql2"
+import { Id, Image, Images, AddDish, UpdateDish } from "../TypesModel/dishesTypes"
+import {Prisma, PrismaClient} from "@prisma/client";
+const prisma = new PrismaClient()
 
-export async function addDish({ name, weight, price, frozen, spicy, ingredients, subcategories_id, active, images }: AddDish): Promise<void> {
-    const conn = await pool.getConnection()
+export async function addDish({ name, weight, price, frozen, spicy, ingredients, sub_category_id, active, images }: AddDish): Promise<Prisma.dishesGetPayload<{include: { dish_images: true }}>> {
     try {
-        await conn.beginTransaction()
-        const [addDishResult] = await conn.execute<ResultSetHeader>("INSERT INTO dishes (name, weight, price, frozen, spicy, ingredients, subcategories_id, active) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", [name, weight, price, frozen, spicy, ingredients, subcategories_id, active])
-        
-        for(const image of images){
-            const { title, image_url } = image
-            await conn.execute("INSERT INTO dish_images (title, image_url, dish_id) VALUES (?, ?, ?)", [title, image_url, addDishResult.insertId])
-        }
+        return await prisma.$transaction(async (tx) => {
+            const dish = await tx.dishes.create({
+                    data: { name, weight, price, frozen, spicy, ingredients, sub_category_id, active }
+            })
 
-        await conn.commit()
-    } catch (error) {
-        await conn.rollback()
-        throw new Error((error as Error).message)
-    } finally{
-        conn.release()
-    }
-}
+            const dishImagesData = images.map((image: Image): Images => ({
+                title: image.title,
+                image_url: image.image_url,
+                dish_id: dish.id
+            }));
 
-export async function updateDish({ id }: DishId, { name, weight, price, frozen, spicy, ingredients, subcategories_id, active, images }: UpdateDish): Promise<void> {
-    const conn = await pool.getConnection()
-    try {
-        await conn.beginTransaction()
-        await conn.execute<ResultSetHeader>("UPDATE dishes SET name = ?, weight = ?, price = ?, frozen = ?, spicy = ?, ingredients = ?, subcategories_id = ?, active = ? WHERE id = ?", [name, weight, price, frozen, spicy, ingredients, subcategories_id, active, id])
-    
-        for(const image of images){
-            const { title, image_url } = image
-            await conn.execute("INSERT INTO dish_images (title, image_url, dish_id) VALUES (?, ?, ?)", [title, image_url, id])
-        }
+            await tx.dish_images.createMany({ data: dishImagesData })
 
-        await conn.commit()
-    } catch (error) {
-        await conn.rollback()
-        throw new Error((error as Error).message)
-    } finally{
-        conn.release()
-    }
-}
-
-export async function deleteDish({ id }: DishId): Promise<void> {
-    try {
-        await pool.execute("DELETE FROM dishes WHERE id = ?", [id])
+            return tx.dishes.findUniqueOrThrow({
+                where: { id: dish.id },
+                include: { dish_images: true }
+            })
+        })
     } catch (error) {
         throw new Error((error as Error).message)
     }
 }
 
-export async function deleteCommentUserById({ id }: DeleteCommentUserById): Promise<void> {
+export async function updateDish({ id }: Id, { name, weight, price, frozen, spicy, ingredients, sub_category_id, active, images }: UpdateDish): Promise<Prisma.dishesGetPayload<{include: { dish_images: true }}>> {
     try {
-        await pool.execute("DELETE FROM dish_comments WHERE id = ?", [id])
+        return await prisma.$transaction(async (tx) => {
+            await tx.dishes.update({
+                where: { id },
+                data: { name, weight, price, frozen, spicy, ingredients, sub_category_id, active }
+            })
+
+            await tx.dish_images.deleteMany({ where: { dish_id: id } })
+
+            const updateDishImages = images.map((image: Image): Images => ({
+                title: image.title,
+                image_url: image.image_url,
+                dish_id: id
+            }))
+
+            await tx.dish_images.createMany({ data: updateDishImages })
+
+            return tx.dishes.findUniqueOrThrow({
+                where: { id },
+                include: { dish_images: true }
+            })
+        })
+    } catch (error) {
+        throw new Error((error as Error).message)
+    }
+}
+
+export async function deleteDish({ id }: Id): Promise<void> {
+    try {
+        await prisma.dishes.delete({
+            where: { id }
+        })
+    } catch (error) {
+        throw new Error((error as Error).message)
+    }
+}
+
+export async function deleteCommentUserById({ id }: Id): Promise<void> {
+    try {
+        await prisma.dish_comments.delete({
+            where: { id }
+        })
     } catch (error) {
         throw new Error((error as Error).message)
     }

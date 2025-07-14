@@ -1,37 +1,34 @@
-import { pool } from "../../config/dbConfig.js"
-import { AllFavorites, Favorites, Dish } from "../TypesModel/favoritesTypes.js"
+import { PrismaClient, Prisma } from '@prisma/client'
+import {AllFavorites, VariousEventsInTheFavorites} from "../TypesModel/favoritesTypes.js"
+const prisma = new PrismaClient()
 
-export async function fetchAllFavorites({ user_id }: AllFavorites): Promise<Dish[]> {
+export async function fetchAllFavorites({ user_id }: AllFavorites): Promise<Prisma.favoritesGetPayload<{ include: { users: true, dishes: true }}>[]> {
     try {
-        const [dishFavorites] = await pool.query<Dish[]>(`
-            SELECT d.*,
-                JSON_ARRAYAGG(
-                    IF(di.id IS NOT NULL, JSON_OBJECT('title', di.title, 'image_url', di.image_url), NULL)
-                ) AS images
-            FROM favorites f
-            JOIN dishes d ON f.dish_id = d.id
-            LEFT JOIN dish_images di ON di.dish_id = d.id
-            WHERE f.user_id = ?
-            GROUP BY d.id
-        `, [user_id])
-        
-        return dishFavorites
+        return await prisma.favorites.findMany({
+            where: { user_id },
+            include: { users: true, dishes: true }
+        })
     } catch (error) {
         throw new Error((error as Error).message)
     }
 }
 
-export async function addFavorite({ user_id, dish_id }: Favorites): Promise<void> {
+export async function addFavorite({ user_id, dish_id }: VariousEventsInTheFavorites): Promise<Prisma.favoritesGetPayload<{ include: {users: true, dishes: true }}>> {
     try {
-        await pool.execute(`INSERT INTO favorites (user_id, dish_id) VALUES(?, ?)`, [user_id, dish_id])
+        return await prisma.favorites.create({
+            data: {user_id, dish_id},
+            include: { users: true, dishes: true }
+        })
     } catch (error) {
         throw new Error((error as Error).message)
     }
 }
 
-export async function deleteFavorite({ user_id, dish_id }: Favorites): Promise<void> {
+export async function deleteFavorite({ user_id, dish_id }: VariousEventsInTheFavorites): Promise<void> {
     try {
-        await pool.execute("DELETE FROM favorites WHERE user_id = ? AND dish_id = ?", [user_id, dish_id])
+        await prisma.favorites.deleteMany({
+            where: { user_id, dish_id }
+        })
     } catch (error) {
         throw new Error((error as Error).message)
     }
