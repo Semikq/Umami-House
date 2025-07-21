@@ -1,26 +1,21 @@
-import { pool } from "../../config/dbConfig";
-import { UpdateUser, IdUser, DeleteResult, User } from "../TypesModel/userTypes";
-import { ResultSetHeader } from 'mysql2'
+import { User, Id } from "../TypesModel/userTypes";
+import { Prisma, PrismaClient } from "@prisma/client"
+const prisma = new PrismaClient();
 
-export async function updateUser({ id }: IdUser, { email, password, name, surname, phone, company_type, company_name }: UpdateUser): Promise<User> {
+export async function updateUser({ id }: Id, { email, password, name, surname, phone, company_type, company_name }: User): Promise<Prisma.usersGetPayload<{}>> {
     try {
-        const [result] = await pool.execute<ResultSetHeader>("UPDATE users SET email = ?, password = ?, name = ?, surname = ?, phone = ?, company_type = ?, company_name = ? WHERE id = ?", [email, password, name, surname, phone, company_type, company_name, id])
-
-        if (result.affectedRows === 0) {
-            throw new Error("User not found or no changes made")
-        }
-
-        const [rows] = await pool.execute<User[]>("SELECT * FROM users WHERE id = ?", [id])
-        return rows[0]
+        return await prisma.users.update({
+            where: { id },
+            data: { email, password, name, surname, phone, company_type, company_name, }
+        })
     } catch (error) {
         throw new Error((error as Error).message)
     }
 }
 
-export async function deleteUser({ id }: IdUser): Promise<DeleteResult> {
+export async function deleteUser({ id }: Id): Promise<void> {
     try {
-        const [result] = await pool.execute<ResultSetHeader>("DELETE FROM users WHERE id = ?", [id])
-        return result
+        await prisma.users.delete({ where: { id } })
     } catch (error) {
         throw new Error((error as Error).message)
     }

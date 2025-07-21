@@ -1,6 +1,6 @@
 import { registerUser, loginUser } from "../../models/user/authModel";
 import { Request, Response } from "express";
-import { generateToken } from "../../config/jwttoken";
+import { generateToken } from "../../config/jwtToken";
 
 export async function handleRegisterUser(req: Request , res: Response): Promise<void> {
     try {
