@@ -10,7 +10,7 @@ export async function addPartners({ name, logo_img, link_website, active }: AddP
     }
 }
 
-export async function updatePartners({ id }: Id, { name, logo_img, link_website, active }: UpdatePartners): Promise<Prisma.partnersGetPayload<{}>> {
+export async function updatePartners({ id, name, logo_img, link_website, active }: UpdatePartners): Promise<Prisma.partnersGetPayload<{}>> {
     try {
         return await prisma.partners.update({
             where: { id },

@@ -3,8 +3,8 @@ import { Request, Response } from "express";
 
 export async function handleAddPartners(req: Request, res: Response): Promise<void> {
     try {
-        await addPartners(req.body)
-        res.status(201).json("Partners successfully added")
+        const result = await addPartners(req.body)
+        res.status(201).json({ message: "Partners successfully added", data: result })
     } catch (error) {
         res.status(500).json((error as Error).message)
     }
@@ -12,10 +12,8 @@ export async function handleAddPartners(req: Request, res: Response): Promise<vo
 
 export async function handleUpdatePartners(req: Request, res: Response): Promise<void> {
     try {
-        const id = Number(req.params.id)
-
-        await updatePartners({ id }, req.body)
-        res.status(200).json("Partners successfully update")
+        const result = await updatePartners(req.body)
+        res.status(200).json({ message: "Partners successfully update", data: result })
     } catch (error) {
         res.status(500).json((error as Error).message)
     }
@@ -23,9 +21,7 @@ export async function handleUpdatePartners(req: Request, res: Response): Promise
 
 export async function handleDeletePartners(req: Request, res: Response): Promise<void> {
     try {
-        const id = Number(req.params.id)
-
-        await deletePartners({ id })
+        await deletePartners(req.body)
         res.status(204).send()
     } catch (error) {
         res.status(500).json((error as Error).message)

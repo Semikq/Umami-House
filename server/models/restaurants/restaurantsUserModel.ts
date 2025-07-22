@@ -2,9 +2,9 @@ import { RestaurantsByCity } from "../TypesModel/restaurantsTypes"
 import { PrismaClient, Prisma } from "@prisma/client"
 const prisma = new PrismaClient()
 
-export async function fetchAllCities(): Promise<Prisma.restaurantsGetPayload<{}>[]> {
+export async function fetchAllCities(): Promise<Prisma.citiesGetPayload<{}>[]> {
     try {
-        return prisma.restaurants.findMany()
+        return prisma.cities.findMany()
     } catch (error) {
         throw new Error((error as Error).message)
     }

@@ -4,14 +4,8 @@ import { Request, Response } from "express";
 export async function handleOrdersByUser(req: Request, res: Response): Promise<void> {
     try {
         const id = Number(req.params.id)
-
-        if(isNaN(id)){
-            res.status(400).json("Invalid user id")
-            return
-        }
-
         const result = await fetchOrdersByUser({ id })
-        res.status(200).json(result)
+        res.status(200).json({ message: result, data: result })
     } catch (error) {
         res.status(500).json((error as Error).message)
     }
@@ -20,14 +14,8 @@ export async function handleOrdersByUser(req: Request, res: Response): Promise<v
 export async function handleAddOrder(req: Request, res: Response): Promise<void> {
     try {
         const id = Number(req.params.id)
-
-        if(isNaN(id)){
-            res.status(400).json("Invalid user id")
-            return
-        }
-
-        await addOrder({ id }, req.body)
-        res.status(201).json("Order successfully added")
+        const result = await addOrder({ id }, req.body)
+        res.status(201).json({ message: "Order successfully added", data: result })
     } catch (error) {
         res.status(500).json((error as Error).message)
     }
@@ -36,12 +24,6 @@ export async function handleAddOrder(req: Request, res: Response): Promise<void>
 export async function handleDeleteOrder(req: Request, res: Response): Promise<void> {
     try {
         const id = Number(req.params.id)
-
-        if(isNaN(id)){
-            res.status(400).json("Invalid user id")
-            return
-        }
-
         await deleteOrder({ id })
         res.status(204).send()
     } catch (error) {

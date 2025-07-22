@@ -3,8 +3,8 @@ import { Request, Response } from "express";
 
 export async function handleAddDish(req: Request, res: Response): Promise<void> {
   try {
-    await addDish(req.body)
-    res.status(201).json("Dish successfully added")
+    const result = await addDish(req.body)
+    res.status(201).json({ message: "Dish successfully added", data: result })
   } catch (error) {
     res.status(500).json((error as Error).message)
   }
@@ -13,9 +13,8 @@ export async function handleAddDish(req: Request, res: Response): Promise<void> 
 export async function handleUpdateDish(req: Request, res: Response): Promise<void> {
   try{
     const id = Number(req.params.id)
-
-    await updateDish({ id }, req.body)
-    res.status(200).json("Dish successfully update")
+    const result = await updateDish({ id }, req.body)
+    res.status(200).json({ message: "Dish successfully update", data: result })
   } catch (error) {
     res.status(500).json((error as Error).message)
   }
@@ -24,7 +23,6 @@ export async function handleUpdateDish(req: Request, res: Response): Promise<voi
 export async function handleDeleteDish(req: Request, res: Response): Promise<void> {
   try{
     const id = Number(req.params.id)
-
     await deleteDish({ id })
     res.status(204).send()
   } catch (error) {

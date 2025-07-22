@@ -6,5 +6,4 @@ export const rateLimitConfig = () => {
       max: 75,
       message: "Too many requests, please try again later.",
     })
-
 }

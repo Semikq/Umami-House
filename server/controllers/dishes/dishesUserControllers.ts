@@ -11,24 +11,14 @@ export async function handleGetAllDishes(req: Request, res: Response): Promise<v
 }
 
 export async function handleGetDishById(req: Request, res: Response): Promise<void> {
-    console.log("fdsfd")
     try {
         const id = Number(req.params.id)
-
-        console.log(req.params);
-
         const result = await fetchDishById({ id })
         res.status(200).json(result)
     } catch (error) {
         res.status(500).json((error as Error).message)
     }
 }
-
-// const id = Number(req.params.id);
-//
-// if (isNaN(id)) {
-//     return res.status(400).json({ message: "Invalid id parameter" });
-// }
 
 export async function handleDishCommentsById(req: Request, res: Response): Promise<void> {
     try {
@@ -43,8 +33,8 @@ export async function handleDishCommentsById(req: Request, res: Response): Promi
 
 export async function handleAddCommentByIdDishes(req: Request, res: Response): Promise<void> {
     try {
-        await addCommentByIdDishes(req.body)
-        res.status(201).json("Comment added")
+        const result = await addCommentByIdDishes(req.body)
+        res.status(201).json({ message: "Comment added", data: result })
     } catch (error) {
         res.status(500).json((error as Error).message)
     }
