@@ -2,6 +2,33 @@ import { Id, AddCommentByIdDishes, DeleteCommentByIdDishes } from "../TypesModel
 import { PrismaClient, Prisma } from '@prisma/client'
 const prisma = new PrismaClient()
 
+export async function fetchCategoryWithDishes({ id }: Id): Promise<any> {
+  try {
+    return await prisma.categories.findUniqueOrThrow({
+      where: { id },
+      select: {
+        title: true,
+        sub_categories:{
+          select: {
+            name: true,
+            dishes: true
+          }
+        }
+      }
+    })
+  } catch (error) {
+    throw new Error((error as Error).message)
+  }
+}
+
+export async function fetchAllCategories(): Promise<Prisma.categoriesGetPayload<{}>[]> {
+  try {
+    return await prisma.categories.findMany({})
+  } catch (error) {
+    throw new Error((error as Error).message)
+  }
+}
+
 export async function fetchAllDishes(): Promise<Prisma.dishesGetPayload<{ include: { dish_images: true }}>[]> {
   try {
     return await prisma.dishes.findMany({

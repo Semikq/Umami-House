@@ -1,6 +1,6 @@
 import { Router } from "express"
 import { handleAddDish, handleUpdateDish, handleDeleteDish, handleDeleteCommentUserById } from "../controllers/dishes/dishesAdminControllers"
-import { handleGetAllDishes, handleGetDishById, handleDishCommentsById, handleAddCommentByIdDishes, handleDeleteCommentByIdDishes } from "../controllers/dishes/dishesUserControllers"
+import { handleCategoryWithDishes, handleAllCategories, handleGetAllDishes, handleGetDishById, handleDishCommentsById, handleAddCommentByIdDishes, handleDeleteCommentByIdDishes } from "../controllers/dishes/dishesUserControllers"
 import { validate } from "../middleware/validation"
 import { authenticateToken, authorizeAdmin } from "../middleware/authMiddleware"
 import { dishesSchemas } from "../schemas/dishesSchemas"
@@ -8,6 +8,8 @@ import { dishesSchemas } from "../schemas/dishesSchemas"
 const route = Router()
 
 route.get("/", handleGetAllDishes)
+route.get("/categories", handleAllCategories)
+route.get("/category/:id", handleCategoryWithDishes)
 route.get("/:id", validate({ params: dishesSchemas.dishById.params }), handleGetDishById)
 route.post("/addDish", authenticateToken, authorizeAdmin, validate({ body: dishesSchemas.create.body }), handleAddDish)
 route.put("/updateDish/:id", authenticateToken, authorizeAdmin, validate({ params: dishesSchemas.update.params, body: dishesSchemas.update.body }), handleUpdateDish)
