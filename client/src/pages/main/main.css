@@ -1,9 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Delius&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 
-main{
-    margin: 80px 40px;
-}
-
 .saleSlider{
     grid-column: 2 / span 10;
     display: grid;
@@ -15,6 +11,7 @@ main{
     justify-items: center;
     user-select: none;
     aspect-ratio: 8 / 3.4;
+    background-color: #B75F6D;
 }
 
 .saleSlider .afisha{
@@ -62,24 +59,23 @@ main{
 }
 
 .saleSlider div:nth-child(2):hover{
-    box-shadow: -20px 0px 20px -5px rgba(51, 51, 51, 0.5);
-}
-
-.saleSlider .afisha:nth-child(3){
-    grid-column: 2 / 10;
-    z-index: 3;
-    width: 100%;
+    box-shadow: -20px 0 20px -5px rgba(51, 51, 51, 0.5);
 }
 
 .saleSlider .afisha:nth-child(4){
+    grid-column: 2 / 10;
+    z-index: 3;
+    width: 100%;
+    background-color: red;
+}
+
+.saleSlider .afisha:nth-child(3){
     grid-column: 1 / 9;
-    z-index: 2;
     width: 100%;
 }
 
 .saleSlider .afisha:nth-child(5){
     grid-column: 3 / -1 ;
-    z-index: 1;
     width: 100%;
 }
 
@@ -94,122 +90,166 @@ main{
 
 
 
-.fieldInforamtion{
+.fieldInformation{
     height: 80px;
     background-color: #B75F6D;
     grid-column: 1 / -1;
-    margin-left: -40px;
-    margin-right: -40px;
+    width: 100vw;
+    margin-left: calc(-1 * (100vw - 100%) / 2);
     border-radius: 24px;
     display: flex;
-    padding: 0 35px;
-    padding-left: 45px;
     justify-content: space-between;
+    padding: 0 40px;
+    box-sizing: border-box;
     margin-bottom: 90px;
 }
 
-.fieldInforamtion div{
+.fieldInformation div{
     display: flex;
     align-items: center;
 }
 
-.fieldInforamtion div > p{
+.fieldInformation div > p{
     font-size: 16px;
     color: #F1C232;
     text-align: center;
 }
 
-.fieldInforamtion div:nth-child(1){
+.fieldInformation div:nth-child(1){
     max-width: 219px;
 }
 
-.fieldInforamtion div:nth-child(2){
+.fieldInformation div:nth-child(2){
     max-width: 268px;
 }
 
-.fieldInforamtion div:nth-child(3){
+.fieldInformation div:nth-child(3){
     max-width: 176px;
 }
 
-.fieldInforamtion div:nth-child(5){
+.fieldInformation .link:nth-child(4){
+    display: flex;
+    align-items: center;
+    /*height: 60px;*/
+    /*background-color: #333333;*/
+    /*width: 200px;*/
+    /*height: 100%;*/
+    /*display: flex;*/
+    /*align-items: center;*/
+    /*justify-content: center;*/
+}
+
+/*.fieldInformation .link:nth-child(4) .icon{*/
+/*    background-color: red;*/
+/*    width: 330px;*/
+/*    height: 330px;*/
+/*}*/
+
+.fieldInformation div:nth-child(5){
     max-width: 173px;
 }
 
-.fieldInforamtion div:nth-child(6){
+.fieldInformation div:nth-child(6){
     max-width: 233px;
 }
 
-.fieldInforamtion div:nth-child(7){
+.fieldInformation div:nth-child(7){
     max-width: 257px;
 }
 
 @media screen and (max-width: 1499px) {
-    .fieldInforamtion{
+    .fieldInformation{
         align-items: center;
     }
 
-    .link .icon{
-        max-width: 60px;
-    }
+    /*.link .icon{*/
+    /*    max-width: 60px;*/
+    /*}*/
 
-    .fieldInforamtion div:nth-child(1) p,
-    .fieldInforamtion div:nth-child(2) p,
-    .fieldInforamtion div:nth-child(6) p,
-    .fieldInforamtion div:nth-child(7) p{
+    .fieldInformation div:nth-child(1) p,
+    .fieldInformation div:nth-child(2) p,
+    .fieldInformation div:nth-child(6) p,
+    .fieldInformation div:nth-child(7) p{
         font-size: 14px;
     }
 
-    .fieldInforamtion div:nth-child(3) p,
-    .fieldInforamtion div:nth-child(5) p{
+    .fieldInformation div:nth-child(3) p,
+    .fieldInformation div:nth-child(5) p{
         display: none;
     }
 
-    .fieldInforamtion .icon:nth-child(4){
+    .fieldInformation .icon:nth-child(4){
         height: 60px;
     }
 
-    .fieldInforamtion div:nth-child(3) > .icon,
-    .fieldInforamtion div:nth-child(5) > .icon{
+    .fieldInformation div:nth-child(3) > .icon,
+    .fieldInformation div:nth-child(5) > .icon{
         background-color: #F1C232;
         border-radius: 10px;
         padding: 4px;
-        height: 30px;
+        height: 32px;
+    }
+}
+
+@media screen and (max-width: 1299px) {
+    .fieldInformation div:nth-child(2) > .icon,
+    .fieldInformation div:nth-child(6) > .icon{
+        background-color: #F1C232;
+        border-radius: 10px;
+        padding: 4px;
+        height: 32px;
+    }
+
+    .fieldInformation div:nth-child(2) p,
+    .fieldInformation div:nth-child(6) p{
+        display: none;
     }
 }
 
 @media screen and (max-width: 992px){
-    .fieldInforamtion{
+    .fieldInformation{
         padding: 0 10px;
         justify-content: space-around;
         align-items: center;
         height: 60px;
-        width: 100vw;
     }
 
     .link .icon{
         max-width: 40px;
     }
 
-    .fieldInforamtion div:nth-child(2) p,
-    .fieldInforamtion div:nth-child(6) p,
-    .fieldInforamtion div:nth-child(1) p,
-    .fieldInforamtion div:nth-child(7) p{
+    .fieldInformation div:nth-child(2) p,
+    .fieldInformation div:nth-child(6) p,
+    .fieldInformation div:nth-child(1) p,
+    .fieldInformation div:nth-child(7) p{
         display: none;
     }
 
-    .fieldInforamtion .icon:nth-child(4){
+    .fieldInformation .icon:nth-child(4){
         display: none;
     }
 
-    .fieldInforamtion div:nth-child(3) > .icon,
-    .fieldInforamtion div:nth-child(5) > .icon,
-    .fieldInforamtion div:nth-child(2) > .icon,
-    .fieldInforamtion div:nth-child(6) > .icon,
-    .fieldInforamtion div:nth-child(1) > .icon,
-    .fieldInforamtion div:nth-child(7) > .icon{
+    .fieldInformation div:nth-child(3) > .icon,
+    .fieldInformation div:nth-child(5) > .icon,
+    .fieldInformation div:nth-child(2) > .icon,
+    .fieldInformation div:nth-child(6) > .icon,
+    .fieldInformation div:nth-child(1) > .icon,
+    .fieldInformation div:nth-child(7) > .icon{
         background-color: #F1C232;
         border-radius: 10px;
-        padding: 4px;
+        padding: 5px;
+        height: 30px;
+        width: 40px;
+    }
+}
+
+@media screen and (max-width: 499px) {
+    .fieldInformation div:nth-child(3) > .icon,
+    .fieldInformation div:nth-child(5) > .icon,
+    .fieldInformation div:nth-child(2) > .icon,
+    .fieldInformation div:nth-child(6) > .icon,
+    .fieldInformation div:nth-child(1) > .icon,
+    .fieldInformation div:nth-child(7) > .icon{
         height: 25px;
         width: 25px;
     }

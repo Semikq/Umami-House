@@ -8,12 +8,14 @@ import CreateMainPage from "./pages/main/Main"
 function App() {
   return (
       <Router>
-        <CreateHeader/>
-        <Routes>
-            <Route path="/" element={<CreateMainPage/>}></Route>
-            <Route path="category/:id" element={<CreatePageCategories/>}></Route>
-        </Routes>
-        <CreateFooter/>
+        <div className="App">
+            <CreateHeader/>
+            <Routes>
+                <Route path="/" element={<CreateMainPage/>}></Route>
+                <Route path="category/:id" element={<CreatePageCategories/>}></Route>
+            </Routes>
+            <CreateFooter/>
+        </div>
       </Router>
   );
 }

@@ -45,6 +45,7 @@ header{
     width: auto;
     font-size: 12px;
     color: #333333;
+    font-family: Roboto, sans-serif;
 }
 
 .primaryAppBar .position:nth-child(1) select{
@@ -52,7 +53,7 @@ header{
     background-color: transparent;
     border: none;
     outline: none;
-    padding: 15px 0px 0px 9px;
+    padding: 15px 0 0 9px;
     width: fit-content;
     appearance: none;
     transform: none;
@@ -61,7 +62,7 @@ header{
 
 .position h1{
     font-size: 16px;
-    font-family: Robot;
+    font-family: Roboto, sans-serif;
     flex: 1;
     text-align: center;
     color: #F1C232;
@@ -75,7 +76,7 @@ header{
 
 .primaryAppBar h2{
     font-size: 34px;
-    font-family: Delius;
+    font-family: Delius, sans-serif;
     display: flex;
     align-items: center;
     letter-spacing: 2px;
@@ -125,7 +126,7 @@ header{
 
 .position:nth-child(8){
     max-width: 134px;
-    font-family: Robot;
+    font-family: Roboto, sans-serif;
     display: flex;
     flex-direction: row;
     gap: 12px;

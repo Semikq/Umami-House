@@ -2,7 +2,7 @@
 
 .footerBar{
     height: 200px;
-    width: 100%;
+    width: 100vw;
     background-color: #B75F6D;
     border-top-left-radius: 40px;
     border-top-right-radius: 40px;
@@ -35,9 +35,9 @@
 
 .information div:nth-child(1) h1{
     font-size: 32px;
-    margin-bottom: 0px;
     margin-top: 14px;
     color: #333333;
+    background: red;
 }
 
 .information div:nth-child(1) p{
