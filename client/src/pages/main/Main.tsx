@@ -6,7 +6,6 @@ import {Link} from "react-router-dom"
 import "./main.css"
 import {Icon} from "@iconify/react"
 
-
 function CreateSlider () {
     const [sale, setSale] = useState([])
     const [index, setIndex] = useState(0)
@@ -14,14 +13,7 @@ function CreateSlider () {
     useEffect(() => {fetchAllSale().then(result => setSale(result.data))}, [])
 
     const nextSlide = () => setIndex((prevIndex) => (prevIndex + 1) % sale.length)
-
     const prevSlide = () => setIndex((prevIndex) => (prevIndex - 1 + sale.length) % sale.length)
-
-    console.log('index:', index);
-    console.log('sale length:', sale.length);
-    console.log('prev item:', sale[((index - 1) + sale.length) % sale.length]);
-    console.log('current item:', sale[index]);
-    console.log('next item:', sale[(index + 1) % sale.length]);
 
     return (
         <div className="saleSlider">
@@ -67,7 +59,7 @@ function CreateMenu() {
         <div className="menu" id="menu">
             {categories.map((category) => {
                 return (
-                    <Link to={`/dishes/${category.id}`} key={category.id} className="menu-item">
+                    <Link to={`/dishes/${category.id}`} key={category.id} style={{ backgroundImage: `url(${category.image_url})` }} className="menu-item">
                         <div className="shadow"></div>
                         <p>{category.title}</p>
                     </Link>
@@ -105,11 +97,11 @@ export function CreateOurPartners() {
                 <Icon className="icon" onClick={nextSlide} icon="solar:round-arrow-right-linear" width={45} height={55} color="#333333" />
             </div>
 
-            {/*<div className="slider-track">*/}
-            {/*    {getVisiblePartners().map((partner, index) => (*/}
-            {/*        <img key={index} src={`${partner.logo}`} alt={partner.name} />*/}
-            {/*    ))}*/}
-            {/*</div>*/}
+            <div className="slider-track">
+                {getVisiblePartners().map((partner, index) => (
+                    <img key={index} src={`${partner.logo_img}`} alt={partner.name} />
+                ))}
+            </div>
         </div>
     );
 }
@@ -125,24 +117,24 @@ export default function CreateMainPage() {
                 </a>
                 {newItem.slice(3, 6).map((item) => <NewItems {...item}/>)}
             </div>
-            {/*<CreateMenu/>*/}
-            {/*<div className="restaurantInfo">*/}
-            {/*    <div>*/}
-            {/*        /!*<img src="/uploads/photoCompany/restaurant.jpg" alt="restaurant"/>*!/*/}
-            {/*        <div>*/}
-            {/*            <h2>Для наших гостей</h2>*/}
-            {/*            <p>Umami House – ваш квиток у світ гастрономічних насолод! Ми поєднуємо традиції азіатської кухні з сучасним підходом до зручності та якості. Наші продукти створені для тих, хто цінує час, але не готовий жертвувати якістю. Ми ретельно відбираємо інгредієнти, щоб кожна страва дарувала справжнє гастрономічне задоволення. Завдяки шоковому заморожуванню ми зберігаємо природний смак, свіжість та користь кожного продукту. Наша місія – зробити ваш обід чи вечерю смачними та простими. Залиште час на важливе, а про смачну їжу подбаємо ми! А ще ви можете завітати до наших ресторанів, щоб насолодитися свіжими стравами азіатської кухні, або придбати заморожені страви, які зручно приготувати вдома.</p>*/}
-            {/*        </div>*/}
-            {/*    </div>*/}
-            {/*    <div>*/}
-            {/*        <div>*/}
-            {/*            <h2>Для наших партнерів</h2>*/}
-            {/*            <p>Запрошуємо до співпраці власників магазинів, заправок, кафе та інших закладів! У нашому асортименті ви знайдете продукцію азіатської кухні, що задовольнить найвибагливіших клієнтів – як заморожені, так і свіжі страви.Ми використовуємо лише добірні інгредієнти та дотримуємося високих стандартів якості. Шокове заморожування гарантує збереження смаку, свіжості та корисних властивостей продукції. Свіжі страви також проходять суворий контроль, щоб кожен ваш клієнт насолоджувався неперевершеним смаком і ароматом.Обираючи нашу продукцію, ви отримуєте можливість розширити асортимент, збільшити прибуток і подарувати своїм клієнтам справжню гастрономічну насолоду. Ваш успіх – наша мета!</p>*/}
-            {/*        </div>*/}
-            {/*        /!*<img src="/uploads/photoCompany/kitchen.jpg" alt="kitchen" />*!/*/}
-            {/*    </div>*/}
-            {/*</div>*/}
-            {/*<CreateOurPartners/>*/}
+            <CreateMenu/>
+            <div className="restaurantInfo">
+                <div>
+                    <img src="/uploads/photoCompany/restaurant.jpg" alt="restaurant"/>
+                    <div>
+                        <h2>Для наших гостей</h2>
+                        <p>Umami House – ваш квиток у світ гастрономічних насолод! Ми поєднуємо традиції азіатської кухні з сучасним підходом до зручності та якості. Наші продукти створені для тих, хто цінує час, але не готовий жертвувати якістю. Ми ретельно відбираємо інгредієнти, щоб кожна страва дарувала справжнє гастрономічне задоволення. Завдяки шоковому заморожуванню ми зберігаємо природний смак, свіжість та користь кожного продукту. Наша місія – зробити ваш обід чи вечерю смачними та простими. Залиште час на важливе, а про смачну їжу подбаємо ми! А ще ви можете завітати до наших ресторанів, щоб насолодитися свіжими стравами азіатської кухні, або придбати заморожені страви, які зручно приготувати вдома.</p>
+                    </div>
+                </div>
+                <div>
+                    <div>
+                        <h2>Для наших партнерів</h2>
+                        <p>Запрошуємо до співпраці власників магазинів, заправок, кафе та інших закладів! У нашому асортименті ви знайдете продукцію азіатської кухні, що задовольнить найвибагливіших клієнтів – як заморожені, так і свіжі страви.Ми використовуємо лише добірні інгредієнти та дотримуємося високих стандартів якості. Шокове заморожування гарантує збереження смаку, свіжості та корисних властивостей продукції. Свіжі страви також проходять суворий контроль, щоб кожен ваш клієнт насолоджувався неперевершеним смаком і ароматом.Обираючи нашу продукцію, ви отримуєте можливість розширити асортимент, збільшити прибуток і подарувати своїм клієнтам справжню гастрономічну насолоду. Ваш успіх – наша мета!</p>
+                    </div>
+                    <img src="/uploads/photoCompany/kitchen.jpg" alt="kitchen" />
+                </div>
+            </div>
+            <CreateOurPartners/>
         </main>
     )
 }

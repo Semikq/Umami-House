@@ -15,6 +15,5 @@ main{
 @media screen and (max-width: 599px){
   main {
     margin: 80px 15px;
-    background: aqua;
   }
 }
