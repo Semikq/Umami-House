@@ -1,4 +1,4 @@
-import bcrypt from "bcrypt"
+import bcrypt from "bcryptjs"
 import { User, LoginUser } from "../TypesModel/userTypes.js"
 import { PrismaClient, Prisma } from "@prisma/client"
 const prisma = new PrismaClient()

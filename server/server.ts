@@ -20,6 +20,6 @@ app.use("/restaurants", restaurantsRoutes)
 app.use("/sales", saleRoutes)
 app.use("/users", userRoutes)
 
-app.listen(3002, () => {
-    console.log("Server is running on port 3002")
+app.listen(3200, () => {
+    console.log("Server is running on port 3200")
 })
