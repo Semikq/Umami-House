@@ -1,6 +1,6 @@
 import "./header.css"
 import {Icon} from '@iconify/react'
-// import SupPhoto from '../../../../../OneDrive/Desktop/Umami-House/client/src/photo/Суп.png';
+// import soup from '../../../public/soup.png;
 import {useState} from "react";
 import {Link} from "react-router-dom";
 
@@ -45,7 +45,9 @@ export function RenderHeader(){
                 {navItems.slice(0, 3).map((item) => <NavItem {...item}/>)}
                 <Link to="/">
                     <h2>
-                        Umami House
+                        Umami
+                        <img src="/soup.png" alt="Soup logo" />
+                        House
                     </h2>
                 </Link>
                 {navItems.slice(3, 5).map((item) => <NavItem {...item}/>)}

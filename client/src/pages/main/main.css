@@ -10,7 +10,7 @@
     width: 100%;
     justify-items: center;
     user-select: none;
-    aspect-ratio: 8 / 3.4;
+    aspect-ratio: 16/6.7;
 }
 
 .saleSlider .afisha{
@@ -31,41 +31,25 @@
     width: 100%;
     transition: all ease-in-out 0.4s;
     z-index: 10;
-    background-color: rgba(51, 51, 51, 0.2);
     cursor: pointer;
-}
-
-.saleSlider div:hover{
-    background-color: rgba(51, 51, 51, 0.2);
 }
 
 .saleSlider div:nth-child(1){
     grid-column: 1 / 2;
     border-top-left-radius: 30px;
     border-bottom-left-radius: 60px;
-    min-width: 10px;
-}
-
-.saleSlider div:nth-child(1):hover{
-    box-shadow: 20px 0px 20px -5px rgba(51, 51, 51, 0.5);
 }
 
 .saleSlider div:nth-child(2){
     grid-column: 10 / -1;
     border-top-right-radius: 60px;
     border-bottom-right-radius: 30px;
-    min-width: 10px;
-}
-
-.saleSlider div:nth-child(2):hover{
-    box-shadow: -20px 0 20px -5px rgba(51, 51, 51, 0.5);
 }
 
 .saleSlider .afisha:nth-child(4){
     grid-column: 2 / 10;
     z-index: 3;
     width: 100%;
-    background-color: red;
 }
 
 .saleSlider .afisha:nth-child(3){
@@ -78,16 +62,32 @@
     width: 100%;
 }
 
-@media screen and (max-width:993px) {
+@media screen and (max-width: 1299px) {
     .saleSlider{
         grid-column: 1 / -1;
         aspect-ratio: 16/9;
-        /* height: 400px; */
+        margin-bottom: 50px;
+        margin-top: -40px;;
     }
 }
 
+@media screen and (max-width: 499px) {
+    .saleSlider{
+        display: grid;
+        margin-bottom: 20px;
+        margin-top: -60px;
+    }
 
+    .saleSlider div .icon{
+        width: 35px;
+        height: 35px;
+    }
 
+    .saleSlider .afisha:nth-child(3){
+        grid-column: 1 / -1;
+        width: 100%;
+    }
+}
 
 .fieldInformation{
     height: 80px;
@@ -194,6 +194,7 @@
         justify-content: space-around;
         align-items: center;
         height: 60px;
+        margin-bottom: 50px;
     }
 
     .link .icon{
@@ -226,6 +227,10 @@
 }
 
 @media screen and (max-width: 499px) {
+    .fieldInformation{
+        margin-bottom: 20px;
+    }
+
     .fieldInformation div:nth-child(3) > .icon,
     .fieldInformation div:nth-child(5) > .icon,
     .fieldInformation div:nth-child(2) > .icon,
@@ -236,7 +241,6 @@
         width: 25px;
     }
 }
-
 
 .menu {
     grid-column: 2 / 12;
@@ -398,7 +402,7 @@
     }
 }
 
-@media screen and (max-width: 576px) {
+@media screen and (max-width: 599px) {
     .menu {
         grid-template-columns: repeat(4, 1fr);
         grid-template-rows: repeat(7, 1fr);
@@ -600,6 +604,12 @@
     text-align: center;
 }
 
+.partners div:nth-child(1) .icon{
+    width: 45px;
+    height: 45px;
+    /*45 50*/
+}
+
 .partners div:nth-child(2){
     display: flex;
     gap: 60px;
@@ -614,13 +624,14 @@
     }
 
     .partners div:nth-child(1) h1{
-        font-size: 20px;
+        font-size: 24px;
         color: #333333;
         margin: 0;
         text-align: center;
     }
 
     .partners div:nth-child(1) .icon{
-        min-width: 40px;
+        width: 35px;
+        height: 35px;
     }
 }
