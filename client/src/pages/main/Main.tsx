@@ -9,6 +9,15 @@ import {Icon} from "@iconify/react"
 function CreateSlider () {
     const [sale, setSale] = useState([])
     const [index, setIndex] = useState(0)
+    const [show, setShow] = useState(true)
+
+    window.addEventListener("resize", () => {
+        if(window.innerWidth < 499){
+            setShow(false)
+        }else {
+            setShow(true)
+        }
+    })
 
     useEffect(() => {fetchAllSale().then(result => setSale(result.data))}, [])
 
@@ -18,16 +27,16 @@ function CreateSlider () {
     return (
         <div className="saleSlider">
             <div onClick={() => prevSlide()}>
-                <Icon icon="solar:round-arrow-left-broken" width={50} height={50} color="#F1C232"></Icon>
+                <Icon icon="solar:round-arrow-left-broken" className="icon" width={50} height={50} color="#F1C232"></Icon>
             </div>
             <div onClick={() => nextSlide()}>
-                <Icon icon="solar:round-arrow-right-broken" width={50} height={50} color="#F1C232"></Icon>
+                <Icon icon="solar:round-arrow-right-broken" className="icon" width={50} height={50} color="#F1C232"></Icon>
             </div>
             {sale.length > 0 && (
                 <>
-                    <img className="afisha" src={`${sale[((index - 1) + sale.length) % sale.length].image_url}`} title="1"/>
-                    <img className="afisha" src={`${sale[index].image_url}`} title="2"/>
-                    <img className="afisha" src={`${sale[(index + 1) % sale.length].image_url}`} title="3"/>
+                    {show ? <img className="afisha" src={`${sale[((index - 1) + sale.length) % sale.length].image_url}`}/> : null}
+                    <img className="afisha" src={`${sale[index].image_url}`}/>
+                    {show ? <img className="afisha" src={`${sale[(index + 1) % sale.length].image_url}`}/> : null}
                 </>
             )}
         </div>
@@ -53,13 +62,13 @@ function NewItems ({title, icon}: {title: string; icon: string}) {
 function CreateMenu() {
     const [categories, setCategories] = useState([])
 
-    useEffect(() => {fetchAllCategories().then(result => {setCategories(result.data); console.log(result)})}, [])
+    useEffect(() => {fetchAllCategories().then(result => setCategories(result.data))}, [])
 
     return (
         <div className="menu" id="menu">
-            {categories.map((category) => {
+            {categories.slice(0, 10).map((category) => {
                 return (
-                    <Link to={`/dishes/${category.id}`} key={category.id} style={{ backgroundImage: `url(${category.image_url})` }} className="menu-item">
+                    <Link to={`/category/${category.id}`} key={category.id} style={{ backgroundImage: `url(${category.image_url})` }} className="menu-item">
                         <div className="shadow"></div>
                         <p>{category.title}</p>
                     </Link>
@@ -92,9 +101,9 @@ export function CreateOurPartners() {
     return (
         <div className="partners">
             <div className="slider-header">
-                <Icon className="icon" onClick={prevSlide} icon="solar:round-arrow-left-linear" width={45} height={55} color="#333333" />
+                <Icon className="icon" onClick={prevSlide} icon="solar:round-arrow-left-linear" color="#333333" />
                 <h1>Наші партнери</h1>
-                <Icon className="icon" onClick={nextSlide} icon="solar:round-arrow-right-linear" width={45} height={55} color="#333333" />
+                <Icon className="icon" onClick={nextSlide} icon="solar:round-arrow-right-linear" color="#333333" />
             </div>
 
             <div className="slider-track">

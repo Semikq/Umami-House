@@ -85,6 +85,7 @@ header{
 
 .primaryAppBar h2 img{
     padding: 0 4px;
+    height: 60px;
 }
 
 .primaryAppBar .user{
