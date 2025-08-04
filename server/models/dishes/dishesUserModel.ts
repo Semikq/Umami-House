@@ -11,7 +11,11 @@ export async function fetchCategoryWithDishes({ id }: Id): Promise<any> {
         sub_categories:{
           select: {
             name: true,
-            dishes: true
+            dishes: {
+              include: {
+                dish_images: true,
+              }
+            }
           }
         }
       }
