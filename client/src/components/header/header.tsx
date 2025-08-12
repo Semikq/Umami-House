@@ -1,6 +1,5 @@
 import "./header.css"
 import {Icon} from '@iconify/react'
-// import soup from '../../../public/soup.png;
 import {useState} from "react";
 import {Link} from "react-router-dom";
 
@@ -24,7 +23,7 @@ function MenuBar() {
     return (
         <div className={`menuBar ${isHidden ? "hidden" : ""}`}>
             <div>
-                {navItems.map((item) => <NavItem {...item}/>)}
+                {navItems.map((item) => <NavItem key={item.label} {...item}/>)}
             </div>
             <Icon icon={isHidden ? "solar:arrow-up-broken" : "solar:arrow-down-broken"} className="icon" onClick={() => setIsHidden(!isHidden)} width={32} height={32} color="#333333"></Icon>
         </div>
@@ -42,7 +41,7 @@ export function RenderHeader(){
                         <option>Полтава</option>
                     </select>
                 </div>
-                {navItems.slice(0, 3).map((item) => <NavItem {...item}/>)}
+                {navItems.slice(0, 3).map((item) => <NavItem key={item.label} {...item}/>)}
                 <Link to="/">
                     <h2>
                         Umami
@@ -50,7 +49,7 @@ export function RenderHeader(){
                         House
                     </h2>
                 </Link>
-                {navItems.slice(3, 5).map((item) => <NavItem {...item}/>)}
+                {navItems.slice(3, 5).map((item) => <NavItem key={item.label} {...item}/>)}
                 <div className="position">
                     <Icon icon="line-md:heart" width={32} height={32} color="#333333"></Icon>
                     <Icon icon="mdi:cart" width={32} height={32} color="#333333"></Icon>
