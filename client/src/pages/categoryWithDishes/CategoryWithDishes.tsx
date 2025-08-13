@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { fetchCategoryWithDishes, fetchAllCategories } from "../../api/dish.tsx"
 import { useParams } from "react-router-dom"
 import { Icon } from "@iconify/react"
@@ -13,10 +13,36 @@ function DishButton ({price}){
     )
 }
 
-export function RenderListDishesPage({infoCategories, categories}){
+function CarouselCategories ({categories}){
     const { id } = useParams()
     const activeCategory = categories.find((category) => category.id === Number(id))
+    const myRef = useRef(null)
 
+    useEffect(() => {
+        const container = myRef.current
+
+        const handleWheel = (e) => {
+            e.preventDefault();
+            container.scrollLeft += e.deltaY;
+        };
+
+        container.addEventListener("wheel", handleWheel, { passive: false });
+        return () => container.removeEventListener("wheel", handleWheel);
+    }, []);
+
+    return (
+        <div className="menuCategories" ref={myRef}>
+            {categories.map((category) =>
+                <Link to={`/category/${category.id}`} className={`listCategory ${category.id === activeCategory.id ? "active" : ""}`}>
+                    <h2>{category.title}</h2>
+                    <Icon className="icon" icon="solar:alt-arrow-right-linear" width={20}></Icon>
+                </Link>
+            )}
+        </div>
+    )
+}
+
+export function RenderListDishesPage({infoCategories, categories}){
     return (
         <main>
             <div className="search">
@@ -24,21 +50,7 @@ export function RenderListDishesPage({infoCategories, categories}){
                 <input placeholder="Введіть назву страви"/>
             </div>
 
-            <div className="menuCategories">
-                <div className="arrowLeft">
-                    <Icon icon="eva:arrow-left-fill" width={30}/>
-                </div>
-                {categories.map((category) =>
-                    <div className={`${category.id === activeCategory.id ? "active" : ""}`}>
-                        <h2>{category.title}</h2>
-                        <Icon className="icon" icon="solar:alt-arrow-right-linear" width={20}></Icon>
-                    </div>
-                )}
-                <div className="arrowRight">
-                    <Icon icon="eva:arrow-right-fill" width={30}/>
-                </div>
-            </div>
-
+            <CarouselCategories categories={categories}/>
             <h1 className="categoryName">{infoCategories.title}</h1>
 
             {infoCategories.sub_categories.filter(sub_category => sub_category.dishes && sub_category.dishes.length > 0).map((sub_category) =>
