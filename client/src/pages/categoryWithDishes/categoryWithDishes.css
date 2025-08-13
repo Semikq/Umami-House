@@ -37,13 +37,6 @@
     outline: none;
 }
 
-
-
-
-
-
-
-
 .menuCategories{
     grid-column: 2 / span 10;
     display: flex;
@@ -51,14 +44,24 @@
     align-items: center;
     height: 50px;
     gap: 10px;
+    position: relative;
+    overflow-x: auto;
+}
+
+.menuCategories::-webkit-scrollbar {
+    display: none;
 }
 
 .menuCategories .arrowLeft,
 .menuCategories .arrowRight{
-    display: none;
+    position: absolute;
 }
 
-.menuCategories > div{
+.menuCategories .arrowRight{
+    right: 0;
+}
+
+.menuCategories > .listCategory{
     display: flex;
     align-items: center;
     justify-content: center;
@@ -69,9 +72,10 @@
     border-radius: 15px;
     padding: 0 10px;
     color: white;
+    text-decoration: none;
 }
 
-.menuCategories > div h2{
+.menuCategories > .listCategory h2{
     font-family: Roboto, sans-serif;
     font-weight: 400;
     font-size: 16px;
@@ -82,19 +86,24 @@
     background-color: #F1C232;
 }
 
-.menuCategories .active h2, .menuCategories .active .icon{
+.menuCategories .active h2{
+    font-weight: 500;
     color: #333333;
 }
 
-
-
-
+.menuCategories .active .icon{
+    display: none;
+}
 
 section{
     grid-column: 2 / span 10;
 }
 
 @media screen and (max-width: 1600px) {
+    .search {
+        margin-top: -40px;
+    }
+
     .search, .menuCategories, section {
         grid-column: 1 / -1;
     }
@@ -102,7 +111,7 @@ section{
 
 .categoryName{
     grid-column: 1 / -1;
-    padding-top: 20px;
+    padding-top: 40px;
     place-self: center;
     color: #333333;
     margin: 0;
