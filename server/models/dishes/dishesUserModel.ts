@@ -43,11 +43,18 @@ export async function fetchAllDishes(): Promise<Prisma.dishesGetPayload<{ includ
   }
 }
 
-export async function fetchDishById({ id }: Id): Promise<Prisma.dishesGetPayload<{ include: { dish_images: true }}>> {
+export async function fetchDishById({ id }: Id): Promise<any> {
   try{
     return await prisma.dishes.findUniqueOrThrow({
       where: { id },
-      include: { dish_images: true }
+      include: {
+        sub_categories: {
+          include: {
+            categories: true
+          }
+        },
+        dish_images: true
+      }
     })
   }catch (error) {
     throw new Error((error as Error).message)
