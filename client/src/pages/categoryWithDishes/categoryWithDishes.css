@@ -52,15 +52,6 @@
     display: none;
 }
 
-.menuCategories .arrowLeft,
-.menuCategories .arrowRight{
-    position: absolute;
-}
-
-.menuCategories .arrowRight{
-    right: 0;
-}
-
 .menuCategories > .listCategory{
     display: flex;
     align-items: center;

@@ -15,6 +15,11 @@ export async function fetchAllCategories(){
 export async function fetchAllPartners() {
     return await axios.get(`/partners`)
 }
+
+export async function fetchDish(id){
+    return await axios.get(`/dishes/${id}`)
+}
+
 // export const fetchAllDishesByCategory = async (id) => {
 //     return await axios.get(`/dishes/categoryDishes/${id}`)
 // }
