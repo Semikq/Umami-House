@@ -53,6 +53,16 @@ export async function fetchDishById({ id }: Id): Promise<any> {
             categories: true
           }
         },
+        dish_comments: {
+          include: {
+            users: {
+              select: {
+                name: true,
+                surname: true
+              },
+            }
+          }
+        },
         dish_images: true
       }
     })
