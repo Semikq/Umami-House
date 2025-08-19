@@ -55,15 +55,17 @@ function CreateCardsWithInfo (){
 
     return (
         <section className="product__info-for-user">
-        {infoCards.map((infoCard, index)=>
-                <div className="product__info-card" key={index}>
-                    <div>
-                        <h2>{infoCard.title}</h2>
-                        <Icon icon={infoCard.icon} width={30} color="#333333"></Icon>
+            <div className="wrapper__product__info-for-user">
+                {infoCards.map((infoCard, index)=>
+                    <div className="product__info-card" key={index}>
+                        <div>
+                            <h2>{infoCard.title}</h2>
+                            <Icon icon={infoCard.icon} width={30} color="#333333"></Icon>
+                        </div>
+                        <p>{infoCard.text}</p>
                     </div>
-                    <p>{infoCard.text}</p>
-                </div>
-        )}
+                )}
+            </div>
         </section>
     )
 }
@@ -193,7 +195,7 @@ function RenderDishPage({dish, additionalDish}){
                             {dish.frozen === true &&
                                 <div className="product__button--frozen">
                                     <p>Заморожена версія</p>
-                                    <Icon icon="famicons:snow" width={25}/>
+                                    <Icon icon="famicons:snow"/>
                                 </div>
                             }
                             <div className="product__quantity-purchase">
