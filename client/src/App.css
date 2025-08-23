@@ -7,7 +7,7 @@
 
 main{
   display: grid;
-  margin: 80px 40px;
+  margin: 40px 40px;
   grid-template-columns: repeat(12, 1fr);
   column-gap: 20px;
 }
