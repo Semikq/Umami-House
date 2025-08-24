@@ -19,3 +19,11 @@ export async function fetchRestaurantsByCity({ city_id }: RestaurantsByCity ): P
         throw new Error((error as Error).message)
     }
 }
+
+export async function fetchAllRestaurants(): Promise<Prisma.restaurantsGetPayload<{}>[]> {
+    try {
+        return prisma.restaurants.findMany()
+    } catch (error){
+        throw new Error((error as Error).message)
+    }
+}

@@ -12,8 +12,8 @@ main{
   column-gap: 20px;
 }
 
-@media screen and (max-width: 599px){
+@media screen and (max-width: 800px){
   main {
-    margin: 80px 15px;
+    margin: 40px 15px;
   }
 }

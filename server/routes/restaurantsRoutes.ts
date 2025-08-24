@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { handleAddRestaurant, handleUpdateRestaurant, handleDeleteRestaurant, handleAddCity, handleDeleteCity } from "../controllers/restaurants/restaurantsAdminControllers";
-import { handleAllCities, handleRestaurantsByCity } from "../controllers/restaurants/restaurantsUserControllers";
+import {handleAllCities, handleAllRestaurants, handleRestaurantsByCity} from "../controllers/restaurants/restaurantsUserControllers";
 import { validate } from "../middleware/validation";
 import { authenticateToken, authorizeAdmin } from "../middleware/authMiddleware";
 import { restaurantsShemas } from "../schemas/restaurantsSchemas";
@@ -15,5 +15,6 @@ route.delete("/deleteCity", authenticateToken, authorizeAdmin, validate({ body: 
 
 route.get("/cities", handleAllCities)
 route.get("/city/:city_id", validate({ params: restaurantsShemas.restaurants.params }), handleRestaurantsByCity)
+route.get("/", handleAllRestaurants)
 
 export default route

@@ -1,11 +1,11 @@
 import {useState, useEffect} from "react"
 import {fetchDish, fetchCategoryWithDishes} from "../../api/dish.tsx";
-import CreateBlockPhotos from "./components/createBlockPhotos.tsx"
-import ChangeQuantity from "./components/changeQuantity.tsx";
-import CreateCardsWithInfo from "./components/createCardsWithInfo.tsx";
-import CreateAdditionalOffers from "./components/createAdditionalOffers.tsx";
-import CreateFormRateProduct from "./components/createFormRateProduct.tsx";
-import CreateUserComment from "./components/createUserComment.tsx";
+import CreateBlockPhotos from "./components/CreateBlockPhotos.tsx"
+import ChangeQuantity from "./components/ChangeQuantity.tsx";
+import CreateCardsWithInfo from "./components/CreateCardsWithInfo.tsx";
+import CreateAdditionalOffers from "./components/CreateAdditionalOffers.tsx";
+import CreateFormRateProduct from "./components/CreateFormRateProduct.tsx";
+import CreateUserComment from "./components/CreateUserComment.tsx";
 import {Link, useParams} from "react-router-dom"
 import {Icon} from "@iconify/react"
 import "./dish.css"
