@@ -1,0 +1,200 @@
+@import url('https://fonts.googleapis.com/css2?family=Delius&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+.form{
+    min-height: 380px;
+    height: auto;
+    width: 520px;
+    border-radius: 20px;
+    background-color: #B75F6D;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    box-sizing: border-box;
+}
+
+.form__header{
+    height: 88px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    align-items: center;
+}
+
+.header__title{
+    font-size: 32px;
+    font-weight: 400;
+    font-family: Roboto, sans-serif;
+    margin: 0;
+    color: #333333;
+}
+
+.header__exit{
+    display: flex;
+    width: 290px;
+    justify-content: space-between;
+}
+
+.header__exit h2{
+    margin: 0;
+    font-size: 26px;
+    font-weight: 400;
+    color: #333333;
+    border-bottom: solid 2px #333333;
+    transition: all ease-in-out 0.3s;
+    cursor: pointer;
+}
+
+.header__exit h2.active{
+    color: #F1C232;
+    border-bottom: solid 2px #F1C232;
+}
+
+.header__exit h2:hover{
+    color: #F1C232;
+    border-bottom: solid 2px #F1C232;
+}
+
+
+
+.form__body{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    font-family: Roboto, sans-serif;
+    gap: 15px;
+    height: auto;
+}
+
+.form__body label{
+    width: 330px;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.form__body label p{
+    font-size: 18px;
+    margin: 0;
+    color: #333333;
+}
+
+.form__body label p span{
+    color: #F1C232;
+    padding-left: 2px;
+    box-sizing: border-box;
+}
+
+.form__body label input,
+.form__body label select{
+    height: 40px;
+    background-color: #C3C3C3;
+    border: 0;
+    border-radius: 10px;
+    font-size: 18px;
+    padding: 0 10px;
+    box-sizing: border-box;
+    color: #333333;
+}
+
+.form__body label input:focus,
+.form__body label select:focus{
+    outline: none;
+}
+
+.form__body button {
+    height: 40px;
+    width: 330px;
+    font-size: 22px;
+    color: #333333;
+    background-color: #F1C232;
+    border-radius: 10px;
+    margin-top: 10px;
+    border: none;
+    cursor: pointer;
+}
+
+
+
+
+.form__if{
+    margin: 0;
+    font-size: 22px;
+    text-align: center;
+    color: #333333;
+    font-family: Roboto, sans-serif;
+}
+
+.form__login-selection{
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.form__login-selection button{
+    height: 40px;
+    width: 155px;
+    border-radius: 10px;
+    border: none;
+    font-family: Roboto, sans-serif;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    color: #333333;
+    background-color: #F1C232;
+    cursor: pointer;
+}
+
+
+.body__user-selection{
+    display: flex;
+    justify-content: space-between;
+    width: 330px;
+}
+
+.body__user{
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.body__user svg{
+    font-size: 24px;
+    color: #C3C3C3;
+}
+
+.body__user h3{
+    font-family: Roboto, sans-serif;
+    font-weight: 400;
+    margin: 0;
+    font-size: 20px;
+    color: #333333;
+}
+
+.body__user.active h3,
+.body__user.active svg{
+    color: #F1C232;
+}
+
+.body__user h3:hover{
+    color: #F1C232;
+}
+
+.body__user svg:hover{
+    color: #F1C232;
+}
+
+.body__name-surname{
+    display: flex;
+    width: 330px;
+    gap: 20px;
+    color: #333333;
+}
+
+.body__name-surname label{
+    width: 155px;
+}

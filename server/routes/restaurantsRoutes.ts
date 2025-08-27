@@ -14,7 +14,7 @@ route.post("/addCity", authenticateToken, authorizeAdmin, validate({ body: resta
 route.delete("/deleteCity", authenticateToken, authorizeAdmin, validate({ body: restaurantsShemas.deleteCity.params }), handleDeleteCity)
 
 route.get("/cities", handleAllCities)
-route.get("/city/:city_id", validate({ params: restaurantsShemas.restaurants.params }), handleRestaurantsByCity)
+route.get("/city/:city_id", handleRestaurantsByCity)
 route.get("/", handleAllRestaurants)
-
+// validate({ body: restaurantsShemas.restaurants.body })
 export default route
