@@ -3,10 +3,10 @@ import { User, LoginUser } from "../TypesModel/userTypes.js"
 import { PrismaClient, Prisma } from "@prisma/client"
 const prisma = new PrismaClient()
 
-export async function registerUser({ email, password, name, surname, phone, role, company_type, company_name }: User): Promise<Prisma.usersGetPayload<{}>> {
+export async function registerUser({ email, password, name, surname, phone, company_type, company_name }: User): Promise<Prisma.usersGetPayload<{}>> {
     try {
         return await prisma.users.create({
-            data: { email, password, name, surname, phone, role, company_type, company_name }
+            data: { email, password, name, surname, phone, company_type, company_name }
         })
     } catch (error) {
         throw new Error((error as Error).message)

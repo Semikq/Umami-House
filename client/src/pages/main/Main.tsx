@@ -83,7 +83,7 @@ export function CreateOurPartners() {
     const [startIndex, setStartIndex] = useState(0);
     const visibleCount = 5;
 
-    useEffect(() => {fetchAllPartners().then(result => {setPartners(result.data); console.log(result)})}, []);
+    useEffect(() => {fetchAllPartners().then(result => setPartners(result.data))}, []);
 
     const nextSlide = () => {
         setStartIndex((prevIndex) => (prevIndex + 1) % partners.length);
@@ -120,11 +120,11 @@ export default function CreateMainPage() {
         <main>
             <CreateSlider/>
             <div className="fieldInformation">
-                {newItem.slice(0, 3).map((item) => <NewItems {...item}/>)}
+                {newItem.slice(0, 3).map((item, i) => <NewItems key={i} {...item}/>)}
                 <a href="#menu" className="link">
                     <Icon className="icon" icon="radix-icons:double-arrow-down" width={60} height={60} color="#333333" />
                 </a>
-                {newItem.slice(3, 6).map((item) => <NewItems {...item}/>)}
+                {newItem.slice(3, 6).map((item, i) => <NewItems key={i} {...item}/>)}
             </div>
             <CreateMenu/>
             <div className="restaurantInfo">

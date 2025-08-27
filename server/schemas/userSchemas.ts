@@ -17,7 +17,6 @@ export const userSchemas = {
             name: z.string(),
             surname: z.string().optional(),
             phone: z.string(),
-            role: z.string(),
             company_type: z.string().optional(),
             company_name: z.string().optional()
         })

@@ -2,12 +2,14 @@ import "./header.css"
 import {Icon} from '@iconify/react'
 import {useState} from "react";
 import {Link} from "react-router-dom";
+import {useDispatch} from "react-redux"
+import {openAuth} from "../../redux/reducer/uiSlice.tsx"
 
 const navItems: {to: string, icon: string, label: string}[] = [
     {to: "/company", icon: "lsicon:work-order-info-filled", label: "Компанія і франшиза"},
     {to: "/action", icon: "mingcute:sale-line", label: "Акції та бонуси"},
     {to: "/contact", icon: "material-symbols:delivery-truck-speed-outline-rounded", label: "Контакти та доставка"},
-    {to: "/restaurants", icon: "hugeicons:restaurant-01", label: "Наші ресторани"},
+    {to: `/restaurants`, icon: "hugeicons:restaurant-01", label: "Наші ресторани"},
     {to: "/yourRoll", icon: "token:sushi", label: "Створи свій рол"}
 ]
 
@@ -31,6 +33,8 @@ function MenuBar() {
 }
 
 export function RenderHeader(){
+    const dispatch = useDispatch()
+
     return (
         <div className="bar">
             <div className="primaryAppBar">
@@ -57,7 +61,7 @@ export function RenderHeader(){
                         <option value="UA">UA</option>
                     </select>
                 </div>
-                <div className="user">
+                <div className="user" onClick={() => dispatch(openAuth())}>
                     <p>Увійти</p>
                     <Icon icon="tdesign:user" width={22} height={26} color="#333333"></Icon>
                 </div>

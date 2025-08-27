@@ -28,7 +28,7 @@ export const restaurantsShemas = {
         params: z.object({ id: z.number() })
     },
     restaurants: {
-        params: z.object({ city: z.string() })
+        body: z.object({ city_id: z.number() })
     },
     addCity: {
         body: z.object({
