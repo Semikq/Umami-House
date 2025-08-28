@@ -65,9 +65,8 @@
 @media screen and (max-width: 1299px) {
     .saleSlider{
         grid-column: 1 / -1;
-        aspect-ratio: 16/9;
+        aspect-ratio: 20/9;
         margin-bottom: 50px;
-        margin-top: -40px;
     }
 }
 

@@ -9,10 +9,22 @@ import CreateRestaurantPages from "./pages/restaurant/Restaurant";
 import CreateAuthFrom from "./pages/auth/Auth";
 import './App.css';
 import {useSelector} from "react-redux";
+import {useEffect} from "react";
 
 function App() {
     const uiSlice = useSelector((state) => state.ui.showAuth)
-    console.log(uiSlice)
+
+    const time = new Date().getTime() + 5000
+
+    setInterval(() => {
+        if (new Date().getTime() > time){
+            console.log("DASDAS")
+        }
+    }, 1000)
+
+    // setInterval(function () {element.innerHTML += "Hello"}, 1000);
+
+
     return (
       <Router>
         <div className="App">

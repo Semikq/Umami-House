@@ -8,7 +8,7 @@ header{
 .bar{
     position: fixed;
     width: 100%;
-    z-index: 1000;
+    z-index: 800;
 }
 
 .primaryAppBar{
@@ -99,6 +99,8 @@ header{
     align-items: center;
     font-size: 18px;
     gap: 7px;
+    cursor: pointer;
+    user-select: none;
 }
 
 .position:nth-child(1){
@@ -303,7 +305,7 @@ header{
     }
 
     .primaryAppBar h2{
-        font-size: 20px;
+        font-size: 26px;
     }
 
     .primaryAppBar h2 img{

@@ -1,10 +1,13 @@
 import {Icon} from "@iconify/react";
 import React, {useState} from "react";
 import CreateTelLabel from "./CreateTelLabel.tsx";
-import {register} from "../../../api/user.tsx";
+import {useDispatch} from "react-redux";
+import {jwtDecode} from "jwt-decode";
+import {logIn} from "../../../redux/reducer/authSlice.tsx";
+import {useRegisterMutation} from "../../../redux/api.tsx";
 
 export default function FormRegister(){
-    const [role, setRole] = useState(false)
+    const [role, setRole] = useState(true)
     const [name, setName] = useState("")
     const [surname, setSurname] = useState("")
     const [phone, setPhone] = useState("")
@@ -12,18 +15,18 @@ export default function FormRegister(){
     const [password, setPassword] = useState("")
     const [company_type, setCompany_type] = useState("")
     const [company_name, setCompany_name] = useState("")
+    const [registerApi, {isLoading}] = useRegisterMutation()
+    const dispatch = useDispatch()
 
-    const handleRegister = (e) => {
+    const handleRegister = async (e) => {
         e.preventDefault();
         try {
-            const res = register({name, surname, phone, password, email, company_type, company_name})
-            console.log(res)
+            const result = await registerApi({ email, password, name, surname, phone, company_type, company_name }).unwrap();
+            dispatch(logIn({ user: jwtDecode(result), token: result }))
         }catch(err){
             console.log(err)
         }
     }
-
-
     return (
         <form className="form__body" onSubmit={handleRegister}>
             <div className="body__user-selection">
