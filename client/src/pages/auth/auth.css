@@ -1,20 +1,34 @@
 @import url('https://fonts.googleapis.com/css2?family=Delius&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 
+.auth-backdrop {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 800;
+}
+
 .form{
     min-height: 380px;
     height: auto;
-    width: 520px;
+    width: auto;
+    max-width: 420px;
     border-radius: 20px;
     background-color: #B75F6D;
-    padding: 15px;
+    padding: 20px 35px;
     display: flex;
     flex-direction: column;
     gap: 15px;
     box-sizing: border-box;
+    user-select: none;
+    margin: 0 15px;
 }
 
 .form__header{
-    height: 88px;
+    height: auto;
     width: 100%;
     display: flex;
     justify-content: space-between;
@@ -23,7 +37,7 @@
 }
 
 .header__title{
-    font-size: 32px;
+    font-size: 30px;
     font-weight: 400;
     font-family: Roboto, sans-serif;
     margin: 0;
@@ -32,8 +46,8 @@
 
 .header__exit{
     display: flex;
-    width: 290px;
-    justify-content: space-between;
+    width: 100%;
+    justify-content: space-around;
 }
 
 .header__exit h2{
@@ -68,7 +82,7 @@
 }
 
 .form__body label{
-    width: 330px;
+    width: 100%;
     height: auto;
     display: flex;
     flex-direction: column;
@@ -106,7 +120,7 @@
 
 .form__body button {
     height: 40px;
-    width: 330px;
+    width: 100%;
     font-size: 22px;
     color: #333333;
     background-color: #F1C232;
@@ -135,11 +149,12 @@
 
 .form__login-selection button{
     height: 40px;
-    width: 155px;
+    flex: 1 1 155px;
     border-radius: 10px;
     border: none;
     font-family: Roboto, sans-serif;
     font-size: 20px;
+
     display: flex;
     justify-content: center;
     align-items: center;
@@ -153,7 +168,8 @@
 .body__user-selection{
     display: flex;
     justify-content: space-between;
-    width: 330px;
+    /*width: 330px;*/
+    width: 100%;
 }
 
 .body__user{
@@ -190,11 +206,16 @@
 
 .body__name-surname{
     display: flex;
-    width: 330px;
+    justify-content: space-between;
+    width: 100%;
     gap: 20px;
     color: #333333;
 }
 
-.body__name-surname label{
-    width: 155px;
+.body__name-surname label {
+    max-width: 155px;
+}
+
+.body__name-surname input {
+    width: 100%;
 }
