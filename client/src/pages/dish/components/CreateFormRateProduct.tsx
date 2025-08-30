@@ -12,7 +12,7 @@ export default function CreateFormRateProduct(){
             <div className="comment__info">
                 <div className="comment__info-rating">
                     {stars.map((_, i) => (
-                        <Icon icon={i + 1 <= (index || rating) ? "bxs:star" : "bx:star"} onClick={() => setRating(i + 1)} onMouseEnter={() => setIndex(i + 1)} onMouseLeave={() => setIndex(0)} width={30} className="rating" color="#F1C232"/>
+                        <Icon icon={i + 1 <= (index || rating) ? "bxs:star" : "bx:star"} key={i} onClick={() => setRating(i + 1)} onMouseEnter={() => setIndex(i + 1)} onMouseLeave={() => setIndex(0)} width={30} className="rating" color="#F1C232"/>
                     ))}
                 </div>
                 <div className="comment__addition-comment">

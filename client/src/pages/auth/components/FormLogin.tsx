@@ -1,13 +1,13 @@
 import React, {useState} from "react";
-import {useLoginMutation} from "../../../redux/api.tsx";
-import {logIn} from "../../../redux/reducer/authSlice.tsx";
+import {useLoginMutation} from "../../../redux/api/usersApi.ts";
+import {logIn} from "../../../redux/slices/authSlice.ts";
 import CreateTelLabel from "./CreateTelLabel.tsx"
 import {useDispatch} from "react-redux";
 import {jwtDecode} from "jwt-decode";
 
 export default function FormLogin() {
-    const [userInput, setUserInput] = useState()
-    const [password, setPassword] = useState()
+    const [userInput, setUserInput] = useState("")
+    const [password, setPassword] = useState("")
     const [loginApi, {isLoading}] = useLoginMutation()
     const dispatch = useDispatch()
 
@@ -21,7 +21,6 @@ export default function FormLogin() {
             console.log('Помилка логіну', err);
         }
     };
-
 
     return(
         <form className="form__body" onSubmit={handleLogin}>

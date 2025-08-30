@@ -10,8 +10,8 @@ export default function CreateAdditionalDetails(){
 
     return (
         <div className="contact__additional-details">
-            {additionalDetails.map((detail) =>
-                <div className="additional-details">
+            {additionalDetails.map((detail, i) =>
+                <div className="additional-details" key={i}>
                     <Icon icon={detail.icon} color="#333333"/>
                     <p>{detail.text}</p>
                 </div>

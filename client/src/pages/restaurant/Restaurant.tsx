@@ -1,6 +1,5 @@
 import {GoogleMap, Marker, InfoBox, useLoadScript} from "@react-google-maps/api";
 import {useState, useEffect} from "react";
-import {getCities, getRestaurantsByCity} from "../../api/restaurants.tsx";
 import {useParams} from "react-router-dom";
 
 function RenderRestaurantPage({cities, restaurants}) {

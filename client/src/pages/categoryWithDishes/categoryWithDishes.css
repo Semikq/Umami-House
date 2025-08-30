@@ -91,10 +91,6 @@ section{
 }
 
 @media screen and (max-width: 1600px) {
-    .search {
-        margin-top: -40px;
-    }
-
     .search, .menuCategories, section {
         grid-column: 1 / -1;
     }

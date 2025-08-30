@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {useLoadScript} from "@react-google-maps/api";
-import {getAllRestaurants} from "../../api/restaurants.tsx";
+import {useRestaurantsQuery} from "../../redux/api/restaurantsApi.ts";
+import {useCitiesQuery} from "../../redux/api/restaurantsApi.ts";
 import CreateCompanyDetails from "./components/CreateCompanyDetails.tsx";
 import CreateAdditionalDetails from "./components/CreateAdditionalDetails.tsx";
 import CreateAdditionalInformationCards from "./components/CreateAdditionalInformationCards.tsx";
@@ -24,11 +25,10 @@ function RenderContactPage({restaurants}){
 }
 
 export default function CreateContactPage() {
-    const [restaurants, setInfoRestaurants] = useState([]);
     const { isLoaded } = useLoadScript({googleMapsApiKey: "AIzaSyCTPdYTVjD2IXVmzsHOoWrWE3MCb6cJCZQ"});
+    const { data: restaurants, isLoading: restaurantsLoading } = useRestaurantsQuery()
 
-    useEffect(() => {getAllRestaurants().then(result => setInfoRestaurants(result.data))}, []);
-    if (!restaurants[0] || !isLoaded) return <p>Loading...</p>;
+    if (restaurantsLoading || !isLoaded) return <p>Loading...</p>;
 
     return(
         <RenderContactPage restaurants={restaurants}/>

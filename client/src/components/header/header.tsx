@@ -3,7 +3,7 @@ import {Icon} from '@iconify/react'
 import {useState} from "react";
 import {Link} from "react-router-dom";
 import {useDispatch} from "react-redux"
-import {openAuth} from "../../redux/reducer/uiSlice.tsx"
+import {changeShow} from "../../redux/slices/uiSlice.ts"
 
 const navItems: {to: string, icon: string, label: string}[] = [
     {to: "/company", icon: "lsicon:work-order-info-filled", label: "Компанія і франшиза"},
@@ -61,7 +61,7 @@ export function RenderHeader(){
                         <option value="UA">UA</option>
                     </select>
                 </div>
-                <div className="user" onClick={() => dispatch(openAuth())}>
+                <div className="user" onClick={() => dispatch(changeShow())}>
                     <p>Увійти</p>
                     <Icon icon="tdesign:user" width={22} height={26} color="#333333"></Icon>
                 </div>

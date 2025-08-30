@@ -1,5 +1,4 @@
-import {useState, useEffect} from "react"
-import {fetchDish, fetchCategoryWithDishes} from "../../api/dish.tsx";
+import {useDishQuery, useCategoryWithDishesQuery} from "../../redux/api/dishesApi.ts";
 import CreateBlockPhotos from "./components/CreateBlockPhotos.tsx"
 import ChangeQuantity from "./components/ChangeQuantity.tsx";
 import CreateCardsWithInfo from "./components/CreateCardsWithInfo.tsx";
@@ -66,8 +65,8 @@ function RenderDishPage({dish, additionalDish}){
             </div>
             <div className="product__comments">
                 <CreateFormRateProduct/>
-                {dish.dish_comments.map((infoComment) =>
-                    <CreateUserComment infoComment={infoComment}/>
+                {dish.dish_comments.map((infoComment, i) =>
+                    <CreateUserComment key={i} infoComment={infoComment}/>
                 )}
             </div>
         </main>
@@ -75,14 +74,11 @@ function RenderDishPage({dish, additionalDish}){
 }
 
 export default function CreateDish() {
-    const [dish, setDish] = useState()
-    const [additionalDish, setAdditionalDish] = useState({})
     const { id } = useParams()
+    const {data: dish, isLoading: dishLoading} = useDishQuery(id)
+    const {data: additionalDish, isLoading: additionalDishLoading} = useCategoryWithDishesQuery("1")
 
-    useEffect(() => {fetchDish(id).then(result => setDish(result.data))}, [id])
-    useEffect(() => {fetchCategoryWithDishes(1).then(result => setAdditionalDish(result.data))}, [id]);
-
-    if (!dish || !additionalDish.title) return <p>Завантаження...</p>
+    if (dishLoading || additionalDishLoading) return <p>Завантаження...</p>
 
     return (
         <RenderDishPage dish={dish} additionalDish={additionalDish} />

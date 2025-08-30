@@ -17,11 +17,9 @@
     height: 100%;
     position: absolute;
     object-fit: cover;
-    border-top-left-radius: 30px;
-    border-top-right-radius: 60px;
-    border-bottom-left-radius: 60px;
-    border-bottom-right-radius: 30px;
+    border-radius: 30px;
     width: 100%;
+    margin-top: 10px;
 }
 
 .saleSlider div{
@@ -62,19 +60,22 @@
     width: 100%;
 }
 
-@media screen and (max-width: 1299px) {
+@media screen and (max-width: 1400px) {
     .saleSlider{
         grid-column: 1 / -1;
         aspect-ratio: 20/9;
         margin-bottom: 50px;
     }
+
+    .saleSlider .afisha{
+        margin-top: 0;
+    }
 }
 
-@media screen and (max-width: 499px) {
+@media screen and (max-width: 500px) {
     .saleSlider{
         display: grid;
         margin-bottom: 20px;
-        margin-top: -60px;
     }
 
     .saleSlider div .icon{
@@ -99,7 +100,7 @@
     justify-content: space-between;
     padding: 0 40px;
     box-sizing: border-box;
-    margin-bottom: 90px;
+    margin-bottom: 80px;
 }
 
 .fieldInformation div{
@@ -142,7 +143,7 @@
     max-width: 257px;
 }
 
-@media screen and (max-width: 1499px) {
+@media screen and (max-width: 1500px) {
     .fieldInformation{
         align-items: center;
     }
@@ -172,7 +173,7 @@
     }
 }
 
-@media screen and (max-width: 1299px) {
+@media screen and (max-width: 1300px) {
     .fieldInformation div:nth-child(2) > .icon,
     .fieldInformation div:nth-child(6) > .icon{
         background-color: #F1C232;
@@ -187,7 +188,7 @@
     }
 }
 
-@media screen and (max-width: 992px){
+@media screen and (max-width: 1000px){
     .fieldInformation{
         padding: 0 10px;
         justify-content: space-around;
@@ -225,7 +226,7 @@
     }
 }
 
-@media screen and (max-width: 499px) {
+@media screen and (max-width: 500px) {
     .fieldInformation{
         margin-bottom: 20px;
     }
@@ -336,13 +337,13 @@
     grid-row: 3 / 4;
 } 
 
-@media screen and (max-width: 1499px) {
+@media screen and (max-width: 1500px) {
     .menu {
         grid-column: 1 / -1;
     }
 }
 
-@media screen and (max-width: 992px){
+@media screen and (max-width: 1000px){
     .menu-item:nth-child(1) {
         grid-column: 1 / 3;
         grid-row: 1 / 2;
@@ -401,7 +402,7 @@
     }
 }
 
-@media screen and (max-width: 599px) {
+@media screen and (max-width: 600px) {
     .menu {
         grid-template-columns: repeat(4, 1fr);
         grid-template-rows: repeat(7, 1fr);
@@ -458,14 +459,13 @@
     }
 }
 
-
 .restaurantInfo {
-    margin-top: 80px;
+    margin-top: 60px;
     grid-column: 3 / 11;
     display: flex;
     flex-direction: column;
-    gap: 80px;
-    margin-bottom: 80px;
+    gap: 60px;
+    margin-bottom: 60px;
     width: 100%;
 }
 
@@ -483,10 +483,7 @@
     max-width: 100%; 
     object-fit: cover;
     object-position: center;
-    border-top-left-radius: 30px;
-    border-top-right-radius: 60px;
-    border-bottom-left-radius: 60px;
-    border-bottom-right-radius: 30px;
+    border-radius: 30px;
 }
 
 .restaurantInfo > div img:nth-child(1){
@@ -532,21 +529,19 @@
     overflow-y: auto;
 }
 
-@media screen and (max-width: 1499px) {
+@media screen and (max-width: 1500px){
     .restaurantInfo {
         grid-column: 1 / -1;
     }
 }
 
-@media screen and (max-width: 576px){
+@media screen and (max-width: 600px){
+
     .restaurantInfo > div div {
         position: absolute;
         width: 100%;
         background-color: rgba(0, 0, 0, 0.4);
-        border-top-left-radius: 30px;
-        border-top-right-radius: 60px;
-        border-bottom-left-radius: 60px;
-        border-bottom-right-radius: 30px;
+        border-radius: 30px 60px 60px 30px;
     }
 
     .restaurantInfo > div div {

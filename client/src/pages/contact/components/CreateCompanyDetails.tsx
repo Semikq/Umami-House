@@ -11,8 +11,8 @@ export default function CreateCompanyDetails(){
         <div className="contact__company-details">
             <h2>Доставка</h2>
             <div className="contact__company-section">
-                {companyDetails.map((detail) =>
-                    <div className="detail">
+                {companyDetails.map((detail, i) =>
+                    <div className="detail" key={i}>
                         <Icon icon={detail.icon} width={35} color="#333333"/>
                         <p>{detail.text}</p>
                     </div>

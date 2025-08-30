@@ -7,8 +7,8 @@ export default function MapRestaurants({restaurants}) {
     return (
         <div className="map-wrapper">
             <GoogleMap mapContainerStyle={{width: "100%", height: "100%", borderRadius: "30px 60px 30px 60px"}} center={{lat: 49.588, lng: 34.554}} zoom={12}>
-                {restaurants.map((item, index) =>
-                    <Marker key={index} position={{ lat: Number(item.latitude), lng: Number(item.longitude) }} onClick={() => setSelected(item)}/>
+                {restaurants.map((item, i) =>
+                    <Marker key={i} position={{ lat: Number(item.latitude), lng: Number(item.longitude) }} onClick={() => setSelected(item)}/>
                 )}
 
                 {selected && (
