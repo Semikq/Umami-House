@@ -9,8 +9,8 @@ export default function CreateAdditionalInformationCards(){
 
     return (
         <div className="contact__section-cards">
-            {additionalInformation.map((info, index)  =>
-                <div className="section-cards__item" key={index}>
+            {additionalInformation.map((info, i)  =>
+                <div className="section-cards__item" key={i}>
                     <div className="section-cards__header">
                         <h2 className="section-cards__title">{info.title}</h2>
                         <Icon icon={info.icon} width={35} color="#333333"></Icon>

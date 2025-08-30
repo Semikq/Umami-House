@@ -25,6 +25,16 @@
     box-sizing: border-box;
     user-select: none;
     margin: 0 15px;
+    position: relative;
+}
+
+.form .form__icon-close{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 22px;
+    color: #333333;
+    cursor: pointer;
 }
 
 .form__header{

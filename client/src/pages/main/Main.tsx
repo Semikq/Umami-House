@@ -1,132 +1,18 @@
-import {useEffect, useState} from "react"
-import {fetchAllSale} from "../../api/dish"
-import {fetchAllCategories} from "../../api/dish";
-import {fetchAllPartners} from "../../api/dish"
-import {Link} from "react-router-dom"
+import {useSaleQuery} from "../../redux/api/saleApi.ts";
+import {useCategoriesQuery} from "../../redux/api/dishesApi.ts";
+import {usePartnersQuery} from "../../redux/api/partnersApi"
+import CreateSlider from "./components/CreateSlider.tsx";
+import CreateMenu from "./components/CreateMenu.tsx";
+import CreateOurPartners from "./components/CreateOurPartners.tsx";
+import CreateFieldInformation from "./components/CreateFieldInformation.tsx";
 import "./main.css"
-import {Icon} from "@iconify/react"
 
-function CreateSlider () {
-    const [sale, setSale] = useState([])
-    const [index, setIndex] = useState(0)
-    const [show, setShow] = useState(true)
-
-    window.addEventListener("resize", () => {
-        if(window.innerWidth < 499){
-            setShow(false)
-        }else {
-            setShow(true)
-        }
-    })
-
-    useEffect(() => {fetchAllSale().then(result => setSale(result.data))}, [])
-
-    const nextSlide = () => setIndex((prevIndex) => (prevIndex + 1) % sale.length)
-    const prevSlide = () => setIndex((prevIndex) => (prevIndex - 1 + sale.length) % sale.length)
-
-    return (
-        <div className="saleSlider">
-            <div onClick={() => prevSlide()}>
-                <Icon icon="solar:round-arrow-left-broken" className="icon" width={50} height={50} color="#F1C232"></Icon>
-            </div>
-            <div onClick={() => nextSlide()}>
-                <Icon icon="solar:round-arrow-right-broken" className="icon" width={50} height={50} color="#F1C232"></Icon>
-            </div>
-            {sale.length > 0 && (
-                <>
-                    {show ? <img className="afisha" src={`${sale[((index - 1) + sale.length) % sale.length].image_url}`}/> : null}
-                    <img className="afisha" src={`${sale[index].image_url}`}/>
-                    {show ? <img className="afisha" src={`${sale[(index + 1) % sale.length].image_url}`}/> : null}
-                </>
-            )}
-        </div>
-    )
-}
-
-const newItem: {title: string, icon: string}[] = [
-    {title: "Розумні ціни для гостей за найкращу якість", icon: "material-symbols:price-check-rounded"},
-    {title: "Справжня азійська кухня - смачно, безпечно, автентично", icon: "hugeicons:noodles"},
-    {title: "Оптові пропозиції для компаній", icon: "icon-park-outline:delivery"},
-    {title: "Працюємо щодня з 10:00 до 21:00", icon: "fluent-emoji-high-contrast:two-oclock"},
-    {title: "Швидка доставка та сезонні оновлення меню", icon: "material-symbols:delivery-truck-speed-outline-rounded"},
-    {title: "Сертифіковане виробництво та високі стандарти якості", icon: "icon-park-outline:certificate"},
-]
-
-function NewItems ({title, icon}: {title: string; icon: string}) {
-    return <div title={title}>
-        <Icon className="icon" icon={icon} width={55} height={50} color="#333333"></Icon>
-        <p>{title}</p>
-    </div>
-}
-
-function CreateMenu() {
-    const [categories, setCategories] = useState([])
-
-    useEffect(() => {fetchAllCategories().then(result => setCategories(result.data))}, [])
-
-    return (
-        <div className="menu" id="menu">
-            {categories.slice(0, 10).map((category) => {
-                return (
-                    <Link to={`/category/${category.id}`} key={category.id} style={{ backgroundImage: `url(${category.image_url})` }} className="menu-item">
-                        <div className="shadow"></div>
-                        <p>{category.title}</p>
-                    </Link>
-                )
-            })}
-        </div>
-    )
-}
-
-export function CreateOurPartners() {
-    const [partners, setPartners] = useState([]);
-    const [startIndex, setStartIndex] = useState(0);
-    const visibleCount = 5;
-
-    useEffect(() => {fetchAllPartners().then(result => setPartners(result.data))}, []);
-
-    const nextSlide = () => {
-        setStartIndex((prevIndex) => (prevIndex + 1) % partners.length);
-    };
-
-    const prevSlide = () => {
-        setStartIndex((prevIndex) => (prevIndex - 1 + partners.length) % partners.length);
-    };
-
-    const getVisiblePartners = () => {
-        const extended = [...partners, ...partners];
-        return extended.slice(startIndex, startIndex + visibleCount);
-    };
-
-    return (
-        <div className="partners">
-            <div className="slider-header">
-                <Icon className="icon" onClick={prevSlide} icon="solar:round-arrow-left-linear" color="#333333" />
-                <h1>Наші партнери</h1>
-                <Icon className="icon" onClick={nextSlide} icon="solar:round-arrow-right-linear" color="#333333" />
-            </div>
-
-            <div className="slider-track">
-                {getVisiblePartners().map((partner, index) => (
-                    <img key={index} src={`${partner.logo_img}`} alt={partner.name} />
-                ))}
-            </div>
-        </div>
-    );
-}
-
-export default function CreateMainPage() {
+function RenderMainPage({sale, categories, partners}) {
     return (
         <main>
-            <CreateSlider/>
-            <div className="fieldInformation">
-                {newItem.slice(0, 3).map((item, i) => <NewItems key={i} {...item}/>)}
-                <a href="#menu" className="link">
-                    <Icon className="icon" icon="radix-icons:double-arrow-down" width={60} height={60} color="#333333" />
-                </a>
-                {newItem.slice(3, 6).map((item, i) => <NewItems key={i} {...item}/>)}
-            </div>
-            <CreateMenu/>
+            <CreateSlider sale={sale}/>
+            <CreateFieldInformation/>
+            <CreateMenu categories={categories}/>
             <div className="restaurantInfo">
                 <div>
                     <img src="/uploads/photoCompany/restaurant.jpg" alt="restaurant"/>
@@ -143,7 +29,19 @@ export default function CreateMainPage() {
                     <img src="/uploads/photoCompany/kitchen.jpg" alt="kitchen" />
                 </div>
             </div>
-            <CreateOurPartners/>
+            <CreateOurPartners partners={partners}/>
         </main>
+    )
+}
+
+export default function CreateMainPage(){
+    const {data: categories, isLoading: categoriesLoading} = useCategoriesQuery()
+    const {data: sale, isLoading: saleLoading} = useSaleQuery()
+    const {data: partners, isLoading: partnersLoading} = usePartnersQuery()
+
+    if (categoriesLoading || partnersLoading || saleLoading) return <p>Loading...</p>
+
+    return (
+        <RenderMainPage sale={sale} categories={categories} partners={partners}/>
     )
 }

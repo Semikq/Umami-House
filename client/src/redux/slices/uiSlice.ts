@@ -12,11 +12,11 @@ const uiSlice = createSlice({
     name: "ui",
     initialState,
     reducers: {
-        openAuth: (state) => {
+        changeShow: (state) => {
             state.showAuth = !state.showAuth
         }
     }
 })
 
-export const {openAuth} = uiSlice.actions
+export const {changeShow} = uiSlice.actions
 export default uiSlice.reducer

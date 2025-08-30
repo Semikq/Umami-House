@@ -3,8 +3,8 @@ import React, {useState} from "react";
 import CreateTelLabel from "./CreateTelLabel.tsx";
 import {useDispatch} from "react-redux";
 import {jwtDecode} from "jwt-decode";
-import {logIn} from "../../../redux/reducer/authSlice.tsx";
-import {useRegisterMutation} from "../../../redux/api.tsx";
+import {logIn} from "../../../redux/slices/authSlice.ts";
+import {useRegisterMutation} from "../../../redux/api/usersApi.ts";
 
 export default function FormRegister(){
     const [role, setRole] = useState(true)
