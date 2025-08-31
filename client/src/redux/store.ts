@@ -7,6 +7,7 @@ import {restaurantsApi} from "./api/restaurantsApi.ts";
 import {partnersApi} from "./api/partnersApi.ts";
 import {dishesApi} from "./api/dishesApi.ts";
 import {saleApi} from "./api/saleApi.ts";
+import userCity from "./slices/userCity.ts";
 import { FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from 'redux-persist'
 
 export const store = configureStore({
@@ -18,7 +19,8 @@ export const store = configureStore({
         [restaurantsApi.reducerPath]: restaurantsApi.reducer,
         [partnersApi.reducerPath]: partnersApi.reducer,
         [dishesApi.reducerPath]: dishesApi.reducer,
-        [saleApi.reducerPath]: saleApi.reducer
+        [saleApi.reducerPath]: saleApi.reducer,
+        userCity
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({
@@ -28,7 +30,7 @@ export const store = configureStore({
         }).concat(usersApi.middleware).concat(restaurantsApi.middleware).concat(partnersApi.middleware).concat(dishesApi.middleware).concat(saleApi.middleware)
 });
 
-store.subscribe(() => {
-    const state = store.getState();
-    console.log(state);
-});
+// store.subscribe(() => {
+//     const state = store.getState();
+//     console.log(state);
+// });

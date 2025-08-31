@@ -1,5 +1,5 @@
 import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react";
-import {Restaurants, Cities} from "../types/restaurants.ts";
+import {Restaurants, Cities, RestaurantsByCity} from "../types/restaurants.ts";
 
 export const restaurantsApi = createApi({
     reducerPath: "restaurantsApi",
@@ -7,7 +7,8 @@ export const restaurantsApi = createApi({
     endpoints: (builder) => ({
         restaurants: builder.query<Restaurants[], void>({ query: () => "" }),
         cities: builder.query<Cities[], void>({ query: () => "/cities" }),
+        restaurantsByCity: builder.query<RestaurantsByCity[], number>({ query: (id) => `/city/${id}` })
     })
 })
 
-export const { useRestaurantsQuery, useCitiesQuery } = restaurantsApi
+export const { useRestaurantsQuery, useCitiesQuery, useRestaurantsByCityQuery } = restaurantsApi

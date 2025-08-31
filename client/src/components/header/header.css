@@ -91,7 +91,7 @@ header{
 .primaryAppBar .user{
     height: 38px;
     width: 115px;
-    border-radius: 27px;
+    border-radius: 20px;
     border: solid 2px black;
     background-color: #F1C232;
     display: flex;
@@ -101,6 +101,14 @@ header{
     gap: 7px;
     cursor: pointer;
     user-select: none;
+}
+
+.primaryAppBar .user p{
+    font-size: 18px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100px;
 }
 
 .position:nth-child(1){

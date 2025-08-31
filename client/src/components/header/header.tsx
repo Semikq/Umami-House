@@ -1,17 +1,14 @@
 import "./header.css"
 import {Icon} from '@iconify/react'
 import {useState} from "react";
-import {Link} from "react-router-dom";
-import {useDispatch} from "react-redux"
+import {Link, useNavigate} from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux"
 import {changeShow} from "../../redux/slices/uiSlice.ts"
+// import {userCity} from "../../redux/slices/userCity.ts";
 
-const navItems: {to: string, icon: string, label: string}[] = [
-    {to: "/company", icon: "lsicon:work-order-info-filled", label: "Компанія і франшиза"},
-    {to: "/action", icon: "mingcute:sale-line", label: "Акції та бонуси"},
-    {to: "/contact", icon: "material-symbols:delivery-truck-speed-outline-rounded", label: "Контакти та доставка"},
-    {to: `/restaurants`, icon: "hugeicons:restaurant-01", label: "Наші ресторани"},
-    {to: "/yourRoll", icon: "token:sushi", label: "Створи свій рол"}
-]
+// const a = useSelector((state) => state)
+// //
+// // console.log(a)
 
 function NavItem({to, icon, label}: {to: string, icon: string, label: string}) {
     return <Link to={to} className="position">
@@ -20,8 +17,9 @@ function NavItem({to, icon, label}: {to: string, icon: string, label: string}) {
     </Link>
 }
 
-function MenuBar() {
+function MenuBar({navItems}) {
     const [isHidden, setIsHidden] = useState(false)
+
     return (
         <div className={`menuBar ${isHidden ? "hidden" : ""}`}>
             <div>
@@ -34,6 +32,17 @@ function MenuBar() {
 
 export function RenderHeader(){
     const dispatch = useDispatch()
+    const user = useSelector((state) => state.auth.user.user)
+    const userCity = useSelector((state) => state.userCity)
+    const navigator = useNavigate()
+
+    const navItems: { to: string, icon: string, label: string}[] = [
+        {to: "/company", icon: "lsicon:work-order-info-filled", label: "Компанія і франшиза"},
+        {to: "/action", icon: "mingcute:sale-line", label: "Акції та бонуси"},
+        {to: "/contact", icon: "material-symbols:delivery-truck-speed-outline-rounded", label: "Контакти та доставка"},
+        {to: `/restaurants/city/${userCity.id}`, icon: "hugeicons:restaurant-01", label: "Наші ресторани"},
+        {to: "/yourRoll", icon: "token:sushi", label: "Створи свій рол"}
+    ]
 
     return (
         <div className="bar">
@@ -48,9 +57,7 @@ export function RenderHeader(){
                 {navItems.slice(0, 3).map((item) => <NavItem key={item.label} {...item}/>)}
                 <Link to="/">
                     <h2>
-                        Umami
-                        <img src="/soup.png" alt="Soup logo" />
-                        House
+                        Umami <img src="/soup.png" alt="Soup logo"/> House
                     </h2>
                 </Link>
                 {navItems.slice(3, 5).map((item) => <NavItem key={item.label} {...item}/>)}
@@ -61,12 +68,16 @@ export function RenderHeader(){
                         <option value="UA">UA</option>
                     </select>
                 </div>
-                <div className="user" onClick={() => dispatch(changeShow())}>
-                    <p>Увійти</p>
-                    <Icon icon="tdesign:user" width={22} height={26} color="#333333"></Icon>
+                <div className="user" onClick={() => {user ? navigator("/user") : dispatch(changeShow())}} >
+                    {user ? <p>{user.name}</p> :
+                        <>
+                            <p>Увійти</p>
+                            <Icon icon="tdesign:user" width={22} height={26} color="#333333"></Icon>
+                        </>
+                    }
                 </div>
             </div>
-            <MenuBar/>
+            <MenuBar navItems={navItems}/>
         </div>
     )
 }
