@@ -16,3 +16,16 @@ export interface Cities {
     id: number
     name: string
 }
+
+export interface RestaurantsByCity {
+    active: boolean
+    address: string
+    city_id: number
+    created_at: string
+    description: string
+    id: number
+    latitude: string
+    longitude: string
+    name: string
+    phone: string
+}

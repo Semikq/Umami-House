@@ -1,0 +1,88 @@
+@import url('https://fonts.googleapis.com/css2?family=Delius&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+.restaurant__header{
+    grid-column: 2 / 12;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    font-family: Roboto, sans-serif;
+    user-select: none;
+    margin-bottom: 30px;
+}
+
+.restaurant__header--title{
+    font-size: 30px;
+    font-weight: 500;
+    color: #333333;
+    padding: 0 0 2px 5px;
+    margin: 0;
+    border-bottom: solid 2px #333333;
+}
+
+.restaurant__header--title span{
+    color: #F1C232;
+}
+
+.restaurant__header--cities{
+    grid-column: 2 / 12;
+    display: flex;
+    gap: 20px;
+}
+
+.header__cities--bloc{
+    background: #B75F6D;
+    color: white;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    padding: 0 20px;
+    cursor: pointer;
+    transition: all ease-in-out 0.3s;
+}
+
+.header__cities--bloc:hover{
+    background-color: #F1C232;
+    color: #333333;
+}
+
+.header__cities--bloc.active{
+    background-color: #F1C232;
+    color: #333333;
+}
+
+.header__cities--bloc h2{
+    font-weight: 400;
+    font-size: 20px;
+    margin: 0;
+}
+
+
+
+
+.restaurant__body{
+    grid-column: 2 / 12;
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    gap: 20px;
+}
+
+.restaurant__body--card{
+    grid-column: span 5;
+    height: 400px;
+    background-color: #DF1322;
+    border-radius: 30px 60px;
+    display: flex;
+}
+
+.card__restaurant--information{
+    width: 50%;
+    background-color: #62DAFB;
+}
+
+.card__restaurant--image{
+    width: 50%;
+    background-color: green;
+}
