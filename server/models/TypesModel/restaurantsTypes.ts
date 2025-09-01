@@ -10,7 +10,9 @@ interface RestaurantType {
     description: string,
     active: boolean,
     latitude: number,
-    longitude: number
+    longitude: number,
+    time_work: string
+    restaurant_image: string
 }
 
 export interface AddRestaurant extends RestaurantType {}

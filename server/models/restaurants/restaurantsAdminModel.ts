@@ -2,19 +2,19 @@ import { Id, AddRestaurant, UpdateRestaurant, addCity } from "../TypesModel/rest
 import { PrismaClient, Prisma } from "@prisma/client"
 const prisma = new PrismaClient()
 
-export async function addRestaurant({ city_id, name, address, phone, description, active, latitude, longitude }: AddRestaurant): Promise<Prisma.restaurantsGetPayload<{}>> {
+export async function addRestaurant({ city_id, name, address, phone, description, active, latitude, longitude, time_work, restaurant_image }: AddRestaurant): Promise<Prisma.restaurantsGetPayload<{}>> {
     try {
-        return await prisma.restaurants.create({ data: { city_id, name, address, phone, description, active, latitude, longitude }})
+        return await prisma.restaurants.create({ data: { city_id, name, address, phone, description, active, latitude, longitude, time_work, restaurant_image }})
     } catch (error) {
         throw new Error((error as Error).message)
     }
 }
 
-export async function updateRestaurant({ id }: Id, { city_id, name, address, phone, description, active, latitude, longitude }: UpdateRestaurant): Promise<Prisma.restaurantsGetPayload<{}>> {
+export async function updateRestaurant({ id }: Id, { city_id, name, address, phone, description, active, latitude, longitude, time_work, restaurant_image }: UpdateRestaurant): Promise<Prisma.restaurantsGetPayload<{}>> {
     try {
         return await prisma.restaurants.update({
             where: { id },
-            data: { city_id, name, address, phone, description, active, latitude, longitude }
+            data: { city_id, name, address, phone, description, active, latitude, longitude, time_work, restaurant_image }
         })
     } catch (error) {
         throw new Error((error as Error).message)
