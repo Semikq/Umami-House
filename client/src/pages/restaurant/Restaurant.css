@@ -67,22 +67,77 @@
     display: grid;
     grid-template-columns: repeat(10, 1fr);
     gap: 20px;
+    font-family: Roboto, sans-serif;
 }
 
 .restaurant__body--card{
     grid-column: span 5;
-    height: 400px;
-    background-color: #DF1322;
+    height: 380px;
+    background-color: #F1C232;
     border-radius: 30px 60px;
+    overflow: hidden;
     display: flex;
 }
 
 .card__restaurant--information{
     width: 50%;
-    background-color: #62DAFB;
+    padding: 20px 30px;
+    /*background-color: #62DAFB;*/
+    /*display: flex;*/
+    /*align-items: center;*/
+    /*flex-direction: column;*/
+}
+
+.restaurant__information--breadcrumbs{
+    /*background-color: #62DAFB;*/
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.information__breadcrumbs--address{
+    font-size: 22px;
+    font-weight: 500;
+    color: #333333;
+    margin: 0;
+}
+
+.information__breadcrumbs--timeWork{
+    font-weight: 500;
+    color: #B75F6D;
+    margin: 0;
+}
+
+.information__breadcrumbs--tel{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+}
+
+.information__breadcrumbs--tel svg{
+    font-size: 30px;
+    background-color: #B75F6D;
+    border-radius: 100%;
+    padding: 3px;
+    box-sizing: border-box;
+    color: white;
+}
+
+.information__breadcrumbs--tel span{
+    font-size: 16px;
+    padding-bottom: 2px;
+    color: #333333;
+    font-weight: 500;
+}
+
+.restaurant___information--description{
+    text-align: center;
+    font-size: 16px;
 }
 
 .card__restaurant--image{
     width: 50%;
     background-color: green;
+    object-fit: cover;
 }

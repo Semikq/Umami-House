@@ -106,17 +106,19 @@ model partners {
 }
 
 model restaurants {
-  id          Int      @id @default(autoincrement())
-  city_id     Int
-  name        String   @db.VarChar(128)
-  description String   @db.VarChar(255)
-  address     String   @db.VarChar(255)
-  phone       String   @db.VarChar(64)
-  latitude    Decimal  @db.Decimal(10, 8)
-  longitude   Decimal  @db.Decimal(10, 8)
-  active      Boolean  @default(false)
-  created_at  DateTime @default(now()) @db.Timestamptz(6)
-  cities      cities   @relation(fields: [city_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "restaurant_city")
+  id               Int      @id @default(autoincrement())
+  city_id          Int
+  name             String   @db.VarChar(128)
+  description      String   @db.VarChar(255)
+  address          String   @db.VarChar(255)
+  phone            String   @db.VarChar(64)
+  latitude         Decimal  @db.Decimal(10, 8)
+  longitude        Decimal  @db.Decimal(10, 8)
+  active           Boolean  @default(false)
+  created_at       DateTime @default(now()) @db.Timestamptz(6)
+  time_work        String
+  restaurant_image String
+  cities           cities   @relation(fields: [city_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "restaurant_city")
 }
 
 model sale {

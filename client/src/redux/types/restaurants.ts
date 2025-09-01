@@ -9,6 +9,8 @@ export interface Restaurants {
     longitude: string
     name: string
     phone: string
+    time_work: string
+    restaurant_image: string
 }
 
 export interface Cities {
@@ -17,15 +19,4 @@ export interface Cities {
     name: string
 }
 
-export interface RestaurantsByCity {
-    active: boolean
-    address: string
-    city_id: number
-    created_at: string
-    description: string
-    id: number
-    latitude: string
-    longitude: string
-    name: string
-    phone: string
-}
+export interface RestaurantsByCity extends Restaurants {}
