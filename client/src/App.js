@@ -12,7 +12,7 @@ import {useSelector} from "react-redux";
 
 function App() {
     const uiSlice = useSelector((state) => state.ui.showAuth)
-
+    localStorage.removeItem("token")
     return (
       <Router>
         <div className="App">
