@@ -13,7 +13,7 @@ export const userCity = createSlice({
     initialState,
     reducers: {
         changeCity: (state, action) => {
-            state.id = action.payload.id
+            state.id = action.payload
         }
     }
 })

@@ -68,6 +68,7 @@
     grid-template-columns: repeat(10, 1fr);
     gap: 20px;
     font-family: Roboto, sans-serif;
+    margin-bottom: 30px;
 }
 
 .restaurant__body--card{
@@ -82,16 +83,22 @@
 .card__restaurant--information{
     width: 50%;
     padding: 20px 30px;
+    /*background-color: #DF1322;*/
     /*background-color: #62DAFB;*/
-    /*display: flex;*/
-    /*align-items: center;*/
-    /*flex-direction: column;*/
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .restaurant__information--breadcrumbs{
     /*background-color: #62DAFB;*/
     display: flex;
     flex-direction: column;
+    justify-content: start;
+    width: 100%;
+    /*background-color: #C3C3C3;*/
     gap: 6px;
 }
 
@@ -103,7 +110,6 @@
 }
 
 .information__breadcrumbs--timeWork{
-    font-weight: 500;
     color: #B75F6D;
     margin: 0;
 }
@@ -125,19 +131,60 @@
 }
 
 .information__breadcrumbs--tel span{
-    font-size: 16px;
+    font-size: 17px;
     padding-bottom: 2px;
     color: #333333;
-    font-weight: 500;
 }
 
 .restaurant___information--description{
     text-align: center;
-    font-size: 16px;
+    font-size: 17px;
+    color: #333333;
+    max-height: 140px;
+    overflow: auto;
+    padding-bottom: 5px;
+    box-sizing: border-box;
+}
+
+.restaurant___information--description::-webkit-scrollbar {
+    width: 6px;
+}
+
+.restaurant___information--description::-webkit-scrollbar-thumb {
+    background: #B75F6D;
+    border-radius: 10px;
+    transition: background 0.3s ease;
+}
+
+
+
+
+.restaurant___information--button{
+    border-radius: 10px;
+    border: none;
+    height: 40px;
+    width: 120px;
+    background-color: #B75F6D;
+    color: #FFF9F0;
+    font-size: 19px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+
+.restaurant___information--button svg{
+    font-size: 24px;
 }
 
 .card__restaurant--image{
     width: 50%;
     background-color: green;
     object-fit: cover;
+}
+
+
+.restaurant__map{
+    grid-column: 2 / 12;
+    height: 630px;
 }

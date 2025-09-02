@@ -1,18 +1,22 @@
-// import {GoogleMap, Marker, InfoBox, useLoadScript} from "@react-google-maps/api";
-// import {useState, useEffect} from "react";
-// import {useParams} from "react-router-dom";
+import {GoogleMap, Marker, InfoBox, useLoadScript, InfoWindow} from "@react-google-maps/api";
 import {useCitiesQuery, useRestaurantsByCityQuery} from "../../redux/api/restaurantsApi.ts";
 import "./Restaurant.css"
 import {useParams} from "react-router-dom";
 import CreateCitiesBlock from "./components/CreateCitiesBlock.tsx";
-import {useState} from "react";
+import {useState, useEffect} from "react";
 import {Icon} from "@iconify/react";
+import {changeCity} from "../../redux/slices/userCity.ts";
+import {useDispatch, useSelector} from "react-redux";
 
 function RenderRestaurantPage({cities, restaurantsByCity}) {
     const { id } = useParams()
+    const dispatch = useDispatch()
     const [index, setIndex] = useState(Number(id) + 1)
 
-    console.log(restaurantsByCity)
+    useEffect(() => {
+        console.log(index)
+        dispatch(changeCity(index))
+    }, [index])
 
     return (
         <main>
@@ -35,29 +39,29 @@ function RenderRestaurantPage({cities, restaurantsByCity}) {
                             <a className="information__breadcrumbs--tel" href={`tel:+38${restaurant.phone}`}><Icon icon="mynaui:telephone-call"/><span>{restaurant.phone}</span></a>
                         </div>
                         <p className="restaurant___information--description">{restaurant.description}</p>
-                        <button>На мапі <Icon icon="foundation:marker"/></button>
+                        <button className="restaurant___information--button">На мапі <Icon icon="majesticons:map-marker-line"/></button>
                     </div>
                     <img className="card__restaurant--image" src={restaurant.restaurant_image} alt={restaurant.name} />
                 </div>)}
             </div>
-            {/*<GoogleMap center={{ lat: 5, lng: 15 }} zoom={12}>*/}
-            {/*    {restaurants.map((restaurant, i) =>*/}
-            {/*        <Marker position={{ lat: 5, lng: 15 }} key={i}>*/}
-
-            {/*        </Marker>*/}
-            {/*        */}
-            {/*        */}
-            {/*    )}*/}
-            {/*</GoogleMap>*/}
+            <div className="restaurant__map">
+                <GoogleMap mapContainerStyle={{height: "100%", width: "100%", borderRadius: "30px 60px 30px 60px"}} center={{lat: 49.588, lng: 34.554}} zoom={12}>
+                    {restaurantsByCity.map((item, i) =>
+                        <Marker key={i} position={{ lat: Number(item.latitude), lng: Number(item.longitude) }}/>
+                    )}
+                </GoogleMap>
+            </div>
         </main>
     )
 }
 
 export default function CreateRestaurantPages() {
+    const { id } = useSelector(state => state.userCity)
     const {data: cities, isLoading: citiesLoading} = useCitiesQuery()
-    const {data: restaurantsByCity, isLoading: restaurantsByCityLoading} = useRestaurantsByCityQuery(1)
+    const {data: restaurantsByCity, isLoading: restaurantsByCityLoading} = useRestaurantsByCityQuery(id)
+    const { isLoaded } = useLoadScript({googleMapsApiKey: "AIzaSyCTPdYTVjD2IXVmzsHOoWrWE3MCb6cJCZQ"});
 
-    if (citiesLoading || restaurantsByCityLoading) return <p>Loading...</p>
+    if (!isLoaded || citiesLoading || restaurantsByCityLoading) return <p>Loading...</p>
 
     return (
         <RenderRestaurantPage cities={cities} restaurantsByCity={restaurantsByCity}/>
