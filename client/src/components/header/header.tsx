@@ -4,11 +4,6 @@ import {useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux"
 import {changeShow} from "../../redux/slices/uiSlice.ts"
-// import {userCity} from "../../redux/slices/userCity.ts";
-
-// const a = useSelector((state) => state)
-// //
-// // console.log(a)
 
 function NavItem({to, icon, label}: {to: string, icon: string, label: string}) {
     return <Link to={to} className="position">
@@ -40,7 +35,7 @@ export function RenderHeader(){
         {to: "/company", icon: "lsicon:work-order-info-filled", label: "Компанія і франшиза"},
         {to: "/action", icon: "mingcute:sale-line", label: "Акції та бонуси"},
         {to: "/contact", icon: "material-symbols:delivery-truck-speed-outline-rounded", label: "Контакти та доставка"},
-        {to: `/restaurants/city/${userCity.id}`, icon: "hugeicons:restaurant-01", label: "Наші ресторани"},
+        {to: `/restaurants/city/${userCity.name}`, icon: "hugeicons:restaurant-01", label: "Наші ресторани"},
         {to: "/yourRoll", icon: "token:sushi", label: "Створи свій рол"}
     ]
 

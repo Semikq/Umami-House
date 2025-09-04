@@ -25,7 +25,7 @@ function RenderContactPage({restaurants}){
 }
 
 export default function CreateContactPage() {
-    const { isLoaded } = useLoadScript({googleMapsApiKey: "AIzaSyCTPdYTVjD2IXVmzsHOoWrWE3MCb6cJCZQ"});
+    const { isLoaded } = useLoadScript({googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY});
     const { data: restaurants, isLoading: restaurantsLoading } = useRestaurantsQuery()
 
     if (restaurantsLoading || !isLoaded) return <p>Loading...</p>;

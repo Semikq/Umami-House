@@ -1,19 +1,22 @@
-import {createSlice} from "@reduxjs/toolkit";
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 
 interface UserCity {
-    id: number
+    id: number | null
+    name: string
 }
 
 const initialState: UserCity = {
-    id: 1
+    id: null,
+    name: "Усі міста"
 }
 
 export const userCity = createSlice({
     name: "userCity",
     initialState,
     reducers: {
-        changeCity: (state, action) => {
-            state.id = action.payload
+        changeCity: (state, action: PayloadAction<UserCity>) => {
+            state.id = action.payload.id
+            state.name = action.payload.name
         }
     }
 })

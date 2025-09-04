@@ -9,10 +9,11 @@ import CreateRestaurantPages from "./pages/restaurant/Restaurant";
 import CreateAuthFrom from "./pages/auth/Auth";
 import './App.css';
 import {useSelector} from "react-redux";
+import useDetectUserCity from "./hooks/useDetectUserCity";
 
 function App() {
     const uiSlice = useSelector((state) => state.ui.showAuth)
-    localStorage.removeItem("token")
+    useDetectUserCity()
     return (
       <Router>
         <div className="App">
@@ -23,7 +24,7 @@ function App() {
                 <Route path="category/:id" element={<CreateCategoryWithDishes/>}></Route>
                 <Route path="dish/:id" element={<CreateDish/>}></Route>
                 <Route path="contact" element={<CreateContactPage/>}></Route>
-                <Route path="restaurants/city/:id" element={<CreateRestaurantPages/>}></Route>
+                <Route path="restaurants/city/:name" element={<CreateRestaurantPages/>}></Route>
             </Routes>
             <CreateFooter/>
         </div>

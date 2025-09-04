@@ -1,54 +1,57 @@
-import {GoogleMap, Marker, InfoBox, useLoadScript, InfoWindow} from "@react-google-maps/api";
-import {useCitiesQuery, useRestaurantsByCityQuery} from "../../redux/api/restaurantsApi.ts";
-import "./Restaurant.css"
-import {useParams} from "react-router-dom";
-import CreateCitiesBlock from "./components/CreateCitiesBlock.tsx";
-import {useState, useEffect} from "react";
-import {Icon} from "@iconify/react";
+import {GoogleMap, Marker, useLoadScript, InfoWindow} from "@react-google-maps/api";
+import {useCitiesQuery, useRestaurantsByCityQuery, useRestaurantsQuery} from "../../redux/api/restaurantsApi.ts";
+import CreateCitiesBloc from "./components/CreateCitiesBloc.tsx";
+import React, {useState, useEffect} from "react";
 import {changeCity} from "../../redux/slices/userCity.ts";
 import {useDispatch, useSelector} from "react-redux";
+import {useNavigate} from "react-router-dom";
+import CreateCardsRestaurants from "./components/CreateCardsRestaurants.tsx"
+import "./Restaurant.css"
 
-function RenderRestaurantPage({cities, restaurantsByCity}) {
-    const { id } = useParams()
+function RenderRestaurantPage({userCityId, cities, restaurantsByCity}) {
     const dispatch = useDispatch()
-    const [index, setIndex] = useState(Number(id) + 1)
+    const navigate = useNavigate()
+    const {data, isLoading} = useRestaurantsQuery()
+    const [selected, setSelected] = useState(null)
+    const [index, setIndex] = useState(userCityId || null)
+    const restaurantsToShow = index === null ? data : restaurantsByCity
+    const currentCity = cities.find(item => item.id === Number(index))
 
-    useEffect(() => {
-        console.log(index)
-        dispatch(changeCity(index))
-    }, [index])
+    useEffect(() => {if (index !== null) dispatch(changeCity({id: currentCity.id, name: currentCity.name}))}, [currentCity])
+
+    const handleCityClick = (cityId) => {
+        const city = cities.find(item => item.id === cityId)
+        setIndex(cityId)
+        navigate(`/restaurants/city/${city.name}`)
+    };
 
     return (
         <main>
             <div className="restaurant__header">
-                <h1 className="restaurant__header--title">Ресторани Umami House у місті <span>{cities.find(item => item.id === Number(id)).name}</span></h1>
+                <h1 className="restaurant__header--title">Ресторани Umami House у місті <span>{currentCity ? currentCity.name : "Усі ресторани"}</span></h1>
                 <div className="restaurant__header--cities">
-                    <div className={`header__cities--bloc ${index === 0 ? "active" : ""}`} onClick={() => setIndex(0)}>
+                    <div className={`header__cities--bloc ${index === null ? "active" : ""}`} onClick={() => setIndex(null)}>
                         <h2>Усі ресторани</h2>
                     </div>
-                    <CreateCitiesBlock cities={cities} index={index} setIndex={setIndex}/>
+                    <CreateCitiesBloc cities={cities} index={index} handleCityClick={handleCityClick}/>
                 </div>
             </div>
-            <div className="restaurant__body">
-                {restaurantsByCity.map((restaurant, i) =>
-                <div className="restaurant__body--card" key={i}>
-                    <div className="card__restaurant--information">
-                        <div className="restaurant__information--breadcrumbs">
-                            <h3 className="information__breadcrumbs--address">Вул. {restaurant.address}</h3>
-                            <p className="information__breadcrumbs--timeWork">{restaurant.time_work}</p>
-                            <a className="information__breadcrumbs--tel" href={`tel:+38${restaurant.phone}`}><Icon icon="mynaui:telephone-call"/><span>{restaurant.phone}</span></a>
-                        </div>
-                        <p className="restaurant___information--description">{restaurant.description}</p>
-                        <button className="restaurant___information--button">На мапі <Icon icon="majesticons:map-marker-line"/></button>
-                    </div>
-                    <img className="card__restaurant--image" src={restaurant.restaurant_image} alt={restaurant.name} />
-                </div>)}
-            </div>
-            <div className="restaurant__map">
-                <GoogleMap mapContainerStyle={{height: "100%", width: "100%", borderRadius: "30px 60px 30px 60px"}} center={{lat: 49.588, lng: 34.554}} zoom={12}>
-                    {restaurantsByCity.map((item, i) =>
-                        <Marker key={i} position={{ lat: Number(item.latitude), lng: Number(item.longitude) }}/>
+            <CreateCardsRestaurants restaurantsToShow={restaurantsToShow} setSelected={setSelected}/>
+            <div className="restaurant__map" id="infoWindow">
+                <GoogleMap mapContainerStyle={{height: "100%", width: "100%", borderRadius: "30px 60px 30px 60px"}} center={{lat: currentCity ? Number(currentCity.latitude) : 48.68960588712109, lng: currentCity ? Number(currentCity.longitude) : 31.638236495038726}} zoom={currentCity ? 11.5 : 6}>
+                    {restaurantsToShow.map((item) =>
+                        <Marker key={item.id} position={{ lat: Number(item.latitude), lng: Number(item.longitude) }}/>
                     )}
+                    {selected &&
+                        <InfoWindow position={{ lat: Number(selected.latitude), lng: Number(selected.longitude) }} onCloseClick={() => setSelected({ latitude: null, longitude: null })}>
+                            <div className="restaurant__map--infoWindow">
+                                <h3>{selected.name}</h3>
+                                <p>{selected.time__work}</p>
+                                <p>{selected.address}</p>
+                                <p>{selected.phone}</p>
+                            </div>
+                        </InfoWindow>
+                    }
                 </GoogleMap>
             </div>
         </main>
@@ -59,11 +62,11 @@ export default function CreateRestaurantPages() {
     const { id } = useSelector(state => state.userCity)
     const {data: cities, isLoading: citiesLoading} = useCitiesQuery()
     const {data: restaurantsByCity, isLoading: restaurantsByCityLoading} = useRestaurantsByCityQuery(id)
-    const { isLoaded } = useLoadScript({googleMapsApiKey: "AIzaSyCTPdYTVjD2IXVmzsHOoWrWE3MCb6cJCZQ"});
+    const { isLoaded } = useLoadScript({googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY})
 
-    if (!isLoaded || citiesLoading || restaurantsByCityLoading) return <p>Loading...</p>
+    if (!restaurantsByCity || !isLoaded || citiesLoading || restaurantsByCityLoading) return <p>Loading...</p>
 
     return (
-        <RenderRestaurantPage cities={cities} restaurantsByCity={restaurantsByCity}/>
+        <RenderRestaurantPage userCityId={id} cities={cities} restaurantsByCity={restaurantsByCity}/>
     )
 }
