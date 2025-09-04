@@ -28,6 +28,8 @@
     grid-column: 2 / 12;
     display: flex;
     gap: 20px;
+    overflow-x: auto;
+    overflow-y: hidden;
 }
 
 .header__cities--bloc{
@@ -41,6 +43,7 @@
     padding: 0 20px;
     cursor: pointer;
     transition: all ease-in-out 0.3s;
+    white-space: nowrap;
 }
 
 .header__cities--bloc:hover{
@@ -59,9 +62,6 @@
     margin: 0;
 }
 
-
-
-
 .restaurant__body{
     grid-column: 2 / 12;
     display: grid;
@@ -78,32 +78,30 @@
     border-radius: 30px 60px;
     overflow: hidden;
     display: flex;
+    position: relative;
 }
 
 .card__restaurant--information{
     width: 50%;
     padding: 20px 30px;
-    /*background-color: #DF1322;*/
-    /*background-color: #62DAFB;*/
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
     gap: 10px;
+    box-sizing: border-box;
 }
 
 .restaurant__information--breadcrumbs{
-    /*background-color: #62DAFB;*/
     display: flex;
     flex-direction: column;
     justify-content: start;
     width: 100%;
-    /*background-color: #C3C3C3;*/
     gap: 6px;
 }
 
 .information__breadcrumbs--address{
-    font-size: 22px;
+    font-size: clamp(16px, 1.8vw, 22px);
     font-weight: 500;
     color: #333333;
     margin: 0;
@@ -156,25 +154,63 @@
     transition: background 0.3s ease;
 }
 
-
-
-
 .restaurant___information--button{
     border-radius: 10px;
     border: none;
     height: 40px;
     width: 120px;
+    min-height: 40px;
     background-color: #B75F6D;
     color: #FFF9F0;
-    font-size: 19px;
+    font-size: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 5px;
+    cursor: pointer;
 }
 
 .restaurant___information--button svg{
     font-size: 24px;
+}
+
+@media screen and (max-width: 1000px){
+    .card__restaurant--information{
+        height: 100%;
+        width: 100%;
+        z-index: 1;
+        background: rgba(0, 0, 0, 0.5);
+    }
+
+    .information__breadcrumbs--address{
+        font-size: clamp(24px, 2vw, 26px);
+        color: white;
+    }
+
+    .information__breadcrumbs--timeWork{
+        font-size: 19px;
+        color: #F1C232;
+    }
+
+    .information__breadcrumbs--tel svg{
+        font-size: 35px;
+    }
+
+    .information__breadcrumbs--tel span,
+    .restaurant___information--description{
+        font-size: 19px;
+        color: white;
+    }
+
+    .restaurant___information--button svg{
+        font-size: 24px;
+    }
+}
+
+@media screen and (max-width: 700px) {
+    .restaurant__body--card{
+        grid-column: 1 / -1;
+    }
 }
 
 .card__restaurant--image{
@@ -183,8 +219,29 @@
     object-fit: cover;
 }
 
+@media screen and (max-width: 1000px){
+    .card__restaurant--image{
+        position: absolute;
+        height: 100%;
+        width: 100%;
+    }
+}
 
 .restaurant__map{
     grid-column: 2 / 12;
     height: 630px;
+}
+
+@media screen and (max-width: 1500px) {
+    .restaurant__header,
+    .restaurant__body,
+    .restaurant__map{
+        grid-column: 1 / -1;
+    }
+}
+
+@media screen and (max-width: 600px){
+    .restaurant__map{
+        height: 450px;
+    }
 }
