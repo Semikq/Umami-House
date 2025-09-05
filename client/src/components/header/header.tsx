@@ -3,7 +3,7 @@ import {Icon} from '@iconify/react'
 import {useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux"
-import {changeShow} from "../../redux/slices/uiSlice.ts"
+import {showAuth, showCart} from "../../redux/slices/uiSlice.ts"
 
 function NavItem({to, icon, label}: {to: string, icon: string, label: string}) {
     return <Link to={to} className="position">
@@ -58,12 +58,12 @@ export function RenderHeader(){
                 {navItems.slice(3, 5).map((item) => <NavItem key={item.label} {...item}/>)}
                 <div className="position">
                     <Icon icon="line-md:heart" width={32} height={32} color="#333333"></Icon>
-                    <Icon icon="mdi:cart" width={32} height={32} color="#333333"></Icon>
+                    <Icon className="icon_cart" onClick={() => dispatch(showCart())} icon="mdi:cart" width={32} height={32} color="#333333"></Icon>
                     <select>
                         <option value="UA">UA</option>
                     </select>
                 </div>
-                <div className="user" onClick={() => {user ? navigator("/user") : dispatch(changeShow())}} >
+                <div className="user" onClick={() => {user ? navigator("/user") : dispatch(showAuth())}} >
                     {user ? <p>{user.name}</p> :
                         <>
                             <p>Увійти</p>

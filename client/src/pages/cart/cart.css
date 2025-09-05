@@ -1,0 +1,179 @@
+@import url('https://fonts.googleapis.com/css2?family=Delius&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+.cart-backdrop{
+    background-color: rgba(0,0,0,0.5);
+    position: fixed;
+    height: 100vh;
+    width: 100vw;
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cart{
+    height: 80%;
+    width: 800px;
+    background-color: #F1C232;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+.cart__header{
+    font-family: Roboto, sans-serif;
+    border-bottom: solid 2px #333333;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 10px;
+    user-select: none;
+    color: #333333;
+}
+
+.cart__header-title{
+    margin: 0;
+    font-weight: 400;
+}
+
+.cart__header-icon{
+    font-size: 34px;
+    cursor: pointer;
+    transition: all ease-in-out 0.2s;
+}
+
+.cart__header-icon:hover{
+    color: #DF1322;
+}
+
+
+
+
+
+.cart__list-dishes{
+    /*background-color: #DF1322;*/
+    flex: 1;
+    padding: 15px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.cart__dish{
+    height: 105px;
+    width: 100%;
+    border-radius: 15px;
+    background-color: #B75F6D;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    gap: 15px;
+    box-sizing: border-box;
+    font-family: Roboto, sans-serif;
+}
+
+.cart__dish-image{
+    height: 100%;
+    width: 150px;
+    object-fit: cover;
+    border-radius: 15px;
+}
+
+.cart__dish-title{
+    font-size: 20px;
+    font-weight: 500;
+    color: #333333;
+    margin: 0;
+    height: 100%;
+    width: 350px;
+}
+
+.product__quantity{
+    height: 38px;
+    background-color: #F1C232;
+}
+
+.dish__controls-price{
+    font-size: 19px;
+    font-weight: 500;
+    color: #333333;
+    margin: 0;
+}
+
+.dish__controls-threeDots{
+    font-size: 26px;
+    color: #333333;
+    cursor: pointer;
+}
+
+.cart__dish-controls{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex: 1;
+    position: relative;
+}
+
+.count{
+    width: 30%;
+    text-align: center;
+    font-size: 19px;
+    border: none;
+    background: transparent;
+    outline: none;
+    color: white;
+}
+
+/* Chrome, Safari, Edge */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+.dish__controls-additionalMenu{
+    position: absolute;
+    right: 0;
+    background-color: #FFF9F0;
+    margin-right: 30px;
+    padding: 10px;
+    border-radius: 15px;
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.dish__controls-additionalMenu-item{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    transition: all ease-in-out 0.2s;
+    user-select: none;
+}
+
+.dish__controls-additionalMenu-item:nth-child(1):hover{
+    color: #B75F6D;
+}
+
+.dish__controls-additionalMenu-item:nth-child(2):hover{
+    color: #DF1322;
+}
+
+.dish__controls-additionalMenu-item svg{
+    font-size: 24px;
+}
+
+.dish__controls-additionalMenu-item p{
+    margin: 0;
+    font-size: 20px;
+}

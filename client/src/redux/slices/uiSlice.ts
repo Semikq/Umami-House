@@ -2,21 +2,26 @@ import {createSlice} from "@reduxjs/toolkit"
 
 interface UIState {
     showAuth: boolean
+    showCart: boolean
 }
 
 const initialState: UIState = {
-    showAuth: false
+    showAuth: false,
+    showCart: true
 }
 
 const uiSlice = createSlice({
     name: "ui",
     initialState,
     reducers: {
-        changeShow: (state) => {
+        showAuth: (state) => {
             state.showAuth = !state.showAuth
+        },
+        showCart: (state) => {
+            state.showCart = !state.showCart
         }
     }
 })
 
-export const {changeShow} = uiSlice.actions
+export const {showAuth, showCart} = uiSlice.actions
 export default uiSlice.reducer
