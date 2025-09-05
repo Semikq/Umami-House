@@ -81,6 +81,7 @@ header{
     align-items: center;
     letter-spacing: 2px;
     color: #333333;
+    margin: 0;
 }
 
 .primaryAppBar h2 img{
@@ -141,6 +142,10 @@ header{
     display: flex;
     flex-direction: row;
     gap: 12px;
+}
+
+.icon_cart{
+    cursor: pointer;
 }
 
 .primaryAppBar div:nth-child(8) select{
@@ -258,6 +263,7 @@ header{
     .menuBar > .icon{
         width: 100%;
         height: 40px;
+        cursor: pointer;
     }
 
     .hidden{

@@ -37,13 +37,21 @@ const cartSlice = createSlice({
             }
             recalcTotalPrice(state)
         },
+        setCount: (state, action): void => {
+            console.log("action.payload")
+            const dish = state.dishes.find(d => d.id === action.payload.id)
+            if (dish){
+                dish.count = action.payload.count
+                recalcTotalPrice(state)
+            }
+        },
         delDish: (state, action: PayloadAction<number>): void => {
             state.dishes = state.dishes.filter(d => d.id !== action.payload)
             recalcTotalPrice(state)
         },
         incrementCount: (state, action: PayloadAction<number>): void => {
             const dish = state.dishes.find(d => d.id === action.payload)
-            if(dish){
+            if(dish && dish.count < 100){
                 dish.count += 1
                 recalcTotalPrice(state)
             }
@@ -62,5 +70,5 @@ const cartSlice = createSlice({
     }
 })
 
-export const { addDish, delDish, incrementCount, decrementCount, clearCart } = cartSlice.actions
+export const { addDish, setCount, delDish, incrementCount, decrementCount, clearCart } = cartSlice.actions
 export default cartSlice.reducer

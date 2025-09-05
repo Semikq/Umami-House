@@ -5,20 +5,22 @@ import CreateCategoryWithDishes from "./pages/categoryWithDishes/CategoryWithDis
 import CreateMainPage from "./pages/main/Main"
 import CreateDish from "./pages/dish/Dish";
 import CreateContactPage from "./pages/contact/Contact";
-import CreateRestaurantPages from "./pages/restaurant/Restaurant";
-import CreateAuthFrom from "./pages/auth/Auth";
-import './App.css';
 import {useSelector} from "react-redux";
 import useDetectUserCity from "./hooks/useDetectUserCity";
+import CreateRestaurantPages from "./pages/restaurant/Restaurant";
+import CreateAuthFrom from "./pages/auth/Auth";import CreateCartBloc from "./pages/cart/Cart";
+import './App.css';
 
 function App() {
-    const uiSlice = useSelector((state) => state.ui.showAuth)
+    const showAuth = useSelector((state) => state.ui.showAuth)
+    const showCart = useSelector((state) => state.ui.showCart)
     useDetectUserCity()
     return (
       <Router>
         <div className="App">
             <CreateHeader/>
-            { uiSlice  && <CreateAuthFrom/> }
+            { showAuth  && <CreateAuthFrom/> }
+            { showCart && <CreateCartBloc/> }
             <Routes>
                 <Route path="/" element={<CreateMainPage/>}></Route>
                 <Route path="category/:id" element={<CreateCategoryWithDishes/>}></Route>
