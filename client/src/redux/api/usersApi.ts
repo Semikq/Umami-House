@@ -4,11 +4,12 @@ export const usersApi = createApi({
     reducerPath: 'usersApi',
     baseQuery: fetchBaseQuery({
         baseUrl: '/users',
-        prepareHeaders: headers => {
-            const token = localStorage.getItem("token")
+        prepareHeaders: (headers, {getState}) => {
+            const token = (getState() as any).auth.token
             if (token) headers.set("Authorization", `Bearer ${token}`)
             return headers
-        }
+        },
+        credentials: 'include'
     }),
     endpoints: (builder) => ({
         login: builder.mutation({

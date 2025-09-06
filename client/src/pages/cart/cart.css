@@ -18,6 +18,8 @@
     border-radius: 15px;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
+    margin: 15px;
 }
 
 .cart__header{
@@ -47,13 +49,9 @@
     color: #DF1322;
 }
 
-
-
-
-
 .cart__list-dishes{
-    /*background-color: #DF1322;*/
     flex: 1;
+    overflow-y: auto;
     padding: 15px;
     box-sizing: border-box;
     display: flex;
@@ -61,10 +59,19 @@
     gap: 15px;
 }
 
+.cart__list-dishes::-webkit-scrollbar {
+    width: 6px;
+}
+
+.cart__list-dishes::-webkit-scrollbar-thumb {
+    background: #B75F6D;
+}
+
 .cart__dish{
-    height: 105px;
+    min-height: 105px;
     width: 100%;
     border-radius: 15px;
+    flex-shrink: 0;
     background-color: #B75F6D;
     display: flex;
     align-items: center;
@@ -73,6 +80,14 @@
     gap: 15px;
     box-sizing: border-box;
     font-family: Roboto, sans-serif;
+    position: relative;
+}
+
+.cart__dish-header{
+    display: flex;
+    height: 100%;
+    gap: 15px;
+    flex: 0 1 600px;
 }
 
 .cart__dish-image{
@@ -83,12 +98,55 @@
 }
 
 .cart__dish-title{
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 500;
     color: #333333;
     margin: 0;
     height: 100%;
-    width: 350px;
+}
+
+.cart__dish-name{
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.cart__dish-controls{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex: 1 0 195px;
+    margin-right: 25px;
+    gap: 10px;
+}
+
+@media screen and (max-width: 700px){
+    .cart__dish{
+        flex-direction: column;
+    }
+
+    .cart__dish-header{
+        flex: auto;
+        width: 100%;
+        padding-right: 20px;
+        box-sizing: border-box;
+    }
+
+    .cart__dish-image{
+        height: 80px;
+    }
+
+    .cart__dish-controls{
+        flex: 20px;
+        width: 100%;
+        margin-right: 0px;
+    }
+
+    .cart__dish-title{
+        font-size: 16px;
+    }
 }
 
 .product__quantity{
@@ -101,20 +159,18 @@
     font-weight: 500;
     color: #333333;
     margin: 0;
+    flex: 1;
+    text-align: end;
 }
 
 .dish__controls-threeDots{
+    position: absolute;
+    right: 0;
     font-size: 26px;
     color: #333333;
     cursor: pointer;
-}
-
-.cart__dish-controls{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex: 1;
-    position: relative;
+    margin-left: -10px;
+    margin-right: 5px;
 }
 
 .count{
@@ -127,14 +183,12 @@
     color: white;
 }
 
-/* Chrome, Safari, Edge */
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
 
-/* Firefox */
 input[type=number] {
     -moz-appearance: textfield;
 }
@@ -176,4 +230,83 @@ input[type=number] {
 .dish__controls-additionalMenu-item p{
     margin: 0;
     font-size: 20px;
+}
+
+.cart__footer{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 25px 15px;
+    box-sizing: border-box;
+    font-family: Roboto, sans-serif;
+}
+
+.footer__button-continue,
+.footer__controls-button{
+    font-size: 16px;
+    background-color: #B75F6D;
+    border: none;
+    border-radius: 10px;
+    padding: 10px;
+    box-sizing: border-box;
+    cursor: pointer;
+    transition: all ease-in-out 0.2s;
+    font-family: Roboto, sans-serif;
+}
+
+.footer__button-continue:hover,
+.footer__controls-button:hover{
+    background-color: #FFF9F0;
+}
+
+.footer__controls{
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.controls__totalPrice-bloc{
+    display: flex;
+}
+
+.controls__totalPrice-text{
+    display: none;
+}
+
+.footer__controls-totalPrice{
+    font-size: 24px;
+    margin: 0;
+    display: flex;
+    align-items: center;
+}
+
+.footer__controls-button{
+    height: 45px;
+    font-size: 20px;
+}
+
+@media screen and (max-width: 700px){
+    .cart__footer{
+        justify-content: center;
+    }
+
+    .footer__button-continue{
+        display: none;
+    }
+
+    .footer__controls{
+        width: 100%;
+        flex-direction: column;
+    }
+
+    .controls__totalPrice-bloc{
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .controls__totalPrice-text{
+        display: flex;
+        margin: 0;
+        font-size: 22px;
+    }
 }

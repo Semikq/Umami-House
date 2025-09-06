@@ -1,12 +1,26 @@
 import {useEffect, useRef, useState} from "react";
 import {Link} from "react-router-dom";
 import {Icon} from "@iconify/react";
+import {useDispatch, useSelector} from "react-redux";
+import {showCart} from "../../../redux/slices/uiSlice.ts";
+import {addDish} from "../../../redux/slices/cartSlice.ts";
 
-function DishButton ({price}){
-    const [text, setText] = useState(`${price} грн`)
+function DishButton ({dish}){
+    const [text, setText] = useState(`${dish.price} грн`)
+    const state = useSelector(state => state.cart)
+    const dispatch = useDispatch()
+    const isInCart = state.dishes.find(i => i.id === dish.id);
 
     return (
-        <input type="button" value={text} onMouseEnter={() => setText('У кошик')} onMouseLeave={() => setText(`${price} грн`)}/>
+        <button onClick={(e) => {
+            e.preventDefault()
+            if (isInCart) dispatch(showCart())
+            else dispatch(addDish({ ...dish, count: 1 }))
+        }}
+                onMouseEnter={() => !isInCart && setText('У кошик')}
+                onMouseLeave={() => !isInCart && setText(`${dish.price} грн`)}>
+            { isInCart ? <Icon icon="solar:cart-3-bold"/> : text }
+        </button>
     )
 }
 
@@ -39,7 +53,7 @@ export default function CreateAdditionalOffers({categoryName, additionalDish}){
                         </div>
                         <div className="dishActions">
                             {dish.spicy === true && <span className="fireIcon" title="Гостре"><Icon icon="mdi:fire" height={40}/></span>}
-                            <DishButton price={dish.price} />
+                            <DishButton dish={dish} />
                             {dish.frozen === true && <span title="Заморожена версія"><Icon className="icon" icon="famicons:snow" width={26}/></span>}
                         </div>
                     </Link>

@@ -16,6 +16,16 @@ function RenderCartBloc(){
                     <Icon className="cart__header-icon" icon="ic:round-close" onClick={() => dispatch(showCart())}/>
                 </div>
                 <CartListDishes cartDishes={cartDishes}/>
+                <div className="cart__footer">
+                    <button className="footer__button-continue" onClick={() => dispatch(showCart())}>Продовжити покупки</button>
+                    <div className="footer__controls">
+                        <div className="controls__totalPrice-bloc">
+                            <p className="controls__totalPrice-text">Разом</p>
+                            <p className="footer__controls-totalPrice">{cartDishes.totalPrice.toLocaleString('uk-UA')} <Icon icon="mdi:currency-uah"/></p>
+                        </div>
+                        <button className="footer__controls-button">Оформити замовлення</button>
+                    </div>
+                </div>
             </div>
         </div>
     )

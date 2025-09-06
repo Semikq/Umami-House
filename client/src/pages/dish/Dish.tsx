@@ -5,11 +5,20 @@ import CreateCardsWithInfo from "./components/CreateCardsWithInfo.tsx";
 import CreateAdditionalOffers from "./components/CreateAdditionalOffers.tsx";
 import CreateFormRateProduct from "./components/CreateFormRateProduct.tsx";
 import CreateUserComment from "./components/CreateUserComment.tsx";
+import {useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {addDish} from "../../redux/slices/cartSlice.ts";
+import {showCart} from "../../redux/slices/uiSlice.ts";
 import {Link, useParams} from "react-router-dom"
 import {Icon} from "@iconify/react"
 import "./dish.css"
 
 function RenderDishPage({dish, additionalDish}){
+    const state = useSelector(state => state.cart)
+    const IsInCart = state.dishes.find(i => i.id === dish.id)
+    const [count, setCount] = useState(1)
+    const dispatch = useDispatch()
+
     return (
         <main>
             <div className="product">
@@ -50,9 +59,14 @@ function RenderDishPage({dish, additionalDish}){
                                 </div>
                             }
                             <div className="product__quantity-purchase">
-                                <ChangeQuantity/>
+                                <ChangeQuantity IsInCart={IsInCart} setCount={setCount}/>
                                 {dish.frozen === true && <Icon icon="famicons:snow" className="snow-icon--frozen"/>}
-                                <input className="product__button--add-product" type="button" value="У кошик"/>
+                                <button className="product__button--add-product" onClick={() => {
+                                    if (IsInCart) dispatch(showCart())
+                                    else dispatch(addDish({...dish, count}))
+                                }}>
+                                    {IsInCart ? <Icon icon="solar:cart-3-bold"/> : "У кошик"}
+                                </button>
                             </div>
                         </div>
                     </section>
