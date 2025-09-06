@@ -206,7 +206,7 @@
 
     .product__additional-photos img{
         width: 100%;
-        flex: 1;
+        height: 140px;
         border-radius: 15px;
     }
 
@@ -370,11 +370,14 @@
     flex: 1;
     height: 100%;
     gap: 10px;
+    margin-left: auto;
 }
 
 .product__quantity,
 .product__button--add-product{
     display: flex;
+    align-items: center;
+    justify-content: center;
     flex: 1 1 110px;
     max-width: 110px;
     font-size: clamp(16px, 2vw, 20px);
@@ -382,6 +385,10 @@
     border-radius: 10px;
     color: white;
     background-color: #B75F6D;
+}
+
+.product__button--add-product svg{
+    font-size: 34px;
 }
 
 .product__quantity{

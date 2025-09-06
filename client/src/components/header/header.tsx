@@ -27,7 +27,7 @@ function MenuBar({navItems}) {
 
 export function RenderHeader(){
     const dispatch = useDispatch()
-    const user = useSelector((state) => state.auth.user.user)
+    const user = useSelector((state) => state.auth.user)
     const userCity = useSelector((state) => state.userCity)
     const navigator = useNavigate()
 

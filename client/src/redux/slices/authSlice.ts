@@ -18,32 +18,12 @@ interface AuthState {
 
 interface LoginPayload {
     user: UserData,
-    token: string
-}
-
-let token = localStorage.getItem("token")
-let userFromToken = {
-    id: 0,
-    email: "",
-    name: "",
-    surname: "",
-    phone: "",
-    role: "",
-    created_at: ""
-};
-
-if (token) {
-    try {
-        userFromToken = jwtDecode(token)
-    } catch {
-        localStorage.removeItem("token")
-        token = "";
-    }
+    accessToken: string
 }
 
 const initialState: AuthState = {
-    user: userFromToken,
-    token: localStorage.getItem("token") || ""
+    user: null,
+    token: ""
 }
 
 const authSlice = createSlice({
@@ -52,12 +32,11 @@ const authSlice = createSlice({
     reducers: {
         logIn: (state, action: PayloadAction<LoginPayload>) => {
             state.user = action.payload.user;
-            state.token = action.payload.token;
-            localStorage.setItem("token", action.payload.token);
+            state.token = action.payload.accessToken;
         },
         logOut: (state) => {
-            localStorage.removeItem("token");
-            return initialState
+            state.user = null;
+            state.token = "";
         }
     }
 })

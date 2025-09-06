@@ -213,7 +213,7 @@ section{
     color: #DF1322;
 }
 
-.cardDish .dishActions input{
+.cardDish .dishActions button{
     height: 35px;
     width: 80px;
     border: none;
@@ -224,6 +224,10 @@ section{
     cursor: pointer;
     font-family: Roboto, sans-serif;
     transition: all ease-in-out 0.4s;
+}
+
+.cardDish .dishActions button svg{
+    font-size: 32px;
 }
 
 .cardDish .dishActions span{

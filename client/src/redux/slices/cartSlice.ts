@@ -7,7 +7,7 @@ interface DishDate {
     frozen: boolean,
     spicy: boolean,
     price: number,
-    count: number
+    count?: number
 }
 
 interface cartState {
@@ -30,6 +30,7 @@ const cartSlice = createSlice({
     reducers: {
         addDish: (state, action: PayloadAction<DishDate>): void => {
             let checkDish = state.dishes.find(d => d.id === action.payload.id)
+            if (checkDish?.count >= 100) return
             if(checkDish){
                 checkDish.count += 1
             }else {

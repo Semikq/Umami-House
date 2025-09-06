@@ -66,25 +66,30 @@ export default function CartListDishes({ cartDishes }){
         <div className="cart__list-dishes">
             {cartDishes.dishes.map(dish =>
                 <div className="cart__dish">
-                    <img className="cart__dish-image" src={dish.dish_images[0].image_url} alt={dish.name}/>
-                    <h2 className="cart__dish-title">{dish.name} ({dish.weight}/10г)</h2>
+                    <div className="cart__dish-header">
+                        <img className="cart__dish-image" src={dish.dish_images[0].image_url} alt={dish.name}/>
+                        <h2 className="cart__dish-title">
+                            <span className="cart__dish-name">{dish.name}</span>
+                            <span className="cart__dish-weight">({dish.weight}/10г)</span>
+                        </h2>
+                    </div>
                     <div className="cart__dish-controls">
                         <ChangeQuantity dish={dish}/>
-                        <p className="dish__controls-price">{dish.price * dish.count} ₴</p>
-                        <Icon className="dish__controls-threeDots" onClick={() => handleToggleMenu(dish.id)} icon="bi:three-dots-vertical"/>
-                        {openMenu === dish.id &&
-                            <div className="dish__controls-additionalMenu" ref={menuRef}>
-                                <div className="dish__controls-additionalMenu-item">
-                                    <Icon icon="line-md:heart"/>
-                                    <p>Улюблене</p>
-                                </div>
-                                <div className="dish__controls-additionalMenu-item" onClick={() => {dispatch(delDish(dish.id)); setOpenMenu(null)}}>
-                                    <Icon icon="iconamoon:trash-duotone"/>
-                                    <p>Видалити</p>
-                                </div>
-                            </div>
-                        }
+                        <p className="dish__controls-price">{(dish.price * dish.count).toLocaleString('uk-UA')} ₴</p>
                     </div>
+                    <Icon className="dish__controls-threeDots" onClick={() => handleToggleMenu(dish.id)} icon="bi:three-dots-vertical"/>
+                    {openMenu === dish.id &&
+                        <div className="dish__controls-additionalMenu" ref={menuRef}>
+                            <div className="dish__controls-additionalMenu-item">
+                                <Icon icon="line-md:heart"/>
+                                <p>Улюблене</p>
+                            </div>
+                            <div className="dish__controls-additionalMenu-item" onClick={() => {dispatch(delDish(dish.id)); setOpenMenu(null)}}>
+                                <Icon icon="iconamoon:trash-duotone"/>
+                                <p>Видалити</p>
+                            </div>
+                        </div>
+                    }
                 </div>
             )}
         </div>

@@ -22,7 +22,7 @@ export default function FormRegister(){
         e.preventDefault();
         try {
             const result = await registerApi({ email, password, name, surname, phone, company_type, company_name }).unwrap();
-            dispatch(logIn({ user: jwtDecode(result), token: result }))
+            dispatch(logIn({ user: result, token: result }))
         }catch(err){
             console.log(err)
         }

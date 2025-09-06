@@ -2,14 +2,25 @@ import {Link} from "react-router-dom";
 import {Icon} from "@iconify/react";
 import {useState} from "react";
 import {addDish} from "../../../redux/slices/cartSlice.ts";
-import {useDispatch} from "react-redux";
+import {showCart} from "../../../redux/slices/uiSlice.ts";
+import {useDispatch, useSelector} from "react-redux";
 
 function DishButton ({dish}){
     const [text, setText] = useState(`${dish.price} грн`)
+    const state = useSelector(state => state.cart)
     const dispatch = useDispatch()
+    const isInCart = state.dishes.find(i => i.id === dish.id);
 
     return (
-        <input type="button" value={text} onClick={(e) => {dispatch(addDish({...dish, count: 1})); e.preventDefault()}} onMouseEnter={() => setText('У кошик')} onMouseLeave={() => setText(`${dish.price} грн`)}/>
+        <button onClick={(e) => {
+                e.preventDefault()
+                if (isInCart) dispatch(showCart())
+                else dispatch(addDish({ ...dish, count: 1 }))
+            }}
+            onMouseEnter={() => !isInCart && setText('У кошик')}
+            onMouseLeave={() => !isInCart && setText(`${dish.price} грн`)}>
+            { isInCart ? <Icon icon="solar:cart-3-bold"/> : text }
+        </button>
     )
 }
 

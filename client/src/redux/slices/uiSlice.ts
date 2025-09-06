@@ -7,7 +7,7 @@ interface UIState {
 
 const initialState: UIState = {
     showAuth: false,
-    showCart: true
+    showCart: false
 }
 
 const uiSlice = createSlice({
