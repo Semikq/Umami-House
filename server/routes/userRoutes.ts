@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { handleAllUsers, handleChoiceRoleUserById, handleDeleteUserById } from "../controllers/user/adminControllers";
-import { handleRegisterUser, handleLoginUsers } from "../controllers/user/authControllers";
+import {handleRegisterUser, handleLoginUsers, handleRefreshToken, handleLogout} from "../controllers/user/authControllers";
 import { handleUpdateUser, handleDeleteUser } from "../controllers/user/userControllers";
 import { validate } from "../middleware/validation";
 import { authenticateToken, authorizeAdmin } from "../middleware/authMiddleware";
@@ -11,6 +11,8 @@ const route = Router()
 
 route.post("/register", validate({ body: userSchemas.register.body }), hashPassword, handleRegisterUser)
 route.post("/login", validate({ body: userSchemas.login.body }), handleLoginUsers)
+route.post("/refresh", handleRefreshToken)
+route.post("/logout", handleLogout)
 
 route.get("/", handleAllUsers)
 route.put("/:id/role", authenticateToken, authorizeAdmin, validate({ params: userSchemas.choiceRoleUserById.params, body: userSchemas.choiceRoleUserById.body }), handleChoiceRoleUserById)

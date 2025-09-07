@@ -6,7 +6,7 @@ import {changeCity} from "../../redux/slices/userCity.ts";
 import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import CreateCardsRestaurants from "./components/CreateCardsRestaurants.tsx"
-import "./Restaurant.css"
+import "./restaurant.css"
 
 function RenderRestaurantPage({userCityId, cities, restaurantsByCity}) {
     const dispatch = useDispatch()

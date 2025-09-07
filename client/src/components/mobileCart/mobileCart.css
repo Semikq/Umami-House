@@ -1,0 +1,35 @@
+@import url('https://fonts.googleapis.com/css2?family=Delius&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+.mobile__cart{
+    background-color: #F1C232;
+    position: fixed;
+    bottom: 20px;
+    left: 15px;
+    right: 15px;
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 15px;
+    box-sizing: border-box;
+    z-index: 100;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: Roboto, sans-serif;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.mobile__icon--cart{
+    font-size: 23px;
+    color: #333333;
+    flex-shrink: 0;
+}
+
+.mobile__text--cart{
+    margin: 0;
+    font-size: 18px;
+    color: #333333;
+    font-weight: 500;
+    white-space: nowrap;
+}
