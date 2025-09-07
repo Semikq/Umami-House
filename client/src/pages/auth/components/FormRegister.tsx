@@ -2,7 +2,6 @@ import {Icon} from "@iconify/react";
 import React, {useState} from "react";
 import CreateTelLabel from "./CreateTelLabel.tsx";
 import {useDispatch} from "react-redux";
-import {jwtDecode} from "jwt-decode";
 import {logIn} from "../../../redux/slices/authSlice.ts";
 import {useRegisterMutation} from "../../../redux/api/usersApi.ts";
 
@@ -21,8 +20,8 @@ export default function FormRegister(){
     const handleRegister = async (e) => {
         e.preventDefault();
         try {
-            const result = await registerApi({ email, password, name, surname, phone, company_type, company_name }).unwrap();
-            dispatch(logIn({ user: result, token: result }))
+            const result = await registerApi({ email, password, name, surname, phone, company_type, company_name }).unwrap()
+            dispatch(logIn({ user: result.user, token: result.accessToken }))
         }catch(err){
             console.log(err)
         }

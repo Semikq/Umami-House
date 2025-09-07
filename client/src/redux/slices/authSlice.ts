@@ -1,5 +1,4 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {jwtDecode} from "jwt-decode";
 
 interface UserData {
     id: number,
@@ -18,7 +17,7 @@ interface AuthState {
 
 interface LoginPayload {
     user: UserData,
-    accessToken: string
+    token: string
 }
 
 const initialState: AuthState = {
@@ -32,7 +31,7 @@ const authSlice = createSlice({
     reducers: {
         logIn: (state, action: PayloadAction<LoginPayload>) => {
             state.user = action.payload.user;
-            state.token = action.payload.accessToken;
+            state.token = action.payload.token;
         },
         logOut: (state) => {
             state.user = null;

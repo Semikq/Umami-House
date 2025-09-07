@@ -1,6 +1,7 @@
 import { registerUser, loginUser } from "../../models/user/authModel";
 import { Request, Response } from "express";
 import { generateAccessToken, generateRefreshToken } from "../../config/jwtToken";
+import jwt, { JwtPayload } from "jsonwebtoken";
 
 export async function handleRegisterUser(req: Request , res: Response): Promise<void> {
     try {
@@ -8,7 +9,7 @@ export async function handleRegisterUser(req: Request , res: Response): Promise<
         const { password, ...user } = result
 
         const accessToken = generateAccessToken(result.id, result.role);
-        const refreshToken = generateRefreshToken(result.id);
+        const refreshToken = generateRefreshToken(result.id, result.role);
 
         res.cookie("refreshToken", refreshToken, {
             httpOnly: true,
@@ -29,7 +30,7 @@ export async function handleLoginUsers(req: Request , res: Response): Promise<vo
         const { password, ...user } = result
 
         const accessToken = generateAccessToken(result.id, result.role);
-        const refreshToken = generateRefreshToken(result.id);
+        const refreshToken = generateRefreshToken(result.id, result.role);
 
         res.cookie("refreshToken", refreshToken, {
             httpOnly: true,
@@ -42,4 +43,29 @@ export async function handleLoginUsers(req: Request , res: Response): Promise<vo
     } catch (error) {
         res.status(500).json((error as Error).message)
     }
+}
+
+export async function handleRefreshToken(req: Request, res: Response): Promise<void> {
+    const { refreshToken } = req.cookies;
+    if (!refreshToken) {
+        res.status(401).json({ error: "No refresh token" });
+        return
+    }
+
+    try {
+        const decoded = jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET!) as JwtPayload;
+        const accessToken = generateAccessToken(decoded.userId, decoded.role);
+        res.json({ user: decoded, accessToken });
+    } catch {
+        res.status(401).json({ error: "Invalid refresh token" });
+    }
+}
+
+export async function handleLogout(req: Request, res: Response) {
+    res.clearCookie("refreshToken", {
+        httpOnly: true,
+        secure: false,
+        sameSite: "strict",
+    });
+    res.status(200).json({ message: "Logged out" });
 }

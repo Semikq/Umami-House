@@ -20,6 +20,11 @@ const initialState: cartState = {
     totalPrice: 0
 }
 
+interface SetCountPayload {
+    id: number
+    count: number
+}
+
 const recalcTotalPrice = (state): void => {
     state.totalPrice = state.dishes.reduce((sum, d) => sum + d.price * d.count, 0)
 }
@@ -38,7 +43,7 @@ const cartSlice = createSlice({
             }
             recalcTotalPrice(state)
         },
-        setCount: (state, action): void => {
+        setCount: (state, action: PayloadAction<SetCountPayload>): void => {
             console.log("action.payload")
             const dish = state.dishes.find(d => d.id === action.payload.id)
             if (dish){
