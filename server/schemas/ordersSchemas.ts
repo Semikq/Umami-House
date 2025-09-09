@@ -19,23 +19,29 @@ export const ordersSchemas = {
         params: z.object({ id: z.number() })
     },
     addUser: {
-        params: z.object({ id: z.number() }),
         body: z.object({
-            status: z.string(),
+            user_id: z.number(),
             delivery_address: z.string(),
             payment_method: z.string(),
+            total_price: z.number(),
             dishes: z.array(z.object({
+                id: z.number(),
                 name: z.string(),
-                weight: z.string(),
+                weight: z.number(),
                 price: z.number(),
                 frozen: z.boolean(),
                 spicy: z.boolean(),
                 ingredients: z.string(),
-                subcategories_id: z.number(),
+                sub_category_id: z.number(),
                 active: z.boolean(),
-                images: z.array(z.object({
+                count: z.number(),
+                created_at: z.string(),
+                dish_images: z.array(z.object({
+                    id: z.number(),
                     title: z.string(),
-                    image_url: z.string()
+                    image_url: z.string(),
+                    dish_id: z.number(),
+                    created_at: z.string()
                 }))
             }))
         })

@@ -6,6 +6,7 @@ interface UserType{
     role: string,
     company_type?: string | null,
     company_name?: string | null,
+    bonuses: number,
     created_at: Date
 }
 
@@ -25,3 +26,5 @@ export interface LoginUser{
 export interface User extends UserType, Id{
     password: string
 }
+
+export interface UserRefresh extends UserType{}

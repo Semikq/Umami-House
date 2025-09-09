@@ -11,8 +11,8 @@ route.get("/ordersByFilter", authenticateToken, authorizeAdmin, validate({ body:
 route.put("/:id/updateOrder", authenticateToken, authorizeAdmin, validate({ params: ordersSchemas.updateStatus.params, body: ordersSchemas.updateStatus.body }), handleUpdateStatusOrder)
 route.delete("/:id/deleteOrder", authenticateToken, authorizeAdmin, validate({ params: ordersSchemas.deleteOrder.params }), handleDeleteOrderById)
 
-route.get("user/:id", authenticateToken, validate({ params: ordersSchemas.ordersByUser.params }), handleOrdersByUser)
-route.post("/order/:id", authenticateToken, validate({ params: ordersSchemas.addUser.params, body: ordersSchemas.addUser.body }), handleAddOrder)
+route.get("/user/:id", authenticateToken, validate({ params: ordersSchemas.ordersByUser.params }), handleOrdersByUser)
+route.post("/addOrder", validate({ body: ordersSchemas.addUser.body }), handleAddOrder)
 route.delete("/order/:id", authenticateToken, validate({ params: ordersSchemas.deleteUser.params }), handleDeleteOrder)
 
 export default route
