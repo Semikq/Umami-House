@@ -94,6 +94,7 @@ model orders {
   delivery_address String       @db.VarChar(255)
   payment_method   String
   created_at       DateTime     @default(now()) @db.Timestamptz(6)
+  total_price      Int
   order_dish       order_dish[]
   users            users        @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_users_orders")
 }
@@ -152,6 +153,7 @@ model users {
   company_name  String?         @db.VarChar(255)
   company_type  String?         @db.VarChar(255)
   created_at    DateTime        @default(now()) @db.Timestamptz(6)
+  bonuses       Int             @default(0)
   dish_comments dish_comments[]
   favorites     favorites[]
   orders        orders[]

@@ -1,4 +1,5 @@
 import { registerUser, loginUser } from "../../models/user/authModel";
+import { findUserByID } from "../../models/user/userModel";
 import { Request, Response } from "express";
 import { generateAccessToken, generateRefreshToken } from "../../config/jwtToken";
 import jwt, { JwtPayload } from "jsonwebtoken";
@@ -55,7 +56,9 @@ export async function handleRefreshToken(req: Request, res: Response): Promise<v
     try {
         const decoded = jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET!) as JwtPayload;
         const accessToken = generateAccessToken(decoded.userId, decoded.role);
-        res.json({ user: decoded, accessToken });
+        const user = await findUserByID({ id: decoded.userId })
+        console.log(user)
+        res.json({ user, accessToken });
     } catch {
         res.status(401).json({ error: "Invalid refresh token" });
     }

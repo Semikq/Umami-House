@@ -7,6 +7,7 @@ import {restaurantsApi} from "./api/restaurantsApi.ts";
 import {partnersApi} from "./api/partnersApi.ts";
 import {dishesApi} from "./api/dishesApi.ts";
 import {saleApi} from "./api/saleApi.ts";
+import {ordersApi} from "./api/ordersApi.ts";
 import userCity from "./slices/userCity.ts";
 import { FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from 'redux-persist'
 
@@ -20,6 +21,7 @@ export const store = configureStore({
         [partnersApi.reducerPath]: partnersApi.reducer,
         [dishesApi.reducerPath]: dishesApi.reducer,
         [saleApi.reducerPath]: saleApi.reducer,
+        [ordersApi.reducerPath]: ordersApi.reducer,
         userCity
     },
     middleware: (getDefaultMiddleware) =>
@@ -27,10 +29,10 @@ export const store = configureStore({
             serializableCheck: {
                 ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
             },
-        }).concat(usersApi.middleware).concat(restaurantsApi.middleware).concat(partnersApi.middleware).concat(dishesApi.middleware).concat(saleApi.middleware)
+        }).concat(usersApi.middleware).concat(restaurantsApi.middleware).concat(partnersApi.middleware).concat(dishesApi.middleware).concat(saleApi.middleware).concat(ordersApi.middleware)
 });
 
-// store.subscribe(() => {
-//     const state = store.getState();
-//     console.log(state);
-// });
+store.subscribe(() => {
+    const state = store.getState();
+    console.log(state);
+});

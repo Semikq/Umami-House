@@ -1,0 +1,159 @@
+@import url('https://fonts.googleapis.com/css2?family=Delius&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+.user__select{
+    grid-column: 2 / 12;
+    border-bottom: solid 2px black;
+    display: flex;
+    justify-content: space-between;
+}
+
+.user__select-tab{
+    display: flex;
+    gap: 15px;
+    overflow-y: auto;
+}
+
+.user__select-block{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: #333333;
+    cursor: pointer;
+    user-select: none;
+}
+
+.select__block-title{
+    margin: 0;
+    font-family: Roboto, sans-serif;
+    font-size: 21px;
+    font-weight: 400;
+    white-space: nowrap;
+}
+
+.select__block-mail {
+    margin: 0;
+    font-family: Roboto, sans-serif;
+    font-size: 14px;
+    user-select: all;
+    transform: translateY(-2px);
+}
+
+.user__select-exit{
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.select__exit-button{
+    margin: 0;
+    font-family: Roboto, sans-serif;
+    font-size: 21px;
+    font-weight: 400;
+}
+
+
+
+.user__info{
+    grid-column: 2 / 12;
+    padding: 10px 0 0 10px;
+    font-family: Roboto, sans-serif;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    color: #333333;
+}
+
+.user__info-role{
+    font-size: 30px;
+    font-weight: 500;
+    margin: 0;
+}
+
+.user__info-contactDetails{
+    font-size: 22px;
+    font-weight: 500;
+    margin: 0;
+}
+
+.user__info-details{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+
+.user__info-details--bloc{
+    display: flex;
+    width: 550px;
+}
+
+.info__details-bloc--title{
+    margin: 0;
+    width: 50%;
+    font-weight: 400;
+    font-size: 19px;
+}
+
+.info__details-bloc--value{
+    margin: 0;
+    width: 50%;
+    font-size: 18px;
+}
+
+.user__info-button--edit,
+.user__info-button--order,
+.user__info-button--favorites{
+    width: 210px;
+    background-color: #B75F6D;
+    border: none;
+    border-radius: 10px 20px 10px 20px;
+    font-size: 20px;
+    padding: 12px 10px;
+    white-space: nowrap;
+    color: #FFF9F0;
+    margin-top: 10px;
+    transition: all ease-in-out 0.3s;
+    cursor: pointer;
+    user-select: none;
+}
+
+.user__info-button--edit:hover,
+.user__info-button--order:hover,
+.user__info-button--favorites:hover{
+    background-color: #F1C232;
+    color: #333333;
+}
+
+
+.user__pastOrders,
+.user__favorites{
+    grid-column: 2 / 12;
+    padding-left: 10px;
+    margin-top: 15px;
+    font-family: Roboto, sans-serif;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.user__pastOrders-title,
+.user__favorites-title{
+    font-size: 30px;
+    margin: 0;
+    font-weight: 500;
+}
+
+.user__pastOrders-text,
+.user__favorites-text{
+    font-size: 20px;
+    margin: 0;
+}
+
+.user__info-button--order,
+.user__info-button--favorites{
+    width: 250px;
+}
+
+.user__info-button--favorites{
+    width: 260px;
+}

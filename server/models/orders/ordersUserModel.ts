@@ -1,4 +1,4 @@
-import { Id, AddOrder } from "../TypesModel/ordersTypes";
+import {Id, AddOrder} from "../TypesModel/ordersTypes";
 import { PrismaClient, Prisma } from "@prisma/client";
 const prisma = new PrismaClient()
 
@@ -23,23 +23,24 @@ export async function fetchOrdersByUser({ id }: Id) {
     }
 }
 
-export async function addOrder({ id }: Id, { user_id, status, delivery_address, payment_method, dishes }: AddOrder): Promise<void> {
+export async function addOrder({ user_id, delivery_address, payment_method, dishes, total_price }: AddOrder): Promise<void> {
     try {
-        await prisma.$transaction(async tx => {
-            await tx.orders.create({ data: { id, user_id, status, delivery_address, payment_method }})
+         await prisma.$transaction(async tx => {
+             const { id } = await tx.orders.create({ data: { user_id, delivery_address, payment_method, total_price }})
 
-            const orderDishesData: Prisma.order_dishCreateManyInput[] = dishes.map((dish) => ({
-                order_id: id,
-                dish_id: dish.dish_id,
-                count: dish.count
-            }));
+             const orderDishesData: Prisma.order_dishCreateManyInput[] = dishes.map((dish) => ({
+                 order_id: id,
+                 dish_id: dish.id,
+                 count: dish.count
+             }));
 
-            await tx.order_dish.createMany({
-                data: orderDishesData
-            });
+             await tx.order_dish.createMany({
+                 data: orderDishesData
+             });
         })
     } catch (error) {
-        throw new Error((error as Error).message)
+        console.error("Prisma error:", error);
+        throw error;
     }
 }
 
