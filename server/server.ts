@@ -22,14 +22,16 @@ app.use(cors({
     credentials: true,
 }));
 
+console.log(process.env.CLIENT_URL)
+
 app.use("/uploads", express.static("uploads"));
-// app.use("/dishes", dishesRouter);
-// app.use("/favorites", favoritesRoutes);
-// app.use("/orders", ordersRoutes);
-// app.use("/partners", partnersRoutes);
-// app.use("/restaurants", restaurantsRoutes);
-// app.use("/sales", saleRoutes);
-// app.use("/users", userRoutes);
+app.use("/dishes", dishesRouter);
+app.use("/favorites", favoritesRoutes);
+app.use("/orders", ordersRoutes);
+app.use("/partners", partnersRoutes);
+app.use("/restaurants", restaurantsRoutes);
+app.use("/sales", saleRoutes);
+app.use("/users", userRoutes);
 
 const clientBuildPath = path.join(__dirname, "../client/build");
 app.use(express.static(clientBuildPath));
