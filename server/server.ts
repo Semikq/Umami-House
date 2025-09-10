@@ -20,7 +20,7 @@ console.log(process.env.CLIENT_URL)
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
-    origin: process.env.CLIENT_URL || "http://localhost:3000",
+    origin: "https://umami-house-client.onrender.com",
     credentials: true,
 }));
 
