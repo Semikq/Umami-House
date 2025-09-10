@@ -8,10 +8,11 @@ import { restaurantsShemas } from "../schemas/restaurantsSchemas.js";
 const route = Router()
 
 route.post("/addRestaurant", authenticateToken, authorizeAdmin, validate({ body: restaurantsShemas.create.body }), handleAddRestaurant)
-route.put("/:id/updateRestaurant", authenticateToken, authorizeAdmin, validate({ params: restaurantsShemas.update.params ,body: restaurantsShemas.update.body }), handleUpdateRestaurant)
-route.delete("/deleteRestaurant", authenticateToken, authorizeAdmin, validate({ body: restaurantsShemas.delete.params }), handleDeleteRestaurant)
+route.put("/updateRestaurant/:id", authenticateToken, authorizeAdmin, validate({ params: restaurantsShemas.update.params ,body: restaurantsShemas.update.body }), handleUpdateRestaurant)
+route.delete("/deleteRestaurant/:id", authenticateToken, authorizeAdmin, validate({ params: restaurantsShemas.delete.params }), handleDeleteRestaurant)
+
 route.post("/addCity", authenticateToken, authorizeAdmin, validate({ body: restaurantsShemas.addCity.body }), handleAddCity)
-route.delete("/deleteCity", authenticateToken, authorizeAdmin, validate({ body: restaurantsShemas.deleteCity.params }), handleDeleteCity)
+route.delete("/deleteCity/:id", authenticateToken, authorizeAdmin, validate({ params: restaurantsShemas.deleteCity.params }), handleDeleteCity)
 
 route.get("/cities", handleAllCities)
 route.get("/city/:city_id", handleRestaurantsByCity)

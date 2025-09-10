@@ -15,10 +15,10 @@ route.post("/refresh", handleRefreshToken)
 route.post("/logout", handleLogout)
 
 route.get("/", handleAllUsers)
-route.put("/:id/role", authenticateToken, authorizeAdmin, validate({ params: userSchemas.choiceRoleUserById.params, body: userSchemas.choiceRoleUserById.body }), handleChoiceRoleUserById)
+route.put("/role/:id", authenticateToken, authorizeAdmin, validate({ params: userSchemas.choiceRoleUserById.params, body: userSchemas.choiceRoleUserById.body }), handleChoiceRoleUserById)
 route.delete("/:id", authenticateToken, authorizeAdmin, validate({ params: userSchemas.deleteUserById.params }), handleDeleteUserById)
 
-route.put("/:id/updateUser", authenticateToken, validate({ params: userSchemas.updateUser.params, body: userSchemas.updateUser.body }), hashPassword,  handleUpdateUser)
-route.delete("/:id/deleteUser", authenticateToken, validate({ params: userSchemas.deleteUser.params }), handleDeleteUser)
+route.put("/updateUser/:id", authenticateToken, validate({ params: userSchemas.updateUser.params, body: userSchemas.updateUser.body }), hashPassword,  handleUpdateUser)
+route.delete("/deleteUser/:id", authenticateToken, validate({ params: userSchemas.deleteUser.params }), handleDeleteUser)
 
 export default route

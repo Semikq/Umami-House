@@ -4,7 +4,7 @@ export const restaurantsShemas = {
     create: {
         body: z.object({
             name: z.string(),
-            addres: z.string(),
+            address: z.string(),
             phone: z.string(),
             description: z.string(),
             active: z.boolean(),
@@ -16,7 +16,7 @@ export const restaurantsShemas = {
         params: z.object({ id: z.number() }),
         body: z.object({
             name: z.string(),
-            addres: z.string(),
+            address: z.string(),
             phone: z.string(),
             description: z.string(),
             active: z.boolean(),
