@@ -16,6 +16,6 @@ route.delete("/deleteCity/:id", authenticateToken, authorizeAdmin, validate({ pa
 
 route.get("/cities", handleAllCities)
 route.get("/city/:city_id", handleRestaurantsByCity)
-route.get("/", handleAllRestaurants)
+route.get("/all", handleAllRestaurants)
 // validate({ body: restaurantsShemas.restaurants.body })
 export default route

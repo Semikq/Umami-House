@@ -7,7 +7,7 @@ import { partnersSchemas } from "../schemas/partnersSchemas.js";
 
 const route = Router()
 
-route.get("/", handleAllPartners)
+route.get("/all", handleAllPartners)
 
 route.post("/addPartners", authenticateToken, authorizeAdmin, validate({ body: partnersSchemas.create.body }), handleAddPartners)
 route.put("/updatePartners/:id", authenticateToken, authorizeAdmin, validate({ params: partnersSchemas.update.params, body: partnersSchemas.update.body }), handleUpdatePartners)
