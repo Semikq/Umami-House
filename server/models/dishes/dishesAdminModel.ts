@@ -1,4 +1,4 @@
-import { Id, Image, Images, AddDish, UpdateDish } from "../TypesModel/dishesTypes"
+import { Id, Image, Images, AddDish, UpdateDish } from "../TypesModel/dishesTypes.js"
 import {Prisma, PrismaClient} from "@prisma/client";
 const prisma = new PrismaClient()
 

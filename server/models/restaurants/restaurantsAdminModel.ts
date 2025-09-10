@@ -1,4 +1,4 @@
-import { Id, AddRestaurant, UpdateRestaurant, addCity } from "../TypesModel/restaurantsTypes";
+import { Id, AddRestaurant, UpdateRestaurant, addCity } from "../TypesModel/restaurantsTypes.js";
 import { PrismaClient, Prisma } from "@prisma/client"
 const prisma = new PrismaClient()
 

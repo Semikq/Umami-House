@@ -4,12 +4,12 @@
     "module": "ESNext",
     "moduleResolution": "Node",
     "outDir": "./dist",
-    "rootDir": ".",
+    "rootDir": "./",
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true
   },
-  "include": ["server.ts", "src/**/*.ts"],
+  "include": ["server/**/*.ts", "server.ts"],
   "exclude": ["node_modules"]
 }

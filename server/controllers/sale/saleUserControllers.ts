@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { fetchAllSale } from "../../models/sale/saleUserModul";
+import { fetchAllSale } from "../../models/sale/saleUserModul.js";
 
 export async function handleAllSale(req: Request, res: Response):Promise<void> {
     try {

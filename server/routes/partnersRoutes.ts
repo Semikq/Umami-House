@@ -1,9 +1,9 @@
 import { Router } from "express";
-import { handleAddPartners, handleUpdatePartners, handleDeletePartners } from "../controllers/partners/partnersAdminControllers";
-import { handleAllPartners } from "../controllers/partners/partnersUserControllers";
-import { validate } from "../middleware/validation";
-import { authenticateToken, authorizeAdmin } from "../middleware/authMiddleware";
-import { partnersSchemas } from "../schemas/partnersSchemas";
+import { handleAddPartners, handleUpdatePartners, handleDeletePartners } from "../controllers/partners/partnersAdminControllers.js";
+import { handleAllPartners } from "../controllers/partners/partnersUserControllers.js";
+import { validate } from "../middleware/validation.js";
+import { authenticateToken, authorizeAdmin } from "../middleware/authMiddleware.js";
+import { partnersSchemas } from "../schemas/partnersSchemas.js";
 
 const route = Router()
 
