@@ -16,7 +16,7 @@ route.post("/logout", handleLogout)
 
 route.get("/", handleAllUsers)
 route.put("/role/:id", authenticateToken, authorizeAdmin, validate({ params: userSchemas.choiceRoleUserById.params, body: userSchemas.choiceRoleUserById.body }), handleChoiceRoleUserById)
-route.delete("/:id", authenticateToken, authorizeAdmin, validate({ params: userSchemas.deleteUserById.params }), handleDeleteUserById)
+route.delete("/delete/:id", authenticateToken, authorizeAdmin, validate({ params: userSchemas.deleteUserById.params }), handleDeleteUserById)
 
 route.put("/updateUser/:id", authenticateToken, validate({ params: userSchemas.updateUser.params, body: userSchemas.updateUser.body }), hashPassword,  handleUpdateUser)
 route.delete("/deleteUser/:id", authenticateToken, validate({ params: userSchemas.deleteUser.params }), handleDeleteUser)

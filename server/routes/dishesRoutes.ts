@@ -15,8 +15,8 @@ route.post("/addDish", authenticateToken, authorizeAdmin, validate({ body: dishe
 route.put("/updateDish/:id", authenticateToken, authorizeAdmin, validate({ params: dishesSchemas.update.params, body: dishesSchemas.update.body }), handleUpdateDish)
 route.delete("/deleteDish/:id", authenticateToken, authorizeAdmin, validate({ params: dishesSchemas.delete.params }), handleDeleteDish)
 
-route.get("/:id/comments", validate({ params: dishesSchemas.dishCommentsById.params }), handleDishCommentsById)
+route.get("/comments/:id", validate({ params: dishesSchemas.dishCommentsById.params }), handleDishCommentsById)
 route.post("/addComment", authenticateToken, validate({ body: dishesSchemas.addCommentByIdDishes.body }), handleAddCommentByIdDishes)
-route.delete("/:id/deleteComment", authenticateToken, validate({ params: dishesSchemas.deleteCommentByIdDishes.params }), handleDeleteCommentByIdDishes)
+route.delete("/deleteComment/:id", authenticateToken, validate({ params: dishesSchemas.deleteCommentByIdDishes.params }), handleDeleteCommentByIdDishes)
 
 export default route
