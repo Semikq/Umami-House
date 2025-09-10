@@ -53,7 +53,7 @@ export async function handleDishCommentsById(req: Request, res: Response): Promi
 export async function handleAddCommentByIdDishes(req: Request, res: Response): Promise<void> {
     try {
         const result = await addCommentByIdDishes(req.body)
-        res.status(201).json({ message: "Comment added", data: result })
+        res.status(201).json({ data: result })
     } catch (error) {
         res.status(500).json((error as Error).message)
     }

@@ -35,7 +35,7 @@ export const ordersSchemas = {
                 sub_category_id: z.number(),
                 active: z.boolean(),
                 count: z.number(),
-                created_at: z.string(),
+                created_at: z.string().datetime(),
                 dish_images: z.array(z.object({
                     id: z.number(),
                     title: z.string(),

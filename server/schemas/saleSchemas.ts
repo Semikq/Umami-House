@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const saleShemas = {
+export const saleSchemas = {
     create: {
         body: z.object({
             title: z.string(),

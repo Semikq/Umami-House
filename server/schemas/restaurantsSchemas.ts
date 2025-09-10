@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const restaurantsShemas = {
+export const restaurantsSchemas = {
     create: {
         body: z.object({
             name: z.string(),

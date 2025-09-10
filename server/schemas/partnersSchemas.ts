@@ -4,7 +4,7 @@ export const partnersSchemas = {
     create: {
         body: z.object({
             name: z.string(),
-            logo: z.string(),
+            logo_img: z.string(),
             link_website: z.string().optional(),
             active: z.boolean()
         })
@@ -13,7 +13,7 @@ export const partnersSchemas = {
         params: z.object({ id: z.number() }),
         body: z.object({
             name: z.string(),
-            logo: z.string(),
+            logo_img: z.string(),
             link_website: z.string().optional(),
             active: z.boolean()
         })
