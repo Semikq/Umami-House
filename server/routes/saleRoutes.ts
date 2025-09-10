@@ -7,7 +7,7 @@ import { saleSchemas } from "../schemas/saleSchemas.js";
 
 const route = Router()
 
-route.get("/", handleAllSale)
+route.get("/all", handleAllSale)
 
 route.post("/addSale", authenticateToken, authorizeAdmin, validate({ body: saleSchemas.create.body }), handleAddSale)
 route.put("/updateSale/:id", authenticateToken, authorizeAdmin, validate({ params: saleSchemas.update.params, body: saleSchemas.update.body }), handleUpdateSale)

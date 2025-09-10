@@ -5,7 +5,7 @@ export const restaurantsApi = createApi({
     reducerPath: "restaurantsApi",
     baseQuery: fetchBaseQuery({ baseUrl: `${process.env.REACT_APP_API_URL}/restaurants` }),
     endpoints: (builder) => ({
-        restaurants: builder.query<Restaurants[], void>({ query: () => "" }),
+        restaurants: builder.query<Restaurants[], void>({ query: () => "/all" }),
         cities: builder.query<Cities[], void>({ query: () => "/cities" }),
         restaurantsByCity: builder.query<RestaurantsByCity[], number>({ query: (id) => `/city/${id}` })
     })

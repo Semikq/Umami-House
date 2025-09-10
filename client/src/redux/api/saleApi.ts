@@ -5,7 +5,7 @@ export const saleApi = createApi({
     reducerPath: 'saleApi',
     baseQuery: fetchBaseQuery({ baseUrl: `${process.env.REACT_APP_API_URL}/sales` }),
     endpoints: (builder) => ({
-        sale: builder.query<Sale[], void>({ query: () => "" })
+        sale: builder.query<Sale[], void>({ query: () => "/all" })
     })
 })
 
