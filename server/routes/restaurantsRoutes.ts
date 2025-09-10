@@ -1,9 +1,9 @@
 import { Router } from "express";
-import { handleAddRestaurant, handleUpdateRestaurant, handleDeleteRestaurant, handleAddCity, handleDeleteCity } from "../controllers/restaurants/restaurantsAdminControllers";
-import {handleAllCities, handleAllRestaurants, handleRestaurantsByCity} from "../controllers/restaurants/restaurantsUserControllers";
-import { validate } from "../middleware/validation";
-import { authenticateToken, authorizeAdmin } from "../middleware/authMiddleware";
-import { restaurantsShemas } from "../schemas/restaurantsSchemas";
+import { handleAddRestaurant, handleUpdateRestaurant, handleDeleteRestaurant, handleAddCity, handleDeleteCity } from "../controllers/restaurants/restaurantsAdminControllers.js";
+import {handleAllCities, handleAllRestaurants, handleRestaurantsByCity} from "../controllers/restaurants/restaurantsUserControllers.js";
+import { validate } from "../middleware/validation.js";
+import { authenticateToken, authorizeAdmin } from "../middleware/authMiddleware.js";
+import { restaurantsShemas } from "../schemas/restaurantsSchemas.js";
 
 const route = Router()
 

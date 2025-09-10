@@ -1,4 +1,4 @@
-import { fetchOrdersByUser, addOrder, deleteOrder } from "../../models/orders/ordersUserModel";
+import { fetchOrdersByUser, addOrder, deleteOrder } from "../../models/orders/ordersUserModel.js";
 import { Request, Response } from "express";
 
 export async function handleOrdersByUser(req: Request, res: Response): Promise<void> {

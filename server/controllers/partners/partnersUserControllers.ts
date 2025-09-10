@@ -1,4 +1,4 @@
-import { fetchAllPartners } from "../../models/partners/partnersUserModel";
+import { fetchAllPartners } from "../../models/partners/partnersUserModel.js";
 import { Request, Response } from "express";
 
 export async function handleAllPartners(req: Request, res: Response): Promise<void> {

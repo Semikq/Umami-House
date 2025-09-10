@@ -1,4 +1,4 @@
-import { User, Id, UserRefresh } from "../TypesModel/userTypes";
+import { User, Id, UserRefresh } from "../TypesModel/userTypes.js";
 import { Prisma, PrismaClient } from "@prisma/client"
 const prisma = new PrismaClient();
 

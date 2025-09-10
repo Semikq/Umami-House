@@ -1,4 +1,4 @@
-import { updateUser, deleteUser } from "../../models/user/userModel"
+import { updateUser, deleteUser } from "../../models/user/userModel.js"
 import { Request, Response } from "express"
 
 export async function handleUpdateUser(req: Request , res: Response): Promise<void> {

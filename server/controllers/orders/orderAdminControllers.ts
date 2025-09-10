@@ -1,4 +1,4 @@
-import { fetchOrdersByFilter, updateStatusOrder, deleteOrder } from "../../models/orders/ordersAdminModel";
+import { fetchOrdersByFilter, updateStatusOrder, deleteOrder } from "../../models/orders/ordersAdminModel.js";
 import { Request, Response } from "express";
 
 export async function handleOrdersByFilter(req: Request, res: Response): Promise<void> {

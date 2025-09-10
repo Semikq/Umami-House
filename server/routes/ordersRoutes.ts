@@ -1,9 +1,9 @@
 import { Router } from "express";
-import { handleOrdersByFilter, handleUpdateStatusOrder, handleDeleteOrderById } from "../controllers/orders/orderAdminControllers";
-import { handleOrdersByUser, handleAddOrder, handleDeleteOrder } from "../controllers/orders/ordersUserControllers";
-import { validate } from "../middleware/validation";
-import { authenticateToken, authorizeAdmin } from "../middleware/authMiddleware";
-import { ordersSchemas } from "../schemas/ordersSchemas";
+import { handleOrdersByFilter, handleUpdateStatusOrder, handleDeleteOrderById } from "../controllers/orders/orderAdminControllers.js";
+import { handleOrdersByUser, handleAddOrder, handleDeleteOrder } from "../controllers/orders/ordersUserControllers.js";
+import { validate } from "../middleware/validation.js";
+import { authenticateToken, authorizeAdmin } from "../middleware/authMiddleware.js";
+import { ordersSchemas } from "../schemas/ordersSchemas.js";
 
 const route = Router()
 

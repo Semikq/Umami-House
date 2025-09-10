@@ -1,4 +1,4 @@
-import { fetchCategoryWithDishes, fetchAllCategories, fetchAllDishes, fetchDishById, fetchDishCommentsById, addCommentByIdDishes, deleteCommentByIdDishes } from "../../models/dishes/dishesUserModel";
+import { fetchCategoryWithDishes, fetchAllCategories, fetchAllDishes, fetchDishById, fetchDishCommentsById, addCommentByIdDishes, deleteCommentByIdDishes } from "../../models/dishes/dishesUserModel.js";
 import { Request, Response } from "express";
 
 export async function handleCategoryWithDishes(req: Request, res: Response): Promise<void> {

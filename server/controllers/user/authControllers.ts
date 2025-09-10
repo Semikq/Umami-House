@@ -1,7 +1,7 @@
-import { registerUser, loginUser } from "../../models/user/authModel";
-import { findUserByID } from "../../models/user/userModel";
+import { registerUser, loginUser } from "../../models/user/authModel.js";
+import { findUserByID } from "../../models/user/userModel.js";
 import { Request, Response } from "express";
-import { generateAccessToken, generateRefreshToken } from "../../config/jwtToken";
+import { generateAccessToken, generateRefreshToken } from "../../config/jwtToken.js";
 import jwt, { JwtPayload } from "jsonwebtoken";
 
 export async function handleRegisterUser(req: Request , res: Response): Promise<void> {

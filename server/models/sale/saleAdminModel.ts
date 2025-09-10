@@ -1,4 +1,4 @@
-import { Id, AddSale, UpdateSale } from "../TypesModel/saleTypes";
+import { Id, AddSale, UpdateSale } from "../TypesModel/saleTypes.js";
 import { PrismaClient, Prisma } from "@prisma/client";
 const prisma = new PrismaClient()
 
