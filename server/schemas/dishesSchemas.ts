@@ -52,9 +52,9 @@ export const dishesSchemas = {
         })
     },
     deleteCommentByIdDishes: {
-        params: z.object({ 
+        body: z.object({
             user_id: z.number(),
             id: z.number() 
-        })
+        }),
     }
 }

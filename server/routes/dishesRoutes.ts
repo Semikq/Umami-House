@@ -17,6 +17,6 @@ route.delete("/deleteDish/:id", authenticateToken, authorizeAdmin, validate({ pa
 
 route.get("/comments/:id", validate({ params: dishesSchemas.dishCommentsById.params }), handleDishCommentsById)
 route.post("/addComment", authenticateToken, validate({ body: dishesSchemas.addCommentByIdDishes.body }), handleAddCommentByIdDishes)
-route.delete("/deleteComment/:id", authenticateToken, validate({ params: dishesSchemas.deleteCommentByIdDishes.params }), handleDeleteCommentByIdDishes)
+route.delete("/deleteComment", authenticateToken, validate({ body: dishesSchemas.deleteCommentByIdDishes.body }), handleDeleteCommentByIdDishes)
 
 export default route
