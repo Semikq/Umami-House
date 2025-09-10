@@ -5,7 +5,6 @@ dotenv.config();
 
 export function authenticateToken(req: Request, res: Response, next: NextFunction): void {
     const authHeader  = req.headers.authorization;
-    console.log(authHeader)
     if (!authHeader) {
         res.status(401).send("No token provided");
         return;

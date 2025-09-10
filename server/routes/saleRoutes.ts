@@ -3,14 +3,14 @@ import { handleAddSale, handleUpdateSale, handleDeleteSale } from "../controller
 import { handleAllSale } from "../controllers/sale/saleUserControllers.js";
 import { validate } from "../middleware/validation.js";
 import { authenticateToken, authorizeAdmin } from "../middleware/authMiddleware.js";
-import { saleShemas } from "../schemas/saleSchemas.js";
+import { saleSchemas } from "../schemas/saleSchemas.js";
 
 const route = Router()
 
 route.get("/", handleAllSale)
 
-route.post("/addSale", authenticateToken, authorizeAdmin, validate({ body: saleShemas.create.body }), handleAddSale)
-route.put("/updateSale/:id", authenticateToken, authorizeAdmin, validate({ params: saleShemas.update.params, body: saleShemas.update.body }), handleUpdateSale)
-route.delete("/deleteSale/:id", authenticateToken, authorizeAdmin, validate({ params: saleShemas.delete.params }), handleDeleteSale)
+route.post("/addSale", authenticateToken, authorizeAdmin, validate({ body: saleSchemas.create.body }), handleAddSale)
+route.put("/updateSale/:id", authenticateToken, authorizeAdmin, validate({ params: saleSchemas.update.params, body: saleSchemas.update.body }), handleUpdateSale)
+route.delete("/deleteSale/:id", authenticateToken, authorizeAdmin, validate({ params: saleSchemas.delete.params }), handleDeleteSale)
 
 export default route
