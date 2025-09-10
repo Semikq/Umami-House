@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "tsx server.ts",
-    "build": "tsc",
+    "build": "npx tsc",
     "start": "node dist/server.js"
   },
   "keywords": [],
@@ -26,7 +26,6 @@
     "jsonwebtoken": "^9.0.2",
     "mysql2": "^3.14.1",
     "pg": "^8.16.3",
-    "tsc": "^2.0.4",
     "zod": "^3.24.4"
   },
   "devDependencies": {
