@@ -15,14 +15,14 @@ const app = express();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+console.log(process.env.CLIENT_URL)
+
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
     origin: process.env.CLIENT_URL || "http://localhost:3000",
     credentials: true,
 }));
-
-console.log(process.env.CLIENT_URL)
 
 app.use("/uploads", express.static("uploads"));
 app.use("/dishes", dishesRouter);
