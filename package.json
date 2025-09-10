@@ -5,7 +5,7 @@
   "scripts": {
     "start": "cd server && npm start",
     "dev": "cd server && npm run dev",
-    "build": "cd server && npm install && npm run build && cd ../client && npm install && npm run build"
+    "build": "cd server && npm install --include=dev && npm run build && cd ../client && npm install && npm run build"
   },
   "repository": {
     "type": "git",
