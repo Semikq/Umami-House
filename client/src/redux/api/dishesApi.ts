@@ -3,7 +3,7 @@ import {Categories, Category, Dish} from "../types/dishes.ts";
 
 export const dishesApi = createApi({
     reducerPath: "dishesApi",
-    baseQuery: fetchBaseQuery({ baseUrl: "/dishes" }),
+    baseQuery: fetchBaseQuery({ baseUrl: `${process.env.REACT_APP_API_URL}/dishes` }),
     endpoints: (builder) => ({
         categories: builder.query<Categories[], void>({ query: () => "categories" }),
         categoryWithDishes: builder.query<Category, string>({ query: (id) => `category/${id}` }),
