@@ -6,8 +6,8 @@
   "scripts": {
     "prisma:push": "npx prisma db push && npx prisma generate",
     "build": "npx tsc",
-    "start_build": "node dist/server.js",
-    "start": "tsx server.ts"
+    "startt": "tsx server.ts",
+    "start": "node dist/server.js"
   },
   "keywords": [],
   "author": "",
