@@ -1,9 +1,10 @@
 import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react";
 import {Partners} from "../types/partners.ts";
+import getApiUrl from "../../utils/getApiUrl.ts";
 
 export const partnersApi = createApi({
     reducerPath: "partnersApi",
-    baseQuery: fetchBaseQuery({ baseUrl: `${process.env.REACT_APP_SERVER_URL}/partners` }),
+    baseQuery: fetchBaseQuery({ baseUrl: getApiUrl("/partners") }),
     endpoints: (builder) => ({
         partners: builder.query<Partners[], void>({ query: () => "/all" })
     })
