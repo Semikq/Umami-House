@@ -67,7 +67,7 @@ export async function handleLogout(req: Request, res: Response) {
     res.clearCookie("refreshToken", {
         httpOnly: true,
         secure: true,
-        sameSite: "strict",
+        sameSite: "none",
     });
     res.status(200).json({ message: "Logged out" });
 }
