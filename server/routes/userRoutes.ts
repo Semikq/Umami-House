@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { handleAllUsers, handleChoiceRoleUserById, handleDeleteUserById } from "../controllers/user/adminControllers.js";
-import {handleRegisterUser, handleLoginUsers, handleLogout} from "../controllers/user/authControllers.js";
+import {handleRegisterUser, handleLoginUsers, handleRefreshToken, handleLogout} from "../controllers/user/authControllers.js";
 import { handleUpdateUser, handleDeleteUser } from "../controllers/user/userControllers.js";
 import { validate } from "../middleware/validation.js";
 import { authenticateToken, authorizeAdmin } from "../middleware/authMiddleware.js";
@@ -11,7 +11,7 @@ const route = Router()
 
 route.post("/register", validate({ body: userSchemas.register.body }), hashPassword, handleRegisterUser)
 route.post("/login", validate({ body: userSchemas.login.body }), handleLoginUsers)
-// route.post("/refresh", handleRefreshToken)
+route.post("/refresh", handleRefreshToken)
 route.post("/logout", handleLogout)
 
 route.get("/all", handleAllUsers)
