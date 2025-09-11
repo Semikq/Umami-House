@@ -7,7 +7,7 @@ import CreateDish from "./pages/dish/Dish";
 import CreateContactPage from "./pages/contact/Contact";
 import {useSelector} from "react-redux";
 import useDetectUserCity from "./hooks/useDetectUserCity";
-import useCheckRefresh from "./hooks/useCheckRefresh";
+// import useCheckRefresh from "./hooks/useCheckRefresh";
 import CreateRestaurantPages from "./pages/restaurant/Restaurant";
 import CreateAuthFrom from "./pages/auth/Auth";
 import CreateCartBloc from "./pages/cart/Cart";
@@ -19,7 +19,7 @@ function App() {
     const showAuth = useSelector((state) => state.ui.showAuth)
     const showCart = useSelector((state) => state.ui.showCart)
     const cart = useSelector(state => state.cart.dishes)
-    useCheckRefresh()
+    // useCheckRefresh()
     useDetectUserCity()
 
     return (
