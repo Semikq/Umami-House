@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "tsx server.ts",
     "build": "npx tsc",
-    "start": "node dist/server.js"
+    "start": "node dist/server.js",
+    "prisma:deploy": "npx prisma migrate deploy && npx prisma generate"
   },
   "keywords": [],
   "author": "",
