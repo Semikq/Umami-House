@@ -46,22 +46,22 @@ export async function handleLoginUsers(req: Request , res: Response): Promise<vo
     }
 }
 
-// export async function handleRefreshToken(req: Request, res: Response): Promise<void> {
-//     const { refreshToken } = req.cookies;
-//     if (!refreshToken) {
-//         res.status(401).json({ error: "No refresh token" });
-//         return
-//     }
-//
-//     try {
-//         const decoded = jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET!) as JwtPayload;
-//         const accessToken = generateAccessToken(decoded.userId, decoded.role);
-//         const user = await findUserByID({ id: decoded.userId })
-//         res.json({ user, accessToken });
-//     } catch {
-//         res.status(401).json({ error: "Invalid refresh token" });
-//     }
-// }
+export async function handleRefreshToken(req: Request, res: Response): Promise<void> {
+    const { refreshToken } = req.cookies;
+    if (!refreshToken) {
+        res.status(401).json({ error: "No refresh token" });
+        return
+    }
+
+    try {
+        const decoded = jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET!) as JwtPayload;
+        const accessToken = generateAccessToken(decoded.userId, decoded.role);
+        const user = await findUserByID({ id: decoded.userId })
+        res.json({ user, accessToken });
+    } catch {
+        res.status(401).json({ error: "Invalid refresh token" });
+    }
+}
 
 export async function handleLogout(req: Request, res: Response) {
     res.clearCookie("refreshToken", {

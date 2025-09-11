@@ -26,12 +26,12 @@ export const usersApi = createApi({
                 body
             })
         }),
-        // refresh: builder.query({
-        //     query: () => ({
-        //         url: 'refresh',
-        //         method: 'POST',
-        //     }),
-        // }),
+        refresh: builder.query({
+            query: () => ({
+                url: 'refresh',
+                method: 'POST',
+            }),
+        }),
         logout: builder.mutation({
             query: () => ({
                 url: 'logout',

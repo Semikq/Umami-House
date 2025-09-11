@@ -215,7 +215,6 @@
 
 .card__restaurant--image{
     width: 50%;
-    background-color: green;
     object-fit: cover;
 }
 
