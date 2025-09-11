@@ -4,10 +4,9 @@
   "main": "server.js",
   "type": "module",
   "scripts": {
-    "dev": "tsx server.ts",
+    "prisma:deploy": "npx prisma migrate deploy && npx prisma generate",
     "build": "npx tsc",
-    "start": "node dist/server.js",
-    "prisma:deploy": "npx prisma migrate deploy && npx prisma generate"
+    "start": "node dist/server.js"
   },
   "keywords": [],
   "author": "",
