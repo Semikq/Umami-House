@@ -1,5 +1,6 @@
 import {useEffect, useRef, useState} from "react";
 import {Icon} from "@iconify/react";
+import getImage from "../../../utils/getImage.ts";
 
 export default function CreateBlockPhotos ({dish}) {
     const [photo, setPhoto] = useState(0)
@@ -19,12 +20,12 @@ export default function CreateBlockPhotos ({dish}) {
 
     return <div className="product__photos">
         <div className="product__photo-spicy">
-            <img src={dish.dish_images[photo]?.image_url} alt={dish.dish_images[photo]?.title}/>
+            <img src={getImage(dish.dish_images[photo]?.image_url)} alt={dish.dish_images[photo]?.title}/>
             {dish.spicy === true && <Icon icon="mdi:fire" className="icon"/>}
         </div>
         <div className="product__additional-photos" ref={myRef}>
             {dish.dish_images.map((image, i) =>
-                <img src={image.image_url} alt={image.title} key={image.id} onClick={() => setPhoto(i)} />
+                <img src={getImage(image.image_url)} alt={image.title} key={image.id} onClick={() => setPhoto(i)} />
             )}
         </div>
     </div>

@@ -2,6 +2,7 @@ import {Icon} from "@iconify/react";
 import {setCount, incrementCount, decrementCount, delDish} from "../../../redux/slices/cartSlice.ts";
 import {useState, useEffect, useRef} from "react";
 import {useDispatch} from "react-redux";
+import getImage from "../../../utils/getImage.ts";
 
 function ChangeQuantity ({ dish }) {
     const [countDish, setCountDish] = useState(dish.count)
@@ -67,7 +68,7 @@ export default function CartListDishes({ cartDishes }){
             {cartDishes.dishes.map(dish =>
                 <div className="cart__dish">
                     <div className="cart__dish-header">
-                        <img className="cart__dish-image" src={dish.dish_images[0].image_url} alt={dish.name}/>
+                        <img className="cart__dish-image" src={getImage(dish.dish_images[0].image_url)} alt={dish.name}/>
                         <h2 className="cart__dish-title">
                             <span className="cart__dish-name">{dish.name}</span>
                             <span className="cart__dish-weight">({dish.weight}/10г)</span>
