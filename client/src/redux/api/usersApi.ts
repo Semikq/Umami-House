@@ -41,4 +41,4 @@ export const usersApi = createApi({
     })
 })
 
-export const { useLoginMutation, useRegisterMutation, useLogoutMutation } = usersApi
+export const { useLoginMutation, useRegisterMutation, useLazyRefreshQuery, useLogoutMutation } = usersApi
