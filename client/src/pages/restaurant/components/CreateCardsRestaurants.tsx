@@ -1,4 +1,5 @@
 import {Icon} from "@iconify/react";
+import getImage from "../../../utils/getImage.ts";
 
 export default function CreateCardsRestaurants({ restaurantsToShow, setSelected }){
     const handleInfoRestaurant = (restaurant) => {
@@ -20,7 +21,7 @@ export default function CreateCardsRestaurants({ restaurantsToShow, setSelected 
                         <p className="restaurant___information--description">{restaurant.description}</p>
                         <button className="restaurant___information--button" onClick={() => handleInfoRestaurant(restaurant)}>На мапі <Icon icon="majesticons:map-marker-line"/></button>
                     </div>
-                    <img className="card__restaurant--image" src={restaurant.restaurant_image} alt={restaurant.name} />
+                    <img className="card__restaurant--image" src={getImage(restaurant.restaurant_image)} alt={restaurant.name} />
                 </div>)}
         </div>
     )

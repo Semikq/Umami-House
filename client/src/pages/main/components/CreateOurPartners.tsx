@@ -1,5 +1,6 @@
 import {useState} from "react";
 import {Icon} from "@iconify/react";
+import getImage from "../../../utils/getImage.ts";
 
 export default function CreateOurPartners({partners}) {
     const [startIndex, setStartIndex] = useState(0);
@@ -28,7 +29,7 @@ export default function CreateOurPartners({partners}) {
 
             <div className="slider-track">
                 {getVisiblePartners().map((partner, index) => (
-                    <img key={index} src={`${partner.logo_img}`} alt={partner.name} />
+                    <img key={index} src={getImage(partner.logo_img)} alt={partner.name} />
                 ))}
             </div>
         </div>

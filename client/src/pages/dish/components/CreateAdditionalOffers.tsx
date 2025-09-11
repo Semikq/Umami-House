@@ -4,6 +4,7 @@ import {Icon} from "@iconify/react";
 import {useDispatch, useSelector} from "react-redux";
 import {showCart} from "../../../redux/slices/uiSlice.ts";
 import {addDish} from "../../../redux/slices/cartSlice.ts";
+import getImage from "../../../utils/getImage.ts";
 
 function DishButton ({dish}){
     const [text, setText] = useState(`${dish.price} грн`)
@@ -46,7 +47,7 @@ export default function CreateAdditionalOffers({categoryName, additionalDish}){
             </div>
             <div className="additionalOffers__list" ref={myRef}>
                 {additionalDish.sub_categories[0].dishes.map((dish) =>
-                    <Link to={`/dish/${dish.id}`} key={dish.id} className="cardDish" style={{ backgroundImage: `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(${dish.dish_images[0].image_url})` }}>
+                    <Link to={`/dish/${dish.id}`} key={dish.id} className="cardDish" style={{ backgroundImage: `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(${getImage(dish.dish_images[0].image_url)})` }}>
                         <div className="dishInfo">
                             <h1>{dish.name}</h1>
                             <p>({dish.weight}/10г)</p>

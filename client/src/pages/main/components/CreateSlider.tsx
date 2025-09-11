@@ -28,7 +28,7 @@ export default function CreateSlider ({sale}) {
             {sale.length > 0 && (
                 <>
                     {show ? <img className="afisha" src={getImage(sale[((index - 1) + sale.length) % sale.length].image_url)}/> : null}
-                    <img className="afisha" src={`${sale[index].image_url}`}/>
+                    <img className="afisha" src={getImage(sale[index].image_url)}/>
                     {show ? <img className="afisha" src={getImage(sale[(index + 1) % sale.length].image_url)}/> : null}
                 </>
             )}

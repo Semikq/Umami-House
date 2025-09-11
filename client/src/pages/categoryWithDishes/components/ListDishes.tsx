@@ -4,6 +4,7 @@ import {useState} from "react";
 import {addDish} from "../../../redux/slices/cartSlice.ts";
 import {showCart} from "../../../redux/slices/uiSlice.ts";
 import {useDispatch, useSelector} from "react-redux";
+import getImage from "../../../utils/getImage.ts";
 
 function DishButton ({dish}){
     const [text, setText] = useState(`${dish.price} грн`)
@@ -28,7 +29,7 @@ export default function ListDishes({sub_category}){
     return (
         <div className="listDishes">
             {sub_category.dishes.map((dish) =>
-                <Link to={`/dish/${dish.id}`} key={dish.id} className="cardDish" style={{ backgroundImage: `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(${dish.dish_images[0].image_url})` }}>
+                <Link to={`/dish/${dish.id}`} key={dish.id} className="cardDish" style={{ backgroundImage: `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(${getImage(dish.dish_images[0].image_url)})` }}>
                     <div className="dishInfo">
                         <h1>{dish.name}</h1>
                         <p>({dish.weight}/10г)</p>

@@ -1,4 +1,5 @@
 import {Icon} from "@iconify/react";
+import getImage from "../../../utils/getImage.ts";
 
 export default function CreateAdditionalInformationCards(){
     const additionalInformation = [
@@ -15,7 +16,7 @@ export default function CreateAdditionalInformationCards(){
                         <h2 className="section-cards__title">{info.title}</h2>
                         <Icon icon={info.icon} width={35} color="#333333"></Icon>
                     </div>
-                    <div className="section-cards__content" style={{backgroundImage: `linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url(${info.urlPhoto})`}}>
+                    <div className="section-cards__content" style={{backgroundImage: `linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url(${getImage(info.urlPhoto)})`}}>
                         <p className="section-cards__text">{info.text}</p>
                     </div>
                 </div>
