@@ -2,7 +2,6 @@
   "name": "client",
   "version": "0.1.0",
   "private": true,
-  "proxy": "https://umami-house-server.onrender.com",
   "dependencies": {
     "@iconify/react": "^6.0.0",
     "@react-google-maps/api": "^2.20.7",
