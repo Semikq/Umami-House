@@ -14,7 +14,7 @@ export async function handleRegisterUser(req: Request , res: Response): Promise<
 
         res.cookie("refreshToken", refreshToken, {
             httpOnly: true,
-            secure: false,
+            secure: true,
             sameSite: "strict",
             maxAge: 7*24*60*60*1000,
         })
@@ -66,7 +66,7 @@ export async function handleRefreshToken(req: Request, res: Response): Promise<v
 export async function handleLogout(req: Request, res: Response) {
     res.clearCookie("refreshToken", {
         httpOnly: true,
-        secure: false,
+        secure: true,
         sameSite: "strict",
     });
     res.status(200).json({ message: "Logged out" });

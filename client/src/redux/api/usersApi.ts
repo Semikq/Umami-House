@@ -26,7 +26,7 @@ export const usersApi = createApi({
                 body
             })
         }),
-        refresh: builder.mutation({
+        refresh: builder.query({
             query: () => ({
                 url: 'refresh',
                 method: 'POST',
@@ -41,4 +41,4 @@ export const usersApi = createApi({
     })
 })
 
-export const { useLoginMutation, useRegisterMutation, useRefreshMutation, useLogoutMutation } = usersApi
+export const { useLoginMutation, useRegisterMutation, useLazyRefreshQuery, useLogoutMutation } = usersApi
