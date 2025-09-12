@@ -53,7 +53,7 @@ export default function FormRegister(){
             <CreateTelLabel setUserInput={setPhone}/>
             <label htmlFor="email">
                 <p>E-mail<span title="Обов'язкове поле">*</span></p>
-                <input id="email" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="plaksiuk@gmail.com" type="email"/>
+                <input id="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="plaksiuk@gmail.com" type="email"/>
             </label>
             <label htmlFor="password">
                 <p>Пароль<span title="Обов'язкове поле">*</span></p>
