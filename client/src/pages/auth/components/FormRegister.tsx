@@ -1,9 +1,10 @@
 import {Icon} from "@iconify/react";
 import React, {useState} from "react";
 import CreateTelLabel from "./CreateTelLabel.tsx";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {logIn} from "../../../redux/slices/authSlice.ts";
 import {useRegisterMutation} from "../../../redux/api/usersApi.ts";
+import {showAuth} from "../../../redux/slices/uiSlice.ts";
 
 export default function FormRegister(){
     const [role, setRole] = useState(true)
@@ -22,6 +23,7 @@ export default function FormRegister(){
         try {
             const result = await registerApi({ email, password, name, surname, phone, company_type, company_name }).unwrap()
             dispatch(logIn({ user: result.user, token: result.accessToken }))
+            dispatch(showAuth())
         }catch(err){
             console.log(err)
         }
@@ -51,7 +53,7 @@ export default function FormRegister(){
             <CreateTelLabel setUserInput={setPhone}/>
             <label htmlFor="email">
                 <p>E-mail<span title="Обов'язкове поле">*</span></p>
-                <input id="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="plaksiuk@gmail.com" type="email"/>
+                <input id="email" pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="plaksiuk@gmail.com" type="email"/>
             </label>
             <label htmlFor="password">
                 <p>Пароль<span title="Обов'язкове поле">*</span></p>

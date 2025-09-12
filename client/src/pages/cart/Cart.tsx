@@ -1,19 +1,28 @@
-import {showCart} from "../../redux/slices/uiSlice.ts";
+import {showCart, showAuth} from "../../redux/slices/uiSlice.ts";
 import {useDispatch, useSelector} from "react-redux";
 import {Icon} from "@iconify/react";
 import CartListDishes from "./components/CartListDishes.tsx";
 import {useAddOrderMutation} from "../../redux/api/ordersApi.ts";
+import {useNavigate} from "react-router-dom";
 import "./cart.css"
 
 function RenderCartBloc(){
     const dispatch = useDispatch()
     const cartDishes = useSelector(state => state.cart)
     const user = useSelector(state => state.auth.user)
+    const navigator = useNavigate()
     const [addOrder] = useAddOrderMutation()
 
     const handleOrder = async() =>{
         try{
-            await addOrder({ user_id: user.id, delivery_address: "address", payment_method: "card", dishes: cartDishes.dishes, total_price: cartDishes.totalPrice })
+            if (user.id){
+                await addOrder({ user_id: user.id, delivery_address: "address", payment_method: "card", dishes: cartDishes.dishes, total_price: cartDishes.totalPrice })
+                navigator("/user")
+            }
+            else{
+                dispatch(showCart())
+                dispatch(showAuth())
+            }
         }catch(err){
             console.log(err)
         }
