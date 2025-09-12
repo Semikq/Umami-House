@@ -17,6 +17,7 @@ function RenderCartBloc(){
         try{
             if (user.id){
                 await addOrder({ user_id: user.id, delivery_address: "address", payment_method: "card", dishes: cartDishes.dishes, total_price: cartDishes.totalPrice })
+                dispatch(showCart())
                 navigator("/user")
             }
             else{
