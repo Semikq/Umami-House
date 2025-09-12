@@ -20,7 +20,7 @@ export default function CreateTelLabel({setUserInput}){
     return (
         <label htmlFor="tel">
             <p>Номер телефону<span title="Обов'язкове поле">*</span></p>
-            <input id="tel" type="tel" value={tel} onInput={handleInput} required/>
+            <input id="tel" pattern="^\+380\s\d{2}\s\d{3}\s\d{2}\s\d{2}$" type="tel" value={tel} onInput={handleInput} required/>
         </label>
     )
 }

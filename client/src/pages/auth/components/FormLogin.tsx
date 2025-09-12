@@ -4,6 +4,7 @@ import {logIn} from "../../../redux/slices/authSlice.ts";
 import CreateTelLabel from "./CreateTelLabel.tsx"
 import {useDispatch} from "react-redux";
 import {jwtDecode} from "jwt-decode";
+import {showAuth} from "../../../redux/slices/uiSlice.ts";
 
 export default function FormLogin() {
     const [userInput, setUserInput] = useState("")
@@ -16,7 +17,7 @@ export default function FormLogin() {
         try {
             const token = await loginApi({ userInput, password }).unwrap();
             dispatch(logIn({user: jwtDecode(token), token: token}))
-
+            dispatch(showAuth())
         } catch (err) {
             console.log('Помилка логіну', err);
         }
