@@ -17,7 +17,6 @@ app.use(cors({
     origin: [
         "http://localhost:3000",
         "http://localhost:5173", // про всяк випадок для Vite
-        "https://umami-house-client-git-main-semikqs-projects.vercel.app", // Твій поточний Preview-домен
         "https://umami-house-client.vercel.app" // Твій основний домен фронту (якщо є)
     ],
     credentials: true,
