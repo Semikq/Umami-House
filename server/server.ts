@@ -15,7 +15,10 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
-    origin: process.env.FRONTEND_URL,
+    origin: [
+        process.env.FRONTEND_URL || "",
+        process.env.VERCEL_URL || ""    
+    ],
     credentials: true,
 }));
 
