@@ -13,6 +13,7 @@ import CreateAuthFrom from "./pages/auth/Auth";
 import CreateCartBloc from "./pages/cart/Cart";
 import CreateMobileCart from "./components/mobileCart/MobileCart";
 import CreateUserPage from "./pages/user/User";
+import CreateCompanyPage from "./pages/company/Company";
 import './App.css';
 
 function App() {
@@ -31,11 +32,12 @@ function App() {
             { cart.length > 0 && <CreateMobileCart/> }
             <Routes>
                 <Route path="/" element={<CreateMainPage/>}></Route>
-                <Route path="category/:id" element={<CreateCategoryWithDishes/>}></Route>
-                <Route path="dish/:id" element={<CreateDish/>}></Route>
+                <Route path="category/:uuid" element={<CreateCategoryWithDishes/>}></Route>
+                <Route path="dish/:uuid" element={<CreateDish/>}></Route>
                 <Route path="contact" element={<CreateContactPage/>}></Route>
                 <Route path="restaurants/city/:name" element={<CreateRestaurantPages/>}></Route>
                 <Route path="user" element={<CreateUserPage/>}></Route>
+                <Route path="company" element={<CreateCompanyPage/>}></Route>
             </Routes>
             <CreateFooter/>
         </div>

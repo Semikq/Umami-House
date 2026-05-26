@@ -1,7 +1,7 @@
 export interface Sale {
     active: boolean
     created_at: string
-    id: number
+    uuid: string
     image_url: string
     title: string
 }

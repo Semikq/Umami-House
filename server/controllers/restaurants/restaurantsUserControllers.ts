@@ -12,8 +12,7 @@ export async function handleAllCities(req: Request, res: Response): Promise<void
 
 export async function handleRestaurantsByCity(req: Request, res: Response): Promise<void> {
     try {
-        const city_id = Number(req.params.city_id);
-        const result = await fetchRestaurantsByCity({ city_id });
+        const result = await fetchRestaurantsByCity({ city_uuid: req.params.city_uuid });
         res.status(200).json(result);
     } catch (error) {
         res.status(500).json({ error: (error as Error).message });

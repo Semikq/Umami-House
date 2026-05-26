@@ -13,22 +13,22 @@ function ChangeQuantity ({ dish }) {
         if (newCount < 0) newCount = 1
         if (newCount > 100) return
         setCountDish(newCount);
-        dispatch(setCount({id: dish.id, count: newCount}))
+        dispatch(setCount({uuid: dish.uuid, count: newCount}))
     }
 
     const handleIncrementCount = () => {
         if (countDish < 100) {
             setCountDish(countDish + 1);
-            dispatch(incrementCount(dish.id))
+            dispatch(incrementCount(dish.uuid))
         }
     }
 
     const handleDecrementCount = () => {
         if (countDish > 1){
             setCountDish(countDish - 1);
-            dispatch(decrementCount(dish.id))
+            dispatch(decrementCount(dish.uuid))
         } else {
-            dispatch(delDish(dish.id))
+            dispatch(delDish(dish.uuid))
         }
     }
 
@@ -78,14 +78,14 @@ export default function CartListDishes({ cartDishes }){
                         <ChangeQuantity dish={dish}/>
                         <p className="dish__controls-price">{(dish.price * dish.count).toLocaleString('uk-UA')} ₴</p>
                     </div>
-                    <Icon className="dish__controls-threeDots" onClick={() => handleToggleMenu(dish.id)} icon="bi:three-dots-vertical"/>
-                    {openMenu === dish.id &&
+                    <Icon className="dish__controls-threeDots" onClick={() => handleToggleMenu(dish.uuid)} icon="bi:three-dots-vertical"/>
+                    {openMenu === dish.uuid &&
                         <div className="dish__controls-additionalMenu" ref={menuRef}>
                             <div className="dish__controls-additionalMenu-item">
                                 <Icon icon="line-md:heart"/>
                                 <p>Улюблене</p>
                             </div>
-                            <div className="dish__controls-additionalMenu-item" onClick={() => {dispatch(delDish(dish.id)); setOpenMenu(null)}}>
+                            <div className="dish__controls-additionalMenu-item" onClick={() => {dispatch(delDish(dish.uuid)); setOpenMenu(null)}}>
                                 <Icon icon="iconamoon:trash-duotone"/>
                                 <p>Видалити</p>
                             </div>

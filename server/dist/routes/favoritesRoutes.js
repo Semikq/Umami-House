@@ -1,0 +1,10 @@
+import { Router } from "express";
+import { handleGetAllFavorites, handleAddFavorite, handleDeleteFavorite } from "../controllers/favorites/favoritesUserControllers.js";
+import { validate } from "../middleware/validation.js";
+import { authenticateToken } from "../middleware/authMiddleware.js";
+import { favoritesSchemas } from "../schemas/favoritesSchemas.js";
+const route = Router();
+route.get("/user/:uuid/favorites", authenticateToken, validate({ params: favoritesSchemas.allfavorites.params }), handleGetAllFavorites);
+route.post("/addFavorite", authenticateToken, validate({ body: favoritesSchemas.addFavorite.body }), handleAddFavorite);
+route.delete("/deleteFavorite", authenticateToken, validate({ body: favoritesSchemas.deleteFavorite.body }), handleDeleteFavorite);
+export default route;

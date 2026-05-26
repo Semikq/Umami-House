@@ -11,7 +11,7 @@ export default function CreateCardsRestaurants({ restaurantsToShow, setSelected 
     return (
         <div className="restaurant__body">
             {restaurantsToShow.map((restaurant) =>
-                <div className="restaurant__body--card" key={restaurant.id}>
+                <div className="restaurant__body--card" key={restaurant.uuid}>
                     <div className="card__restaurant--information">
                         <div className="restaurant__information--breadcrumbs">
                             <h3 className="information__breadcrumbs--address">Вул. {restaurant.address}</h3>

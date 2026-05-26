@@ -1,29 +1,29 @@
-import { Id, AddRestaurant, UpdateRestaurant, addCity } from "../TypesModel/restaurantsTypes.js";
+import { Uuid, AddRestaurant, UpdateRestaurant, addCity } from "../TypesModel/restaurantsTypes.js";
 import { PrismaClient, Prisma } from "@prisma/client"
 const prisma = new PrismaClient()
 
-export async function addRestaurant({ city_id, name, address, phone, description, active, latitude, longitude, time_work, restaurant_image }: AddRestaurant): Promise<Prisma.restaurantsGetPayload<{}>> {
+export async function addRestaurant({ city_uuid, name, address, phone, description, active, latitude, longitude, time_work, restaurant_image }: AddRestaurant): Promise<Prisma.restaurantsGetPayload<{}>> {
     try {
-        return await prisma.restaurants.create({ data: { city_id, name, address, phone, description, active, latitude, longitude, time_work, restaurant_image }})
+        return await prisma.restaurants.create({ data: { city_uuid, name, address, phone, description, active, latitude, longitude, time_work, restaurant_image }})
     } catch (error) {
         throw new Error((error as Error).message)
     }
 }
 
-export async function updateRestaurant({ id }: Id, { city_id, name, address, phone, description, active, latitude, longitude, time_work, restaurant_image }: UpdateRestaurant): Promise<Prisma.restaurantsGetPayload<{}>> {
+export async function updateRestaurant({ uuid }: Uuid, { city_uuid, name, address, phone, description, active, latitude, longitude, time_work, restaurant_image }: UpdateRestaurant): Promise<Prisma.restaurantsGetPayload<{}>> {
     try {
         return await prisma.restaurants.update({
-            where: { id },
-            data: { city_id, name, address, phone, description, active, latitude, longitude, time_work, restaurant_image }
+            where: { uuid },
+            data: { city_uuid, name, address, phone, description, active, latitude, longitude, time_work, restaurant_image }
         })
     } catch (error) {
         throw new Error((error as Error).message)
     }
 }
 
-export async function deleteRestaurant({ id }: Id): Promise<void> {
+export async function deleteRestaurant({ uuid }: Uuid): Promise<void> {
     try {
-        await prisma.restaurants.delete({ where: { id } })
+        await prisma.restaurants.delete({ where: { uuid } })
     } catch (error) {
         throw new Error((error as Error).message)
     }
@@ -37,9 +37,9 @@ export async function addCity({ city_name }: addCity): Promise<Prisma.citiesGetP
     }
 }
 
-export async function deleteCity({ id }: Id): Promise<void> {
+export async function deleteCity({ uuid }: Uuid): Promise<void> {
     try {
-        await prisma.cities.delete({ where: { id } })
+        await prisma.cities.delete({ where: { uuid } })
     } catch (error) {
         throw new Error((error as Error).message)
     }

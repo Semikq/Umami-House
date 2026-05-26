@@ -1,14 +1,15 @@
 import { z } from "zod";
+import { uuidParamsSchema } from "./common.js";
 
 export const userSchemas = {
-    choiceRoleUserById: {
-        params: z.object({ id: z.number() }),
+    choiceRoleUserByUuid: {
+        params: uuidParamsSchema,
         body: z.object({
             role: z.string()
         })
     },
-    deleteUserById: {
-        params: z.object({ id: z.number() })
+    deleteUserByUuid: {
+        params: uuidParamsSchema
     },
     register: {
         body: z.object({
@@ -28,7 +29,7 @@ export const userSchemas = {
         })
     },
     updateUser: {
-        params: z.object({ id: z.number() }),
+        params: uuidParamsSchema,
         body: z.object({
             email: z.string(),
             password: z.coerce.string(),
@@ -40,6 +41,6 @@ export const userSchemas = {
         })
     },
     deleteUser: {
-        params: z.object({ id: z.number() })
+        params: uuidParamsSchema
     }
 }

@@ -1,7 +1,7 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 
 interface UserData {
-    id: number,
+    uuid: string,
     email: string,
     name: string,
     surname: string,
@@ -30,7 +30,6 @@ const authSlice = createSlice({
     initialState,
     reducers: {
         logIn: (state, action: PayloadAction<LoginPayload>) => {
-            console.log(action)
             state.user = action.payload.user;
             state.token = action.payload.token;
         },

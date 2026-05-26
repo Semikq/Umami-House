@@ -10,7 +10,7 @@ function DishButton ({dish}){
     const [text, setText] = useState(`${dish.price} грн`)
     const state = useSelector(state => state.cart)
     const dispatch = useDispatch()
-    const isInCart = state.dishes.find(i => i.id === dish.id);
+    const isInCart = state.dishes.find(i => i.uuid === dish.uuid);
 
     return (
         <button onClick={(e) => {
@@ -47,7 +47,7 @@ export default function CreateAdditionalOffers({categoryName, additionalDish}){
             </div>
             <div className="additionalOffers__list" ref={myRef}>
                 {additionalDish.sub_categories[0].dishes.map((dish) =>
-                    <Link to={`/dish/${dish.id}`} key={dish.id} className="cardDish" style={{ backgroundImage: `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(${getImage(dish.dish_images[0].image_url)})` }}>
+                    <Link to={`/dish/${dish.uuid}`} key={dish.uuid} className="cardDish" style={{ backgroundImage: `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(${getImage(dish.dish_images[0].image_url)})` }}>
                         <div className="dishInfo">
                             <h1>{dish.name}</h1>
                             <p>({dish.weight}/10г)</p>

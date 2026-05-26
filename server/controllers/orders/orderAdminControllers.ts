@@ -12,30 +12,16 @@ export async function handleOrdersByFilter(req: Request, res: Response): Promise
 
 export async function handleUpdateStatusOrder(req: Request, res: Response): Promise<void> {
     try {
-        const id = Number(req.params.id)
-
-        if(isNaN(id)){
-            res.status(400).json("Invalid order id")
-            return
-        }
-
-        const result = await updateStatusOrder({ id }, req.body)
+        const result = await updateStatusOrder({ uuid: req.params.uuid }, req.body)
         res.status(200).json({ message: "Status Order successfully update", data: result })
     } catch (error) {
         res.status(500).json((error as Error).message)
     }
 }
 
-export async function handleDeleteOrderById(req: Request, res: Response): Promise<void> {
+export async function handleDeleteOrderByUuid(req: Request, res: Response): Promise<void> {
     try {
-        const id = Number(req.params.id)
-
-        if(isNaN(id)){
-            res.status(400).json("Invalid order id")
-            return
-        }
-
-        await deleteOrder({ id })
+        await deleteOrder({ uuid: req.params.uuid })
         res.status(204).send()
     } catch (error) {
         res.status(500).json((error as Error).message)

@@ -1,11 +1,11 @@
-import {Id, AddOrder} from "../TypesModel/ordersTypes.js";
+import { Uuid, AddOrder } from "../TypesModel/ordersTypes.js";
 import { PrismaClient, Prisma } from "@prisma/client";
 const prisma = new PrismaClient()
 
-export async function fetchOrdersByUser({ id }: Id) {
+export async function fetchOrdersByUser({ uuid }: Uuid) {
     try {
         return await prisma.orders.findMany({
-            where: { user_id: id },
+            where: { user_uuid: uuid },
             include: {
                 order_dish: {
                     include: {
@@ -23,14 +23,14 @@ export async function fetchOrdersByUser({ id }: Id) {
     }
 }
 
-export async function addOrder({ user_id, delivery_address, payment_method, dishes, total_price }: AddOrder): Promise<void> {
+export async function addOrder({ user_uuid, delivery_address, payment_method, dishes, total_price }: AddOrder): Promise<void> {
     try {
          await prisma.$transaction(async tx => {
-             const { id } = await tx.orders.create({ data: { user_id, delivery_address, payment_method, total_price }})
+             const { uuid: orderUuid } = await tx.orders.create({ data: { user_uuid, delivery_address, payment_method, total_price } })
 
              const orderDishesData: Prisma.order_dishCreateManyInput[] = dishes.map((dish) => ({
-                 order_id: id,
-                 dish_id: dish.id,
+                 order_uuid: orderUuid,
+                 dish_uuid: dish.uuid,
                  count: dish.count
              }));
 
@@ -44,9 +44,9 @@ export async function addOrder({ user_id, delivery_address, payment_method, dish
     }
 }
 
-export async function deleteOrder({ id }: Id): Promise<void> {
+export async function deleteOrder({ uuid }: Uuid): Promise<void> {
     try {
-        await prisma.orders.delete({ where: { id } })
+        await prisma.orders.delete({ where: { uuid } })
     } catch (error) {
         throw new Error((error as Error).message)
     }

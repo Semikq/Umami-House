@@ -1,5 +1,5 @@
 import { registerUser, loginUser } from "../../models/user/authModel.js";
-import { findUserByID } from "../../models/user/userModel.js";
+import { findUserByUuid } from "../../models/user/userModel.js";
 import { Request, Response } from "express";
 import { generateAccessToken, generateRefreshToken } from "../../config/jwtToken.js";
 import jwt, { JwtPayload } from "jsonwebtoken";
@@ -9,8 +9,8 @@ export async function handleRegisterUser(req: Request , res: Response): Promise<
         const result = await registerUser(req.body)
         const { password, ...user } = result
 
-        const accessToken = generateAccessToken(result.id, result.role);
-        const refreshToken = generateRefreshToken(result.id, result.role);
+        const accessToken = generateAccessToken(result.uuid, result.role);
+        const refreshToken = generateRefreshToken(result.uuid, result.role);
 
         res.cookie("refreshToken", refreshToken, {
             httpOnly: true,
@@ -30,8 +30,8 @@ export async function handleLoginUsers(req: Request , res: Response): Promise<vo
         const result = await loginUser(req.body)
         const { password, ...user } = result
 
-        const accessToken = generateAccessToken(result.id, result.role);
-        const refreshToken = generateRefreshToken(result.id, result.role);
+        const accessToken = generateAccessToken(result.uuid, result.role);
+        const refreshToken = generateRefreshToken(result.uuid, result.role);
 
         res.cookie("refreshToken", refreshToken, {
             httpOnly: true,
@@ -55,8 +55,9 @@ export async function handleRefreshToken(req: Request, res: Response): Promise<v
 
     try {
         const decoded = jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET!) as JwtPayload;
-        const accessToken = generateAccessToken(decoded.userId, decoded.role);
-        const user = await findUserByID({ id: decoded.userId })
+        const userUuid = decoded.userUuid ?? decoded.userId;
+        const accessToken = generateAccessToken(userUuid, decoded.role);
+        const user = await findUserByUuid({ uuid: userUuid })
         res.json({ user, accessToken });
     } catch {
         res.status(401).json({ error: "Invalid refresh token" });

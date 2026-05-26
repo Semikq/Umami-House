@@ -6,7 +6,7 @@ export default function CreateMenu({categories}) {
         <div className="menu" id="menu">
             {categories.slice(0, 10).map((category) => {
                 return (
-                    <Link to={`/category/${category.id}`} key={category.id} style={{ backgroundImage: `url(${getImage(category.image_url)})` }} className="menu-item">
+                    <Link to={`/category/${category.uuid}`} key={category.uuid} style={{ backgroundImage: `url(${getImage(category.image_url)})` }} className="menu-item">
                         <div className="shadow"></div>
                         <p>{category.title}</p>
                     </Link>

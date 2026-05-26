@@ -17,9 +17,9 @@ export default function useDetectUserCity (){
         if (!citiesLoading && userCity && cities){
             const currentCity = cities.find(item => item.name.toLowerCase() === userCity.toLowerCase())
             if (currentCity){
-                dispatch(changeCity({ id: currentCity.id,  name: currentCity.name }))
+                dispatch(changeCity({ uuid: currentCity.uuid,  name: currentCity.name }))
             }else {
-                dispatch(changeCity({ id: cities[0].id,  name: cities[0].name }))
+                dispatch(changeCity({ uuid: cities[0].uuid,  name: cities[0].name }))
             }
         }
     }, [cities, citiesLoading, userCity]);

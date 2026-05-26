@@ -1,4 +1,4 @@
-import { addDish, updateDish, deleteDish, deleteCommentUserById } from "../../models/dishes/dishesAdminModel.js";
+import { addDish, updateDish, deleteDish, deleteCommentUserByUuid } from "../../models/dishes/dishesAdminModel.js";
 import { Request, Response } from "express";
 
 export async function handleAddDish(req: Request, res: Response): Promise<void> {
@@ -12,8 +12,7 @@ export async function handleAddDish(req: Request, res: Response): Promise<void> 
 
 export async function handleUpdateDish(req: Request, res: Response): Promise<void> {
   try{
-    const id = Number(req.params.id)
-    const result = await updateDish({ id }, req.body)
+    const result = await updateDish({ uuid: req.params.uuid }, req.body)
     res.status(200).json({ message: "Dish successfully update", data: result })
   } catch (error) {
     res.status(500).json((error as Error).message)
@@ -22,17 +21,16 @@ export async function handleUpdateDish(req: Request, res: Response): Promise<voi
 
 export async function handleDeleteDish(req: Request, res: Response): Promise<void> {
   try{
-    const id = Number(req.params.id)
-    await deleteDish({ id })
+    await deleteDish({ uuid: req.params.uuid })
     res.status(204).send()
   } catch (error) {
     res.status(500).json((error as Error).message)
   }
 }
 
-export async function handleDeleteCommentUserById(req: Request, res: Response): Promise<void> {
+export async function handleDeleteCommentUserByUuid(req: Request, res: Response): Promise<void> {
   try {
-    await deleteCommentUserById(req.body)
+    await deleteCommentUserByUuid(req.body)
     res.status(204).send()
   } catch (error) {
     res.status(500).json((error as Error).message)

@@ -8,14 +8,14 @@ import { restaurantsSchemas } from "../schemas/restaurantsSchemas.js";
 const route = Router()
 
 route.post("/addRestaurant", authenticateToken, authorizeAdmin, validate({ body: restaurantsSchemas.create.body }), handleAddRestaurant)
-route.put("/updateRestaurant/:id", authenticateToken, authorizeAdmin, validate({ params: restaurantsSchemas.update.params ,body: restaurantsSchemas.update.body }), handleUpdateRestaurant)
-route.delete("/deleteRestaurant/:id", authenticateToken, authorizeAdmin, validate({ params: restaurantsSchemas.delete.params }), handleDeleteRestaurant)
+route.put("/updateRestaurant/:uuid", authenticateToken, authorizeAdmin, validate({ params: restaurantsSchemas.update.params ,body: restaurantsSchemas.update.body }), handleUpdateRestaurant)
+route.delete("/deleteRestaurant/:uuid", authenticateToken, authorizeAdmin, validate({ params: restaurantsSchemas.delete.params }), handleDeleteRestaurant)
 
 route.post("/addCity", authenticateToken, authorizeAdmin, validate({ body: restaurantsSchemas.addCity.body }), handleAddCity)
-route.delete("/deleteCity/:id", authenticateToken, authorizeAdmin, validate({ params: restaurantsSchemas.deleteCity.params }), handleDeleteCity)
+route.delete("/deleteCity/:uuid", authenticateToken, authorizeAdmin, validate({ params: restaurantsSchemas.deleteCity.params }), handleDeleteCity)
 
 route.get("/cities", handleAllCities)
-route.get("/city/:city_id", handleRestaurantsByCity)
+route.get("/city/:city_uuid", handleRestaurantsByCity)
 route.get("/all", handleAllRestaurants)
-// validate({ body: restaurantsShemas.restaurants.body })
+
 export default route

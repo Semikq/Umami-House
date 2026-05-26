@@ -25,7 +25,7 @@ export default function CreateBlockPhotos ({dish}) {
         </div>
         <div className="product__additional-photos" ref={myRef}>
             {dish.dish_images.map((image, i) =>
-                <img src={getImage(image.image_url)} alt={image.title} key={image.id} onClick={() => setPhoto(i)} />
+                <img src={getImage(image.image_url)} alt={image.title} key={image.uuid} onClick={() => setPhoto(i)} />
             )}
         </div>
     </div>

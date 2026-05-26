@@ -1,4 +1,4 @@
-import { changeUserRole, Id } from "../TypesModel/userTypes.js";
+import { changeUserRole, Uuid } from "../TypesModel/userTypes.js";
 import { Prisma, PrismaClient } from "@prisma/client"
 const prisma = new PrismaClient();
 
@@ -10,10 +10,10 @@ export async function fetchAllUsers(): Promise<Prisma.usersGetPayload<{}>[]> {
     }
 }
 
-export async function choiceRoleUser({ id, role }: changeUserRole): Promise<Prisma.usersGetPayload<{}>> {
+export async function choiceRoleUser({ uuid, role }: changeUserRole): Promise<Prisma.usersGetPayload<{}>> {
     try {
         return await prisma.users.update({
-            where: { id },
+            where: { uuid },
             data: { role: role }
         })
     } catch (error) {
@@ -21,9 +21,9 @@ export async function choiceRoleUser({ id, role }: changeUserRole): Promise<Pris
     }
 }
 
-export async function deleteUser({ id }: Id): Promise<void> {
+export async function deleteUser({ uuid }: Uuid): Promise<void> {
     try {
-        await prisma.users.delete({ where: { id } })
+        await prisma.users.delete({ where: { uuid } })
     } catch (error) {
         throw new Error((error as Error).message)
     }

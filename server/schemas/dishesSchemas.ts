@@ -1,8 +1,9 @@
 import { z } from "zod";
+import { uuidSchema, uuidParamsSchema } from "./common.js";
 
 export const dishesSchemas = {
-    dishById: {
-        params: z.object({ id: z.coerce.number().int().positive() })
+    dishByUuid: {
+        params: uuidParamsSchema
     },
     create: {
         body: z.object({
@@ -12,7 +13,7 @@ export const dishesSchemas = {
             frozen: z.boolean(),
             spicy: z.boolean(),
             ingredients: z.string(),
-            subcategories_id: z.number(),
+            sub_category_uuid: uuidSchema,
             active: z.boolean(),
             images: z.array(z.object({
                 title: z.string(),
@@ -21,7 +22,7 @@ export const dishesSchemas = {
         })
     },
     update: {
-        params: z.object({ id: z.number() }),
+        params: uuidParamsSchema,
         body: z.object({
             name: z.string(),
             weight: z.string(),
@@ -29,7 +30,7 @@ export const dishesSchemas = {
             frozen: z.boolean(),
             spicy: z.boolean(),
             ingredients: z.string(),
-            subcategories_id: z.number(),
+            sub_category_uuid: uuidSchema,
             active: z.boolean(),
             images: z.array(z.object({
                 title: z.string(),
@@ -38,23 +39,23 @@ export const dishesSchemas = {
         })
     },
     delete: {
-        params: z.object({ id: z.number() })
+        params: uuidParamsSchema
     },
-    dishCommentsById: {
-        params: z.object({ id: z.number() })
+    dishCommentsByUuid: {
+        params: uuidParamsSchema
     },
-    addCommentByIdDishes: {
+    addCommentByUuidDishes: {
         body: z.object({
-            dish_id: z.number(),
-            user_id: z.number(),
+            dish_uuid: uuidSchema,
+            user_uuid: uuidSchema,
             comment: z.string().optional(),
             rating: z.number()
         })
     },
-    deleteCommentByIdDishes: {
+    deleteCommentByUuidDishes: {
         body: z.object({
-            user_id: z.number(),
-            id: z.number() 
+            user_uuid: uuidSchema,
+            uuid: uuidSchema
         }),
     }
 }

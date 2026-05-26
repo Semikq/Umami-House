@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { uuidSchema, uuidParamsSchema } from "./common.js";
 
 export const ordersSchemas = {
     ordersByFilter: {
@@ -7,46 +8,46 @@ export const ordersSchemas = {
         })
     },
     updateStatus: {
-        params: z.object({ id: z.number() }),
+        params: uuidParamsSchema,
         body: z.object({
             status: z.string()
         })
     },
     deleteOrder: {
-        params: z.object({ id: z.number() })
+        params: uuidParamsSchema
     },
     ordersByUser: {
-        params: z.object({ id: z.number() })
+        params: uuidParamsSchema
     },
     addUser: {
         body: z.object({
-            user_id: z.number(),
+            user_uuid: uuidSchema,
             delivery_address: z.string(),
             payment_method: z.string(),
             total_price: z.number(),
             dishes: z.array(z.object({
-                id: z.number(),
+                uuid: uuidSchema,
                 name: z.string(),
                 weight: z.number(),
                 price: z.number(),
                 frozen: z.boolean(),
                 spicy: z.boolean(),
                 ingredients: z.string(),
-                sub_category_id: z.number(),
+                sub_category_uuid: uuidSchema,
                 active: z.boolean(),
                 count: z.number(),
                 created_at: z.string().datetime(),
                 dish_images: z.array(z.object({
-                    id: z.number(),
+                    uuid: uuidSchema,
                     title: z.string(),
                     image_url: z.string(),
-                    dish_id: z.number(),
+                    dish_uuid: uuidSchema,
                     created_at: z.string()
                 }))
             }))
         })
     },
     deleteUser: {
-        params: z.object({ id: z.number() })
+        params: uuidParamsSchema
     }
 }

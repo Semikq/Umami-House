@@ -1,7 +1,7 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 
 interface DishDate {
-    id: number,
+    uuid: string,
     name: string,
     weight: number,
     frozen: boolean,
@@ -21,7 +21,7 @@ const initialState: cartState = {
 }
 
 interface SetCountPayload {
-    id: number
+    uuid: string
     count: number
 }
 
@@ -34,7 +34,7 @@ const cartSlice = createSlice({
     initialState,
     reducers: {
         addDish: (state, action: PayloadAction<DishDate>): void => {
-            let checkDish = state.dishes.find(d => d.id === action.payload.id)
+            let checkDish = state.dishes.find(d => d.uuid === action.payload.uuid)
             if (checkDish?.count >= 100) return
             if(checkDish){
                 checkDish.count += 1
@@ -44,26 +44,25 @@ const cartSlice = createSlice({
             recalcTotalPrice(state)
         },
         setCount: (state, action: PayloadAction<SetCountPayload>): void => {
-            console.log("action.payload")
-            const dish = state.dishes.find(d => d.id === action.payload.id)
+            const dish = state.dishes.find(d => d.uuid === action.payload.uuid)
             if (dish){
                 dish.count = action.payload.count
                 recalcTotalPrice(state)
             }
         },
-        delDish: (state, action: PayloadAction<number>): void => {
-            state.dishes = state.dishes.filter(d => d.id !== action.payload)
+        delDish: (state, action: PayloadAction<string>): void => {
+            state.dishes = state.dishes.filter(d => d.uuid !== action.payload)
             recalcTotalPrice(state)
         },
-        incrementCount: (state, action: PayloadAction<number>): void => {
-            const dish = state.dishes.find(d => d.id === action.payload)
+        incrementCount: (state, action: PayloadAction<string>): void => {
+            const dish = state.dishes.find(d => d.uuid === action.payload)
             if(dish && dish.count < 100){
                 dish.count += 1
                 recalcTotalPrice(state)
             }
         },
-        decrementCount: (state, action: PayloadAction<number>): void=> {
-            const dish = state.dishes.find(d => d.id === action.payload)
+        decrementCount: (state, action: PayloadAction<string>): void=> {
+            const dish = state.dishes.find(d => d.uuid === action.payload)
             if(dish && dish.count > 1){
                 dish.count -= 1
                 recalcTotalPrice(state)

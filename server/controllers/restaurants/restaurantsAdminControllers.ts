@@ -12,8 +12,7 @@ export async function handleAddRestaurant(req: Request, res: Response): Promise<
 
 export async function handleUpdateRestaurant(req: Request, res: Response): Promise<void> {
     try {
-        const id= Number(req.params.id);
-        const result = await updateRestaurant({ id }, req.body)
+        const result = await updateRestaurant({ uuid: req.params.uuid }, req.body)
         res.status(200).json({ message: "Restaurant successfully update", data: result });
     } catch (error) {
         res.status(500).json((error as Error).message)
@@ -22,7 +21,7 @@ export async function handleUpdateRestaurant(req: Request, res: Response): Promi
 
 export async function handleDeleteRestaurant(req: Request, res: Response): Promise<void> {
     try {
-        await deleteRestaurant(req.body)
+        await deleteRestaurant({ uuid: req.params.uuid })
         res.status(204).send()
     } catch (error) {
         res.status(500).json((error as Error).message)
@@ -40,7 +39,7 @@ export async function handleAddCity(req: Request, res: Response): Promise<void> 
 
 export async function handleDeleteCity(req: Request, res: Response): Promise<void> {
     try {
-        await deleteCity(req.body)
+        await deleteCity({ uuid: req.params.uuid })
         res.status(204).send()
     } catch (error) {
         res.status(500).json((error as Error).message)

@@ -1,5 +1,5 @@
 export interface Categories {
-    id: number,
+    uuid: string,
     image_url: string
     title: string
     created_at: string
@@ -7,8 +7,8 @@ export interface Categories {
 
 interface DishImage {
     created_at: string
-    dish_id: number
-    id: number
+    dish_uuid: string
+    uuid: string
     image_url: string
     title: string
 }
@@ -18,12 +18,12 @@ export interface Dish {
     created_at: string
     dish_images: DishImage[]
     frozen: boolean
-    id: number
+    uuid: string
     ingredients: string
     name: string
     price: number
     spicy: boolean
-    sub_category_id: number
+    sub_category_uuid: string
     weight: number
 }
 

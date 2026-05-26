@@ -7,8 +7,8 @@ export const dishesApi = createApi({
     baseQuery: fetchBaseQuery({ baseUrl: getApiUrl("/dishes") }),
     endpoints: (builder) => ({
         categories: builder.query<Categories[], void>({ query: () => "categories" }),
-        categoryWithDishes: builder.query<Category, string>({ query: (id) => `category/${id}` }),
-        dish: builder.query<Dish, string>({ query: (id) => `dish/${id}` })
+        categoryWithDishes: builder.query<Category, string>({ query: (uuid) => `category/${uuid}` }),
+        dish: builder.query<Dish, string>({ query: (uuid) => `dish/${uuid}` })
     })
 })
 

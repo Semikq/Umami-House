@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { uuidParamsSchema } from "./common.js";
 
 export const saleSchemas = {
     create: {
@@ -9,10 +10,10 @@ export const saleSchemas = {
         })
     },
     update: {
-        params: z.object({ id: z.number() }),
+        params: uuidParamsSchema,
         body: z.object({ active: z.boolean() })
     },
     delete: {
-        params: z.object({ id: z.number() })
+        params: uuidParamsSchema
     }
 }

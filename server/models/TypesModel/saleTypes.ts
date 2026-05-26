@@ -1,14 +1,14 @@
-export interface Id{
-    id: number
+export interface Uuid {
+    uuid: string
 }
 
-export interface AddSale{
+export interface AddSale {
     title: string,
     image_url: string,
     active: boolean
 }
 
-export interface UpdateSale{
+export interface UpdateSale {
     active: boolean,
-    id: number
+    uuid: string
 }

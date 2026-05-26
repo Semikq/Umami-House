@@ -10,20 +10,18 @@ export async function handleAllUsers(req: Request , res: Response): Promise<void
     }
 }
 
-export async function handleChoiceRoleUserById(req: Request , res: Response): Promise<void> {
+export async function handleChoiceRoleUserByUuid(req: Request , res: Response): Promise<void> {
     try {
-        const id = Number(req.params.id)
-        const result = await choiceRoleUser({ id, role: req.body })
+        const result = await choiceRoleUser({ uuid: req.params.uuid, role: req.body.role })
         res.status(200).json({ message: "Choice user successfully added", data: result })
     } catch (error) {
         res.status(500).json((error as Error).message)
     }
 }
 
-export async function handleDeleteUserById(req: Request , res: Response): Promise<void> {
+export async function handleDeleteUserByUuid(req: Request , res: Response): Promise<void> {
     try {
-        const id = Number(req.params.id)
-        await deleteUser({ id })
+        await deleteUser({ uuid: req.params.uuid })
         res.status(204).send()
     } catch (error) {
         res.status(500).json((error as Error).message)

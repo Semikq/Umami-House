@@ -3,8 +3,8 @@ import {useEffect, useRef} from "react";
 import {Icon} from "@iconify/react";
 
 export default function CarouselCategories ({categories}){
-    const { id } = useParams()
-    const activeCategory = categories.find((category) => category.id === Number(id))
+    const { uuid } = useParams()
+    const activeCategory = categories.find((category) => category.uuid === uuid)
     const myRef = useRef(null)
 
     useEffect(() => {
@@ -22,7 +22,7 @@ export default function CarouselCategories ({categories}){
     return (
         <div className="menuCategories" ref={myRef}>
             {categories.map((category, i) =>
-                <Link to={`/category/${category.id}`} className={`listCategory ${category.id === activeCategory.id ? "active" : ""}`} key={i}>
+                <Link to={`/category/${category.uuid}`} className={`listCategory ${category.uuid === activeCategory?.uuid ? "active" : ""}`} key={i}>
                     <h2>{category.title}</h2>
                     <Icon className="icon" icon="solar:alt-arrow-right-linear" width={20}></Icon>
                 </Link>

@@ -1,0 +1,54 @@
+@import url('https://fonts.googleapis.com/css2?family=Delius&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+.company__title{
+    grid-column: 2 / 12;
+    text-align: center;
+    height: auto;
+    margin: 0 0 15px 0;
+    font-family: Roboto, sans-serif;
+    font-weight: 500;
+    color: #333333;
+    font-size: clamp(22px, 2vw, 34px);
+}
+
+.company__aboutUs{
+    grid-column: 2 / 12;
+    height: 730px;
+    border-radius: 30px;
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    position: relative;
+    overflow: hidden;
+    background-size: cover;
+    padding: 50px;
+    box-sizing: border-box;
+}
+
+.company__aboutUs::after{
+    content: "";
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-color: #000000;
+    opacity: 45%;
+}
+
+.aboutUs__title{
+    color: white;
+    grid-column: 2 / 6;
+    font-size: 32px;
+    font-family: Roboto, sans-serif;
+    font-weight: 400;
+    margin: 0 0 50px 0;
+    z-index: 1;
+    background: #DF1322;
+}
+
+.aboutUs__info{
+    grid-column: 2 / 6;
+    background-color: #F1C232;
+}
+
+.aboutUs__info--text{
+    margin: 0;
+}

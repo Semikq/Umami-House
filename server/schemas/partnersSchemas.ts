@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { uuidParamsSchema } from "./common.js";
 
 export const partnersSchemas = {
     create: {
@@ -10,7 +11,7 @@ export const partnersSchemas = {
         })
     },
     update: {
-        params: z.object({ id: z.number() }),
+        params: uuidParamsSchema,
         body: z.object({
             name: z.string(),
             logo_img: z.string(),
@@ -19,6 +20,6 @@ export const partnersSchemas = {
         })
     },
     delete: {
-        params: z.object({ id: z.number() })
+        params: uuidParamsSchema
     }
 }

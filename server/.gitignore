@@ -1,3 +1,6 @@
 .env
 node_modules/
 /generated/prisma
+data/*
+!data/.gitkeep
+data/pgdata/

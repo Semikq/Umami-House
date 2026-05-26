@@ -12,8 +12,11 @@ export function authenticateToken(req: Request, res: Response, next: NextFunctio
 
     const token = authHeader.split(" ")[1]
     try {
-        const decoded = jwt.verify(token, process.env.JWT_ACCESS_SECRET!) as { userId: number, role: string };
-        (req as any).user = decoded
+        const decoded = jwt.verify(token, process.env.JWT_ACCESS_SECRET!) as { userUuid?: string, userId?: string, role: string };
+        (req as any).user = {
+            userUuid: decoded.userUuid ?? decoded.userId,
+            role: decoded.role
+        }
         next()
     } catch (err) {
         res.status(401).json({ error: "Invalid token" });
