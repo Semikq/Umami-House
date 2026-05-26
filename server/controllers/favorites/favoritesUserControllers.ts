@@ -3,8 +3,7 @@ import { Request, Response } from "express";
 
 export async function handleGetAllFavorites(req: Request, res: Response): Promise<void> {
     try {
-        const user_id = Number(req.params.id)
-        const result = await fetchAllFavorites({ user_id });
+        const result = await fetchAllFavorites({ user_uuid: req.params.uuid });
         res.status(200).json(result);
     } catch (error) {
         res.status(500).json((error as Error).message);

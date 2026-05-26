@@ -1,0 +1,52 @@
+services:
+  db:
+    image: postgres:17-alpine
+    container_name: umami-house-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-1234}
+      POSTGRES_DB: ${POSTGRES_DB:-postgres}
+    volumes:
+      - ./server/data/pgdata:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: umami-house-server
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    env_file:
+      - ./server/.env
+    environment:
+      DATABASE_URL: postgresql://postgres:${POSTGRES_PASSWORD:-1234}@db:5432/${POSTGRES_DB:-postgres}
+      FRONTEND_URL: http://localhost:3000
+      PORT: 3200
+    ports:
+      - "3200:3200"
+    volumes:
+      - ./server/uploads:/app/uploads
+
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+      args:
+        REACT_APP_SERVER_URL: http://localhost:3200
+        REACT_APP_GOOGLE_MAPS_API_KEY: ${REACT_APP_GOOGLE_MAPS_API_KEY:-}
+    container_name: umami-house-client
+    restart: unless-stopped
+    depends_on:
+      - server
+    ports:
+      - "3000:80"

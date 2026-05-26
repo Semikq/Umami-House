@@ -8,7 +8,9 @@ export const restaurantsApi = createApi({
     endpoints: (builder) => ({
         restaurants: builder.query<Restaurants[], void>({ query: () => "/all" }),
         cities: builder.query<Cities[], void>({ query: () => "/cities" }),
-        restaurantsByCity: builder.query<RestaurantsByCity[], number>({ query: (id) => `/city/${id}` })
+        restaurantsByCity: builder.query<RestaurantsByCity[], string | null>({
+            query: (cityUuid) => cityUuid ? `/city/${cityUuid}` : "/all"
+        })
     })
 })
 

@@ -1,13 +1,13 @@
-import { User, Id, UserRefresh } from "../TypesModel/userTypes.js";
+import { User, Uuid, UserRefresh } from "../TypesModel/userTypes.js";
 import { Prisma, PrismaClient } from "@prisma/client"
 const prisma = new PrismaClient();
 
-export async function findUserByID({ id }: Id): Promise<UserRefresh> {
+export async function findUserByUuid({ uuid }: Uuid): Promise<UserRefresh> {
     try {
         return await prisma.users.findUniqueOrThrow({
-            where: { id },
+            where: { uuid },
             select: {
-                id: true,
+                uuid: true,
                 email: true,
                 name: true,
                 surname: true,
@@ -24,10 +24,10 @@ export async function findUserByID({ id }: Id): Promise<UserRefresh> {
     }
 }
 
-export async function updateUser({ id }: Id, { email, password, name, surname, phone, company_type, company_name }: User): Promise<Prisma.usersGetPayload<{}>> {
+export async function updateUser({ uuid }: Uuid, { email, password, name, surname, phone, company_type, company_name }: User): Promise<Prisma.usersGetPayload<{}>> {
     try {
         return await prisma.users.update({
-            where: { id },
+            where: { uuid },
             data: { email, password, name, surname, phone, company_type, company_name, }
         })
     } catch (error) {
@@ -35,9 +35,9 @@ export async function updateUser({ id }: Id, { email, password, name, surname, p
     }
 }
 
-export async function deleteUser({ id }: Id): Promise<void> {
+export async function deleteUser({ uuid }: Uuid): Promise<void> {
     try {
-        await prisma.users.delete({ where: { id } })
+        await prisma.users.delete({ where: { uuid } })
     } catch (error) {
         throw new Error((error as Error).message)
     }

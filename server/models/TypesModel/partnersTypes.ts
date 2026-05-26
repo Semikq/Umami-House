@@ -1,8 +1,8 @@
-export interface Id{
-    id:number
+export interface Uuid {
+    uuid: string
 }
 
-interface PartnersType{
+interface PartnersType {
     name: string,
     logo_img: string,
     link_website?: string,
@@ -11,4 +11,4 @@ interface PartnersType{
 
 export interface AddPartners extends PartnersType {}
 
-export interface UpdatePartners extends Id, PartnersType{}
+export interface UpdatePartners extends Uuid, PartnersType {}

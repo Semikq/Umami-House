@@ -29,8 +29,8 @@ export function RenderListDishesPage({infoCategories, categories}){
 }
 
 export default function CreateCategoryWithDishes() {
-    const { id } = useParams()
-    const {data: infoCategories, isLoading: infoCategoriesLoading} = useCategoryWithDishesQuery(id)
+    const { uuid } = useParams()
+    const {data: infoCategories, isLoading: infoCategoriesLoading} = useCategoryWithDishesQuery(uuid)
     const {data: categories, isLoading: categoriesLoading} = useCategoriesQuery()
 
     if (infoCategoriesLoading || categoriesLoading) return <p>Завантаження...</p>

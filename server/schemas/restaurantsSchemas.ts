@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { uuidSchema, uuidParamsSchema } from "./common.js";
 
 export const restaurantsSchemas = {
     create: {
@@ -13,7 +14,7 @@ export const restaurantsSchemas = {
         })
     },
     update: {
-        params: z.object({ id: z.number() }),
+        params: uuidParamsSchema,
         body: z.object({
             name: z.string(),
             address: z.string(),
@@ -25,10 +26,10 @@ export const restaurantsSchemas = {
         })
     },
     delete: {
-        params: z.object({ id: z.number() })
+        params: uuidParamsSchema
     },
     restaurants: {
-        body: z.object({ city_id: z.number() })
+        body: z.object({ city_uuid: uuidSchema })
     },
     addCity: {
         body: z.object({
@@ -36,8 +37,6 @@ export const restaurantsSchemas = {
         })
     },
     deleteCity: {
-        params: z.object({
-            id: z.number()
-        })
+        params: uuidParamsSchema
     }
 }

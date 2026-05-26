@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { handleAllUsers, handleChoiceRoleUserById, handleDeleteUserById } from "../controllers/user/adminControllers.js";
+import { handleAllUsers, handleChoiceRoleUserByUuid, handleDeleteUserByUuid } from "../controllers/user/adminControllers.js";
 import {handleRegisterUser, handleLoginUsers, handleRefreshToken, handleLogout} from "../controllers/user/authControllers.js";
 import { handleUpdateUser, handleDeleteUser } from "../controllers/user/userControllers.js";
 import { validate } from "../middleware/validation.js";
@@ -15,10 +15,10 @@ route.post("/refresh", handleRefreshToken)
 route.post("/logout", handleLogout)
 
 route.get("/all", handleAllUsers)
-route.put("/role/:id", authenticateToken, authorizeAdmin, validate({ params: userSchemas.choiceRoleUserById.params, body: userSchemas.choiceRoleUserById.body }), handleChoiceRoleUserById)
-route.delete("/delete/:id", authenticateToken, authorizeAdmin, validate({ params: userSchemas.deleteUserById.params }), handleDeleteUserById)
+route.put("/role/:uuid", authenticateToken, authorizeAdmin, validate({ params: userSchemas.choiceRoleUserByUuid.params, body: userSchemas.choiceRoleUserByUuid.body }), handleChoiceRoleUserByUuid)
+route.delete("/delete/:uuid", authenticateToken, authorizeAdmin, validate({ params: userSchemas.deleteUserByUuid.params }), handleDeleteUserByUuid)
 
-route.put("/updateUser/:id", authenticateToken, validate({ params: userSchemas.updateUser.params, body: userSchemas.updateUser.body }), hashPassword,  handleUpdateUser)
-route.delete("/deleteUser/:id", authenticateToken, validate({ params: userSchemas.deleteUser.params }), handleDeleteUser)
+route.put("/updateUser/:uuid", authenticateToken, validate({ params: userSchemas.updateUser.params, body: userSchemas.updateUser.body }), hashPassword,  handleUpdateUser)
+route.delete("/deleteUser/:uuid", authenticateToken, validate({ params: userSchemas.deleteUser.params }), handleDeleteUser)
 
 export default route

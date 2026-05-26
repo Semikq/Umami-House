@@ -1,5 +1,6 @@
-interface UserType{
+interface UserType {
     email: string,
+    password: string,
     name: string,
     surname: string,
     phone: string,
@@ -10,21 +11,19 @@ interface UserType{
     created_at: Date
 }
 
-export interface Id{
-    id: number
+export interface Uuid {
+    uuid: string
 }
 
-export interface changeUserRole extends Id{
+export interface changeUserRole extends Uuid {
     role: string,
 }
 
-export interface LoginUser{
+export interface LoginUser {
     userInput: string,
     password: string
 }
 
-export interface User extends UserType, Id{
-    password: string
-}
+export interface User extends UserType, Uuid {}
 
-export interface UserRefresh extends UserType{}
+export interface UserRefresh extends Omit<UserType, "password">, Uuid {}

@@ -1,6 +1,6 @@
 import {z} from "zod";
 
-enum Status{
+enum Status {
     PROCESSING = 'processing',
     CONFIRMED = 'confirmed',
     CANCELLED = 'cancelled',
@@ -15,28 +15,28 @@ enum PaymentMethod {
     CASH = 'cash'
 }
 
-export interface Id{
-    id: number
+export interface Uuid {
+    uuid: string
 }
 
-export interface OrdersByFilter{
+export interface OrdersByFilter {
     status: Status
 }
 
-export interface UpdateStatusOrder extends OrdersByFilter{
-    id: number
+export interface UpdateStatusOrder extends OrdersByFilter {
+    uuid: string
 }
 
 interface DishImages {
-    id: number
+    uuid: string
     title: string
     image_url: string
-    dish_id: number
+    dish_uuid: string
     created_at: string
 }
 
 export interface OrderDishInput {
-    id: number
+    uuid: string
     count: number
     name: string
     weight: number
@@ -44,14 +44,14 @@ export interface OrderDishInput {
     frozen: boolean
     spicy: boolean
     ingredients: string
-    sub_category_id: number
+    sub_category_uuid: string
     active: boolean
     created_at: string
     dish_images: DishImages[]
 }
 
-export interface AddOrder extends Id {
-    user_id: number,
+export interface AddOrder {
+    user_uuid: string,
     delivery_address: string,
     payment_method: PaymentMethod,
     dishes: OrderDishInput[],

@@ -15,7 +15,7 @@ import "./dish.css"
 
 function RenderDishPage({dish, additionalDish}){
     const state = useSelector(state => state.cart)
-    const IsInCart = state.dishes.find(i => i.id === dish.id)
+    const IsInCart = state.dishes.find(i => i.uuid === dish.uuid)
     const [count, setCount] = useState(1)
     const dispatch = useDispatch()
 
@@ -28,11 +28,11 @@ function RenderDishPage({dish, additionalDish}){
                         <Icon icon="line-md:heart" className="product__like-button"></Icon>
                     </div>
                     <div className="product__breadcrumbs">
-                        <Link className="product__link" to={`/category/${dish.sub_categories.categories.id}`}>{dish.sub_categories.categories.title}</Link>
+                        <Link className="product__link" to={`/category/${dish.sub_categories.categories.uuid}`}>{dish.sub_categories.categories.title}</Link>
                         <div className="icon">
                             <Icon icon="lets-icons:arrow-drop-right"/>
                         </div>
-                        <Link className="product__link" to={`/category/${dish.sub_categories.id}`}>{dish.sub_categories.name}</Link>
+                        <Link className="product__link" to={`/category/${dish.sub_categories.uuid}`}>{dish.sub_categories.name}</Link>
                         <div className="icon">
                             <Icon icon="lets-icons:arrow-drop-right"/>
                         </div>
@@ -88,9 +88,10 @@ function RenderDishPage({dish, additionalDish}){
 }
 
 export default function CreateDish() {
-    const { id } = useParams()
-    const {data: dish, isLoading: dishLoading} = useDishQuery(id)
-    const {data: additionalDish, isLoading: additionalDishLoading} = useCategoryWithDishesQuery("1")
+    const { uuid } = useParams()
+    const {data: dish, isLoading: dishLoading} = useDishQuery(uuid)
+    const categoryUuid = dish?.sub_categories?.category_uuid
+    const {data: additionalDish, isLoading: additionalDishLoading} = useCategoryWithDishesQuery(categoryUuid, { skip: !categoryUuid })
 
     if (dishLoading || additionalDishLoading) return <p>Завантаження...</p>
 

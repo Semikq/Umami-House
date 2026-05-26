@@ -1,4 +1,4 @@
-import { Id, AddSale, UpdateSale } from "../TypesModel/saleTypes.js";
+import { Uuid, AddSale, UpdateSale } from "../TypesModel/saleTypes.js";
 import { PrismaClient, Prisma } from "@prisma/client";
 const prisma = new PrismaClient()
 
@@ -10,17 +10,17 @@ export async function addSale({ title, image_url, active}: AddSale): Promise<Pri
     }
 }
 
-export async function updateSale({ id }: Id, { active }: UpdateSale): Promise<Prisma.saleGetPayload<{}>> {
+export async function updateSale({ uuid }: Uuid, { active }: UpdateSale): Promise<Prisma.saleGetPayload<{}>> {
     try {
-        return await prisma.sale.update({ where: { id }, data: { active } })
+        return await prisma.sale.update({ where: { uuid }, data: { active } })
     } catch (error) {
         throw new Error((error as Error).message)
     }
 }
 
-export async function deleteSale({ id }: Id): Promise<void> {
+export async function deleteSale({ uuid }: Uuid): Promise<void> {
     try {
-        await prisma.sale.delete({ where: { id } })
+        await prisma.sale.delete({ where: { uuid } })
     } catch (error) {
         throw new Error((error as Error).message)
     }

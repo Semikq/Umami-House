@@ -1,4 +1,4 @@
-import { Id, OrdersByFilter, UpdateStatusOrder } from "../TypesModel/ordersTypes.js";
+import { Uuid, OrdersByFilter, UpdateStatusOrder } from "../TypesModel/ordersTypes.js";
 import { PrismaClient, Prisma } from "@prisma/client"
 const prisma = new PrismaClient()
 
@@ -35,20 +35,20 @@ export async function fetchOrdersByFilter({ status }: OrdersByFilter): Promise<P
     }
 }
 
-export async function updateStatusOrder({ id }: Id, { status }: UpdateStatusOrder): Promise<Prisma.ordersGetPayload<{}>> {
+export async function updateStatusOrder({ uuid }: Uuid, { status }: UpdateStatusOrder): Promise<Prisma.ordersGetPayload<{}>> {
     try {
         return await prisma.orders.update({
             data: { status },
-            where: { id }
+            where: { uuid }
         })
     } catch (error) {
         throw new Error((error as Error).message)
     }
 }
 
-export async function deleteOrder({ id }: Id): Promise<void> {
+export async function deleteOrder({ uuid }: Uuid): Promise<void> {
     try {
-        await prisma.orders.delete({ where: { id } })
+        await prisma.orders.delete({ where: { uuid } })
     } catch (error) {
         throw new Error((error as Error).message)
     }

@@ -8,20 +8,24 @@ import {useNavigate} from "react-router-dom";
 import CreateCardsRestaurants from "./components/CreateCardsRestaurants.tsx"
 import "./restaurant.css"
 
-function RenderRestaurantPage({userCityId, cities, restaurantsByCity}) {
+function RenderRestaurantPage({userCityUuid, cities, restaurantsByCity}) {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const {data, isLoading} = useRestaurantsQuery()
     const [selected, setSelected] = useState(null)
-    const [index, setIndex] = useState(userCityId || null)
+    const [index, setIndex] = useState(userCityUuid || null)
     const restaurantsToShow = index === null ? data : restaurantsByCity
-    const currentCity = cities.find(item => item.id === Number(index))
+    const currentCity = cities.find(item => item.uuid === index)
 
-    useEffect(() => {if (index !== null) dispatch(changeCity({id: currentCity.id, name: currentCity.name}))}, [currentCity])
+    useEffect(() => {
+        if (index !== null && currentCity) {
+            dispatch(changeCity({uuid: currentCity.uuid, name: currentCity.name}))
+        }
+    }, [currentCity, dispatch, index])
 
-    const handleCityClick = (cityId) => {
-        const city = cities.find(item => item.id === cityId)
-        setIndex(cityId)
+    const handleCityClick = (cityUuid) => {
+        const city = cities.find(item => item.uuid === cityUuid)
+        setIndex(cityUuid)
         navigate(`/restaurants/city/${city.name}`)
     };
 
@@ -40,13 +44,13 @@ function RenderRestaurantPage({userCityId, cities, restaurantsByCity}) {
             <div className="restaurant__map" id="infoWindow">
                 <GoogleMap mapContainerStyle={{height: "100%", width: "100%", borderRadius: "30px 60px 30px 60px"}} center={{lat: currentCity ? Number(currentCity.latitude) : 48.68960588712109, lng: currentCity ? Number(currentCity.longitude) : 31.638236495038726}} zoom={currentCity ? 11.5 : 6}>
                     {restaurantsToShow.map((item) =>
-                        <Marker key={item.id} position={{ lat: Number(item.latitude), lng: Number(item.longitude) }}/>
+                        <Marker key={item.uuid} position={{ lat: Number(item.latitude), lng: Number(item.longitude) }}/>
                     )}
                     {selected &&
                         <InfoWindow position={{ lat: Number(selected.latitude), lng: Number(selected.longitude) }} onCloseClick={() => setSelected({ latitude: null, longitude: null })}>
                             <div className="restaurant__map--infoWindow">
                                 <h3>{selected.name}</h3>
-                                <p>{selected.time__work}</p>
+                                <p>{selected.time_work}</p>
                                 <p>{selected.address}</p>
                                 <p>{selected.phone}</p>
                             </div>
@@ -59,14 +63,14 @@ function RenderRestaurantPage({userCityId, cities, restaurantsByCity}) {
 }
 
 export default function CreateRestaurantPages() {
-    const { id } = useSelector(state => state.userCity)
+    const { uuid } = useSelector(state => state.userCity)
     const {data: cities, isLoading: citiesLoading} = useCitiesQuery()
-    const {data: restaurantsByCity, isLoading: restaurantsByCityLoading} = useRestaurantsByCityQuery(id)
+    const {data: restaurantsByCity, isLoading: restaurantsByCityLoading} = useRestaurantsByCityQuery(uuid)
     const { isLoaded } = useLoadScript({googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY})
 
     if (!restaurantsByCity || !isLoaded || citiesLoading || restaurantsByCityLoading) return <p>Loading...</p>
 
     return (
-        <RenderRestaurantPage userCityId={id} cities={cities} restaurantsByCity={restaurantsByCity}/>
+        <RenderRestaurantPage userCityUuid={uuid} cities={cities} restaurantsByCity={restaurantsByCity}/>
     )
 }

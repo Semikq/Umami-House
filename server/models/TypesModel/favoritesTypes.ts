@@ -1,7 +1,7 @@
-export interface AllFavorites{
-    user_id: number
+export interface AllFavorites {
+    user_uuid: string
 }
 
-export interface VariousEventsInTheFavorites extends AllFavorites{
-    dish_id: number
+export interface VariousEventsInTheFavorites extends AllFavorites {
+    dish_uuid: string
 }

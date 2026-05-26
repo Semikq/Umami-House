@@ -10,10 +10,10 @@ export async function fetchAllCities(): Promise<Prisma.citiesGetPayload<{}>[]> {
     }
 }
 
-export async function fetchRestaurantsByCity({ city_id }: RestaurantsByCity ): Promise<Prisma.restaurantsGetPayload<{}>[]> {
+export async function fetchRestaurantsByCity({ city_uuid }: RestaurantsByCity ): Promise<Prisma.restaurantsGetPayload<{}>[]> {
     try {
         return prisma.restaurants.findMany({
-            where: { city_id }
+            where: { city_uuid }
         })
     } catch (error) {
         throw new Error((error as Error).message)

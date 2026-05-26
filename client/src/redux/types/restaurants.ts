@@ -1,10 +1,10 @@
 export interface Restaurants {
     active: boolean
     address: string
-    city_id: number
+    city_uuid: string
     created_at: string
     description: string
-    id: number
+    uuid: string
     latitude: string
     longitude: string
     name: string
@@ -15,7 +15,7 @@ export interface Restaurants {
 
 export interface Cities {
     created_at: string
-    id: number
+    uuid: string
     name: string
 }
 

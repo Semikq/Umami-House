@@ -10,7 +10,7 @@ const route = Router()
 route.get("/all", handleAllSale)
 
 route.post("/addSale", authenticateToken, authorizeAdmin, validate({ body: saleSchemas.create.body }), handleAddSale)
-route.put("/updateSale/:id", authenticateToken, authorizeAdmin, validate({ params: saleSchemas.update.params, body: saleSchemas.update.body }), handleUpdateSale)
-route.delete("/deleteSale/:id", authenticateToken, authorizeAdmin, validate({ params: saleSchemas.delete.params }), handleDeleteSale)
+route.put("/updateSale/:uuid", authenticateToken, authorizeAdmin, validate({ params: saleSchemas.update.params, body: saleSchemas.update.body }), handleUpdateSale)
+route.delete("/deleteSale/:uuid", authenticateToken, authorizeAdmin, validate({ params: saleSchemas.delete.params }), handleDeleteSale)
 
 export default route

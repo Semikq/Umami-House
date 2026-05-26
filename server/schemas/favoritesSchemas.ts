@@ -1,19 +1,20 @@
 import { z } from "zod";
+import { uuidSchema, uuidParamsSchema } from "./common.js";
 
 export const favoritesSchemas = {
     allfavorites: {
-        params: z.object({ id: z.number() })
+        params: uuidParamsSchema
     },
     addFavorite:{
         body: z.object({
-            user_id: z.number(),
-            dish_id: z.number()
+            user_uuid: uuidSchema,
+            dish_uuid: uuidSchema
         })
     },
     deleteFavorite:{
         body: z.object({
-            user_id: z.number(),
-            dish_id: z.number()
+            user_uuid: uuidSchema,
+            dish_uuid: uuidSchema
         })
     }
 }

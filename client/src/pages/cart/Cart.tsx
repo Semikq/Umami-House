@@ -15,8 +15,8 @@ function RenderCartBloc(){
 
     const handleOrder = async() =>{
         try{
-            if (user?.id){
-                await addOrder({ user_id: user.id, delivery_address: "address", payment_method: "card", dishes: cartDishes.dishes, total_price: cartDishes.totalPrice })
+            if (user?.uuid){
+                await addOrder({ user_uuid: user.uuid, delivery_address: "address", payment_method: "card", dishes: cartDishes.dishes, total_price: cartDishes.totalPrice })
                 dispatch(showCart())
                 navigator("/user")
             }

@@ -1,12 +1,12 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 
 interface UserCity {
-    id: number | null
+    uuid: string | null
     name: string
 }
 
 const initialState: UserCity = {
-    id: null,
+    uuid: null,
     name: "Усі міста"
 }
 
@@ -15,7 +15,7 @@ export const userCity = createSlice({
     initialState,
     reducers: {
         changeCity: (state, action: PayloadAction<UserCity>) => {
-            state.id = action.payload.id
+            state.uuid = action.payload.uuid
             state.name = action.payload.name
         }
     }

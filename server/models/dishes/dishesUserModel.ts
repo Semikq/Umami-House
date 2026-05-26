@@ -1,11 +1,11 @@
-import { Id, AddCommentByIdDishes, DeleteCommentByIdDishes } from "../TypesModel/dishesTypes.js"
+import { Uuid, AddCommentByUuidDishes, DeleteCommentByUuidDishes } from "../TypesModel/dishesTypes.js"
 import { PrismaClient, Prisma } from '@prisma/client'
 const prisma = new PrismaClient()
 
-export async function fetchCategoryWithDishes({ id }: Id): Promise<any> {
+export async function fetchCategoryWithDishes({ uuid }: Uuid): Promise<any> {
   try {
     return await prisma.categories.findUniqueOrThrow({
-      where: { id },
+      where: { uuid },
       select: {
         title: true,
         sub_categories:{
@@ -43,10 +43,10 @@ export async function fetchAllDishes(): Promise<Prisma.dishesGetPayload<{ includ
   }
 }
 
-export async function fetchDishById({ id }: Id): Promise<any> {
+export async function fetchDishByUuid({ uuid }: Uuid): Promise<any> {
   try{
     return await prisma.dishes.findUniqueOrThrow({
-      where: { id },
+      where: { uuid },
       include: {
         sub_categories: {
           include: {
@@ -71,10 +71,10 @@ export async function fetchDishById({ id }: Id): Promise<any> {
   }
 }
 
-export async function fetchDishCommentsById({ id }: Id): Promise<Prisma.dish_commentsGetPayload<{ include: { users: true }}>[]> {
+export async function fetchDishCommentsByUuid({ uuid }: Uuid): Promise<Prisma.dish_commentsGetPayload<{ include: { users: true }}>[]> {
   try {
     return await prisma.dish_comments.findMany({
-      where: { dish_id: id },
+      where: { dish_uuid: uuid },
       include: { users: true }
     })
   } catch (error) {
@@ -82,10 +82,10 @@ export async function fetchDishCommentsById({ id }: Id): Promise<Prisma.dish_com
   }
 }
 
-export async function addCommentByIdDishes({ dish_id, user_id, comment, rating }: AddCommentByIdDishes): Promise<Prisma.dish_commentsGetPayload<{ include: { users: true } }>> {
+export async function addCommentByUuidDishes({ dish_uuid, user_uuid, comment, rating }: AddCommentByUuidDishes): Promise<Prisma.dish_commentsGetPayload<{ include: { users: true } }>> {
   try {
     return await prisma.dish_comments.create({
-      data: { dish_id, user_id, comment, rating },
+      data: { dish_uuid, user_uuid, comment, rating },
       include: { users: true }
     })
   } catch (error) {
@@ -93,10 +93,10 @@ export async function addCommentByIdDishes({ dish_id, user_id, comment, rating }
   }
 }
 
-export async function deleteCommentByIdDishes({ user_id, dish_id }: DeleteCommentByIdDishes): Promise<void> {
+export async function deleteCommentByUuidDishes({ user_uuid, dish_uuid }: DeleteCommentByUuidDishes): Promise<void> {
   try {
     await prisma.dish_comments.deleteMany({
-      where: { user_id, dish_id }
+      where: { user_uuid, dish_uuid }
     })
   } catch (error) {
     throw new Error((error as Error).message)

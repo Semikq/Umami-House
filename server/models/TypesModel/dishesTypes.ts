@@ -1,43 +1,43 @@
-export interface Id{
-  id: number
+export interface Uuid {
+  uuid: string
 }
 
-export interface AddCommentByIdDishes{
-  dish_id: number,
-  user_id: number,
+export interface AddCommentByUuidDishes {
+  dish_uuid: string,
+  user_uuid: string,
   comment: string,
   rating: number
 }
 
-export interface DeleteCommentByIdDishes{
-  user_id: number,
-  dish_id: number
+export interface DeleteCommentByUuidDishes {
+  user_uuid: string,
+  dish_uuid: string
 }
 
-export interface Image{
+export interface Image {
   title: string,
   image_url: string
 }
 
-export interface Images extends Image{
-  dish_id: number
+export interface Images extends Image {
+  dish_uuid: string
 }
 
-interface DishType{
+interface DishType {
   name: string,
   weight: number,
   price: number,
   frozen: boolean,
   spicy: boolean,
   ingredients: string,
-  sub_category_id: number,
+  sub_category_uuid: string,
   active: boolean,
 }
 
-export interface AddDish extends DishType{
+export interface AddDish extends DishType {
   images: Image[]
 }
 
-export interface UpdateDish extends AddDish{
-  id: number
+export interface UpdateDish extends AddDish {
+  uuid: string
 }

@@ -1,9 +1,9 @@
-export interface Id {
-    id: number
+export interface Uuid {
+    uuid: string
 }
 
 interface RestaurantType {
-    city_id: number,
+    city_uuid: string,
     name: string,
     address: string,
     phone: string,
@@ -18,13 +18,13 @@ interface RestaurantType {
 export interface AddRestaurant extends RestaurantType {}
 
 export interface UpdateRestaurant extends AddRestaurant {
-    id: number
+    uuid: string
 }
 
 export interface RestaurantsByCity {
-    city_id: number
+    city_uuid: string
 }
 
-export interface addCity{
+export interface addCity {
     city_name: string
 }
