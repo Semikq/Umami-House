@@ -12,15 +12,21 @@ import userRoutes from "./routes/userRoutes.js";
 dotenv.config();
 const app = express();
 
-app.use(express.json());
-app.use(cookieParser());
+// 1. CORS МАЄ СТОЯТИ НАЙПЕРШИМ
 app.use(cors({
     origin: [
-        process.env.FRONTEND_URL || "",
-        process.env.VERCEL_URL || ""    
+        "http://localhost:3000",
+        "http://localhost:5173", // про всяк випадок для Vite
+        "https://umami-house-client-git-main-semikqs-projects.vercel.app", // Твій поточний Preview-домен
+        "https://umami-house-client.vercel.app" // Твій основний домен фронту (якщо є)
     ],
     credentials: true,
+    optionsSuccessStatus: 200
 }));
+
+// 2. Усі інші мідлвари йдуть СТРОГО ПІСЛЯ CORS
+app.use(express.json());
+app.use(cookieParser());
 
 app.use("/uploads", express.static("uploads"));
 app.use("/dishes", dishesRouter);
