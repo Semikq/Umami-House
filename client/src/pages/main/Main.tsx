@@ -11,7 +11,7 @@ import getImage from "../../utils/getImage.ts";
 function RenderMainPage({sale, categories, partners}) {
     return (
         <main>
-            <CreateSlider sale={sale}/>
+            <CreateSlider sale={sale ?? []}/>
             <CreateFieldInformation/>
             <CreateMenu categories={categories}/>
             <div className="restaurantInfo">

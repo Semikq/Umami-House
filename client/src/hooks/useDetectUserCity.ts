@@ -14,13 +14,13 @@ export default function useDetectUserCity (){
     }, []);
 
     useEffect(() => {
-        if (!citiesLoading && userCity && cities){
+        if (!citiesLoading && userCity && cities?.length) {
             const currentCity = cities.find(item => item.name.toLowerCase() === userCity.toLowerCase())
             if (currentCity){
                 dispatch(changeCity({ uuid: currentCity.uuid,  name: currentCity.name }))
-            }else {
+            } else {
                 dispatch(changeCity({ uuid: cities[0].uuid,  name: cities[0].name }))
             }
         }
-    }, [cities, citiesLoading, userCity]);
+    }, [cities, citiesLoading, userCity, dispatch]);
 }

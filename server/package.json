@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "prisma:push": "npx prisma db push && npx prisma generate",
-    "build": "npx tsc",
+    "build": "npx prisma generate && npx tsc",
     "startt": "tsx server.ts",
     "start": "node dist/server.js"
   },
