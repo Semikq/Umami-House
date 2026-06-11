@@ -4,7 +4,7 @@ import {useState} from "react";
 import FormLogin from "./components/FormLogin.tsx";
 import FormRegister from "./components/FormRegister.tsx"
 import {useDispatch} from "react-redux";
-import {showAuth} from "../../redux/slices/uiSlice.ts";
+import {closeAuth} from "../../redux/slices/uiSlice.ts";
 import "./auth.css"
 
 function RenderAuthForm(){
@@ -12,9 +12,11 @@ function RenderAuthForm(){
     const dispatch = useDispatch()
 
     return (
-        <div className="auth-backdrop" onClick={() => dispatch(showAuth())}>
+        <div className="auth-backdrop">
             <div className="form" onClick={(e) => e.stopPropagation()}>
-                <Icon className="form__icon-close" icon="mingcute:close-fill" onClick={() => dispatch(showAuth())}/>
+                <button type="button" className="form__icon-close" onClick={() => dispatch(closeAuth())} aria-label="Закрити">
+                    <Icon icon="mingcute:close-fill"/>
+                </button>
                 <div className="form__header">
                     <h1 className="header__title">Вас вітає Umami House!</h1>
                     <div className="header__exit">
@@ -23,17 +25,6 @@ function RenderAuthForm(){
                     </div>
                 </div>
                 {isRegister ? <FormRegister/> : <FormLogin/>}
-                <p className="form__if">або</p>
-                <div className="form__login-selection">
-                    <button>
-                        <Icon icon="logos:facebook"/>
-                        Facebook
-                    </button>
-                    <button>
-                        <Icon icon="logos:google-icon"/>
-                        Google
-                    </button>
-                </div>
             </div>
         </div>
     )

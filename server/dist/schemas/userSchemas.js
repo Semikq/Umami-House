@@ -4,7 +4,7 @@ export const userSchemas = {
     choiceRoleUserByUuid: {
         params: uuidParamsSchema,
         body: z.object({
-            role: z.string()
+            role: z.enum(["user", "admin", "company"]),
         })
     },
     deleteUserByUuid: {
@@ -18,7 +18,8 @@ export const userSchemas = {
             surname: z.string().optional(),
             phone: z.string(),
             company_type: z.string().optional(),
-            company_name: z.string().optional()
+            company_name: z.string().optional(),
+            city_uuid: z.string().uuid().optional(),
         })
     },
     login: {
@@ -31,7 +32,7 @@ export const userSchemas = {
         params: uuidParamsSchema,
         body: z.object({
             email: z.string(),
-            password: z.coerce.string(),
+            password: z.coerce.string().optional(),
             name: z.string(),
             surname: z.string().optional(),
             phone: z.string(),
@@ -41,5 +42,14 @@ export const userSchemas = {
     },
     deleteUser: {
         params: uuidParamsSchema
-    }
+    },
+    updateUserCity: {
+        params: uuidParamsSchema,
+        body: z.object({
+            city_uuid: z.string().uuid(),
+        }),
+    },
+    bonusCardsByUser: {
+        params: uuidParamsSchema,
+    },
 };

@@ -25,6 +25,8 @@ export const ordersSchemas = {
             delivery_address: z.string(),
             payment_method: z.string(),
             total_price: z.number(),
+            bonuses_spent: z.number().int().min(0).optional(),
+            bonus_card_uuid: uuidSchema.optional(),
             dishes: z.array(z.object({
                 uuid: uuidSchema,
                 name: z.string(),

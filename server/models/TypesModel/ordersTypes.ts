@@ -53,7 +53,9 @@ export interface OrderDishInput {
 export interface AddOrder {
     user_uuid: string,
     delivery_address: string,
-    payment_method: PaymentMethod,
+    payment_method: string,
     dishes: OrderDishInput[],
-    total_price: number
+    total_price: number,
+    bonuses_spent?: number,
+    bonus_card_uuid?: string,
 }

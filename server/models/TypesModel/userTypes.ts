@@ -26,4 +26,12 @@ export interface LoginUser {
 
 export interface User extends UserType, Uuid {}
 
-export interface UserRefresh extends Omit<UserType, "password">, Uuid {}
+export interface UserCity {
+    uuid: string
+    name: string
+}
+
+export interface UserRefresh extends Omit<UserType, "password">, Uuid {
+    city_uuid?: string | null
+    cities?: UserCity | null
+}

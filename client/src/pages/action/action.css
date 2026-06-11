@@ -1,0 +1,443 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+@import '../main/components/saleSlider.css';
+
+.action__title{
+    grid-column: 2 / 12;
+    text-align: center;
+    margin: 0 0 20px 0;
+    font-family: Roboto, sans-serif;
+    font-weight: 500;
+    color: #333333;
+    font-size: 34px;
+}
+
+@media screen and (max-width: 1200px) {
+    .action__title{
+        grid-column: 1 / -1;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .action__title{
+        font-size: 28px;
+        margin-bottom: 16px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .action__title{
+        font-size: 26px;
+        margin-bottom: 12px;
+    }
+}
+
+.action__loyalty{
+    grid-column: 2 / 12;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    margin-top: 30px;
+}
+
+.action__bonuses{
+    grid-column: 2 / 12;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.action__bonuses-grid{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.action__bonus-card{
+    min-height: 500px;
+    overflow: hidden;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 28px 24px;
+    box-sizing: border-box;
+}
+
+.action__bonus-content{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    text-align: center;
+    min-height: 500px;
+    padding: 20px;
+}
+
+.action__bonus-card:nth-child(1){
+    border-top-left-radius: 60px;
+    border-bottom-left-radius: 60px;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+.action__bonus-card:nth-child(2){
+    border-radius: 20px;
+}
+
+.action__bonus-card:nth-child(3){
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    border-top-right-radius: 60px;
+    border-bottom-right-radius: 60px;
+}
+
+.action__bonus-title{
+    margin: 0;
+    font-family: Roboto, sans-serif;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 1.25;
+    color: #ffffff;
+    margin-bottom: 20px;
+}
+
+.action__bonus-text{
+    margin: 0;
+    font-family: Roboto, sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 1.35;
+    color: #ffffff;
+}
+
+.action__sectionTitle{
+    margin: 0;
+    text-align: center;
+    font-family: Roboto, sans-serif;
+    font-weight: 500;
+    font-size: 34px;
+    color: #333333;
+}
+
+.action__loyalty-banner{
+    position: relative;
+    overflow: hidden;
+    border-radius: 40px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 620px;
+    padding: 56px 60px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+}
+
+.action__loyalty-banner::after{
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.48);
+    pointer-events: none;
+}
+
+.action__loyalty-inner{
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    display: grid;
+    grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
+    gap: 48px;
+    align-items: center;
+}
+
+.action__loyalty-content{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 720px;
+}
+
+.action__loyalty-heading{
+    margin: 0;
+    font-family: Roboto, sans-serif;
+    font-weight: 500;
+    font-size: 34px;
+    line-height: 1.2;
+    color: #ffffff;
+}
+
+.action__loyalty-text{
+    margin: 0;
+    font-family: Roboto, sans-serif;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 1.35;
+    color: #ffffff;
+}
+
+.action__loyalty-list{
+    margin: 0;
+    padding-left: 26px;
+    font-family: Roboto, sans-serif;
+    font-size: 20px;
+    line-height: 1.35;
+    color: #ffffff;
+    list-style-type: disc;
+}
+
+.action__loyalty-list li{
+    margin-bottom: 14px;
+}
+
+.action__loyalty-list li:last-child{
+    margin-bottom: 0;
+}
+
+.action__loyalty-list strong{
+    font-weight: 600;
+}
+
+.action__loyalty-discounts{
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    justify-self: center;
+    width: 100%;
+    max-width: 360px;
+}
+
+.action__discounts-title{
+    margin: 0;
+    text-align: center;
+    font-family: Roboto, sans-serif;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 1.3;
+    color: #ffffff;
+}
+
+.action__discount-box{
+    background: rgba(255, 255, 255, 0.58);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 24px;
+    padding: 28px 32px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.action__discount-row{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding: 18px 0;
+}
+
+.action__discount-row:first-child{
+    padding-top: 0;
+}
+
+.action__discount-row:last-child{
+    padding-bottom: 0;
+}
+
+.action__discount-divider{
+    width: 100%;
+    height: 1px;
+    background-color: rgba(51, 51, 51, 0.3);
+    margin-bottom: 18px;
+}
+
+.action__discount-amount{
+    margin: 0;
+    font-family: Roboto, sans-serif;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 1.2;
+    color: #333333;
+    text-align: center;
+}
+
+.action__discount-value{
+    margin: 0;
+    font-family: Roboto, sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 1.3;
+    color: #333333;
+    text-align: center;
+}
+
+@media screen and (max-width: 1200px) {
+    .action__loyalty,
+    .action__bonuses{
+        grid-column: 1 / -1;
+    }
+}
+
+@media screen and (max-width: 992px) {
+    .action__loyalty{
+        margin-top: 16px;
+        gap: 22px;
+    }
+
+    .action__loyalty-banner{
+        min-height: auto;
+        padding: 40px 32px;
+        border-radius: 32px;
+    }
+
+    .action__loyalty-inner{
+        grid-template-columns: 1fr;
+        gap: 32px;
+    }
+
+    .action__loyalty-content{
+        max-width: none;
+    }
+
+    .action__loyalty-discounts{
+        max-width: 400px;
+        margin: 0 auto;
+    }
+
+    .action__bonuses{
+        margin-top: 40px;
+        gap: 28px;
+    }
+
+    .action__bonuses-grid{
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .action__bonus-card:last-child{
+        grid-column: 1 / -1;
+        max-width: 520px;
+        justify-self: center;
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .action__sectionTitle{
+        font-size: 28px;
+    }
+
+    .action__loyalty-heading{
+        font-size: 28px;
+    }
+
+    .action__loyalty-banner{
+        padding: 36px 28px;
+    }
+
+    .action__loyalty-text,
+    .action__loyalty-list{
+        font-size: 18px;
+    }
+
+    .action__discounts-title{
+        font-size: 20px;
+    }
+
+    .action__discount-amount{
+        font-size: 20px;
+    }
+
+    .action__discount-value{
+        font-size: 16px;
+    }
+
+    .action__bonus-title{
+        font-size: 20px;
+    }
+
+    .action__bonus-text{
+        font-size: 16px;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .action__bonuses-grid{
+        grid-template-columns: 1fr;
+    }
+
+    .action__bonus-card:last-child{
+        max-width: none;
+    }
+
+    .action__bonus-card:nth-child(1),
+    .action__bonus-card:nth-child(2),
+    .action__bonus-card:nth-child(3){
+        border-radius: 24px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .action__bonuses{
+        margin-top: 30px;
+        margin-bottom: 30px;
+        gap: 20px;
+    }
+
+    .action__bonus-card{
+        min-height: 420px;
+        padding: 22px 18px;
+        border-radius: 20px;
+    }
+
+    .action__bonus-title{
+        font-size: 18px;
+    }
+
+    .action__bonus-text{
+        font-size: 15px;
+    }
+
+    .action__sectionTitle{
+        font-size: 26px;
+    }
+
+    .action__loyalty-banner{
+        padding: 28px 20px;
+        border-radius: 24px;
+        min-height: auto;
+    }
+
+    .action__loyalty-heading{
+        font-size: 24px;
+    }
+
+    .action__discounts-title{
+        font-size: 20px;
+    }
+
+    .action__loyalty-text,
+    .action__loyalty-list{
+        font-size: 16px;
+    }
+
+    .action__loyalty-list{
+        padding-left: 20px;
+    }
+
+    .action__discount-box{
+        padding: 20px;
+    }
+
+    .action__discount-amount{
+        font-size: 18px;
+    }
+
+    .action__discount-value{
+        font-size: 15px;
+    }
+}

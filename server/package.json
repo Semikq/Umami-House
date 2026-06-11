@@ -5,6 +5,9 @@
   "type": "module",
   "scripts": {
     "prisma:push": "npx prisma db push && npx prisma generate",
+    "prisma:seed": "tsx prisma/seed.ts",
+    "prisma:seed:local": "tsx prisma/seed-local.ts",
+    "prisma:create-admin": "tsx prisma/create-admin.ts",
     "build": "npx prisma generate && npx tsc",
     "startt": "tsx server.ts",
     "start": "node dist/server.js"
@@ -13,6 +16,9 @@
   "author": "",
   "license": "ISC",
   "description": "",
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
+  },
   "dependencies": {
     "@prisma/client": "^6.11.1",
     "@types/express": "^5.0.1",

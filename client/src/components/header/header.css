@@ -5,24 +5,60 @@ header{
     height: 70px;
 }
 
+header.header--with-loyalty{
+    height: auto;
+    min-height: 168px;
+}
+
 .bar{
     position: fixed;
     width: 100%;
+    max-width: 100%;
+    overflow-x: clip;
     z-index: 800;
+}
+
+.bar--with-loyalty{
+    overflow: hidden;
+    border-bottom-left-radius: 30px;
+    border-bottom-right-radius: 30px;
+    box-shadow: 0 8px 24px rgba(183, 95, 109, 0.18);
+}
+
+.bar--with-loyalty .primaryAppBar{
+    border-radius: 0;
+    position: relative;
+    z-index: 2;
+    box-shadow: none;
+}
+
+.bar--with-loyalty .loyaltyBanner{
+    position: relative;
+    z-index: 1;
+    margin-top: 0;
+    border-radius: 0;
+    border-bottom-left-radius: 30px;
+    border-bottom-right-radius: 30px;
+    box-shadow: none;
 }
 
 .primaryAppBar{
     height: 70px;
     width: 100%;
+    max-width: 100%;
+    min-width: 0;
     background-color: #B75F6D;
     border-bottom-left-radius: 30px;
     border-bottom-right-radius: 30px;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 8px;
     padding: 0 33px;
     box-sizing: border-box;
     z-index: 99;
+    box-shadow: 0 8px 24px rgba(183, 95, 109, 0.22);
+    overflow: hidden;
 }
 
 .position{
@@ -33,31 +69,58 @@ header{
     position: relative;
     box-sizing: border-box;
     text-decoration: none;
+    transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
-.primaryAppBar .position:nth-child(1){
-    gap: 0;
+.primaryAppBar > a.position:hover{
+    transform: translateY(-1px);
+    opacity: 0.92;
 }
 
-.primaryAppBar .position:nth-child(1) h1{
-    position: absolute;
-    transform: translate(35px, -10px);
-    width: auto;
-    font-size: 12px;
-    color: #333333;
-    font-family: Roboto, sans-serif;
+.primaryAppBar .city-block{
+    gap: 6px;
+    max-width: 130px;
+    flex-shrink: 0;
 }
 
-.primaryAppBar .position:nth-child(1) select{
-    font-size: 18px;
-    background-color: transparent;
-    border: none;
-    outline: none;
-    padding: 15px 0 0 9px;
-    width: fit-content;
-    appearance: none;
-    transform: none;
-    color: #F1C232;
+.city-block__btn{
+    display: none;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-sizing: border-box;
+    border-radius: 50%;
+    background: transparent;
+    border: 2px solid #ffffff;
+    box-shadow: none;
+}
+
+.city-block__glyph{
+    display: block;
+    flex-shrink: 0;
+}
+
+.headerBurger{
+    display: none;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+    background: transparent;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+.headerBurger:active{
+    transform: scale(0.96);
+}
+
+.primaryAppBar .city-block .city-block__icon--desktop{
+    flex-shrink: 0;
 }
 
 .position h1{
@@ -74,6 +137,17 @@ header{
     text-decoration: none;
 }
 
+.primaryAppBar__logo{
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    transition: transform 0.25s ease;
+}
+
+.primaryAppBar__logo:hover{
+    transform: scale(1.02);
+}
+
 .primaryAppBar h2{
     font-size: 34px;
     font-family: Delius, sans-serif;
@@ -82,38 +156,82 @@ header{
     letter-spacing: 2px;
     color: #333333;
     margin: 0;
+    line-height: 1;
 }
 
 .primaryAppBar h2 img{
     padding: 0 4px;
-    height: 60px;
+    height: 56px;
+    width: auto;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.12));
 }
 
 .primaryAppBar .user{
-    height: 38px;
-    width: 115px;
-    border-radius: 20px;
-    border: solid 2px black;
-    background-color: #F1C232;
-    display: flex;
-    justify-content: center;
+    height: 42px;
+    min-width: 42px;
+    max-width: 148px;
+    padding: 0 14px 0 6px;
+    margin: 0;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.55);
+    appearance: none;
+    background: linear-gradient(135deg, #FFF9F0 0%, #ffffff 100%);
+    display: inline-flex;
+    justify-content: flex-start;
     align-items: center;
-    font-size: 18px;
-    gap: 7px;
+    gap: 8px;
     cursor: pointer;
     user-select: none;
+    font-family: Roboto, sans-serif;
+    box-shadow: 0 4px 14px rgba(51, 51, 51, 0.12);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 }
 
-.primaryAppBar .user p{
-    font-size: 18px;
+.primaryAppBar .user:hover{
+    transform: translateY(-1px);
+    border-color: rgba(255, 255, 255, 0.85);
+    box-shadow: 0 6px 18px rgba(51, 51, 51, 0.16);
+}
+
+.primaryAppBar .user:active{
+    transform: translateY(0);
+}
+
+.primaryAppBar .user__avatar{
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: #B75F6D;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1;
+}
+
+.primaryAppBar .user__avatar--guest{
+    background: rgba(183, 95, 109, 0.12);
+}
+
+.primaryAppBar .user__name{
+    font-size: 15px;
+    font-weight: 500;
+    color: #333333;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 100px;
+    max-width: 88px;
 }
 
-.position:nth-child(1){
-    max-width: 115px;
+.primaryAppBar .user--logged{
+    padding-right: 12px;
+}
+
+.position:nth-child(1).city-block{
+    max-width: 130px;
 }
 
 .position:nth-child(2){
@@ -136,19 +254,32 @@ header{
     max-width: 108px;
 }
 
-.position:nth-child(8){
+.primaryAppBar__actions{
     max-width: 134px;
     font-family: Roboto, sans-serif;
     display: flex;
     flex-direction: row;
+    align-items: center;
     gap: 12px;
+    flex-shrink: 0;
 }
 
-.icon_cart{
+.icon_cart,
+.icon_heart{
     cursor: pointer;
+    transition: transform 0.2s ease;
 }
 
-.primaryAppBar div:nth-child(8) select{
+.icon_cart:hover,
+.icon_heart:hover{
+    transform: scale(1.08);
+}
+
+.position .icon{
+    flex-shrink: 0;
+}
+
+.primaryAppBar__actions select{
     border: none;
     font-size: 20px;
     background-color: transparent;
@@ -173,11 +304,54 @@ header{
     }
 }
 
-.menuBar{
-    display: none;
+.loyaltyBanner{
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(240px, 360px);
+    align-items: center;
+    gap: 12px 24px;
+    padding: 12px 33px 14px;
+    background-color: #F1C232;
+    box-sizing: border-box;
+}
+
+.loyaltyBanner .loyaltyStatus{
+    min-width: 0;
+}
+
+.loyaltyBanner .loyaltyTierPills{
+    justify-self: end;
+}
+
+.bar--with-loyalty .primaryAppBar .position h1{
+    color: #F1C232;
+}
+
+@media screen and (max-width: 1000px) {
+    .primaryAppBar .position:nth-child(2) .icon{
+        background-color: #F1C232;
+        border-radius: 10px;
+        padding: 4px;
+    }
+
+    .primaryAppBar .position:nth-child(2) h1{
+        display: none;
+    }
+
+    .primaryAppBar .position:nth-child(2){
+        max-width: none;
+    }
 }
 
 @media screen and (max-width: 1199px) {
+    header.header--with-loyalty{
+        min-height: 168px;
+    }
+
+    .loyaltyBanner{
+        grid-template-columns: minmax(0, 1fr) minmax(220px, 320px);
+        padding: 12px 20px 14px;
+    }
+
     .primaryAppBar h2{
         font-size: 30px;
     }
@@ -194,7 +368,7 @@ header{
         display: none;
     }
 
-    .primaryAppBar div:nth-child(8){
+    .primaryAppBar__actions{
         gap: 4px;
     }
 
@@ -204,118 +378,134 @@ header{
 }
 
 @media screen and (max-width: 992px){
+    header.header--with-loyalty{
+        min-height: 188px;
+    }
+
+    .loyaltyBanner{
+        grid-template-columns: 1fr;
+        gap: 12px;
+        padding: 12px 16px 14px;
+    }
+
+    .loyaltyBanner .loyaltyTierPills{
+        justify-self: stretch;
+    }
+}
+
+@media screen and (max-width: 855px){
     header{
-        height: 110px;
+        height: 70px;
     }
 
-    .primaryAppBar div:nth-child(8){
-        display: none;
-    }
-
-    .primaryAppBar a:nth-child(1),
-    .primaryAppBar a:nth-child(2),
-    .primaryAppBar a:nth-child(3),
-    .primaryAppBar a:nth-child(4),
-    .primaryAppBar a:nth-child(6),
-    .primaryAppBar a:nth-child(7){
-        display: none;
+    .bar:not(.bar--with-loyalty){
+        background-color: transparent;
+        box-shadow: none;
     }
 
     .primaryAppBar{
-        position: absolute;
+        position: relative;
+        overflow: hidden;
+        display: grid;
+        grid-template-columns: 36px 1fr 36px;
+        align-items: center;
+        justify-content: unset;
+        column-gap: 10px;
+        height: 70px;
+        min-height: 70px;
+        padding: 0 16px;
+        gap: 0;
+        box-sizing: border-box;
         z-index: 1;
     }
 
-    .menuBar{
-        position: absolute;
-        height: 120px;
-        width: 100%;
-        background-color: #F1C232;
-        border-bottom-left-radius: 30px;
-        border-bottom-right-radius: 30px;
-        display: flex;
-        flex-direction: column;
-        transition: all ease-in-out 0.5s;
-        transform: translateY(-10px);
+    .primaryAppBar .city-block{
+        display: none;
     }
 
-    .menuBar > div{
-        display: flex;
-        justify-content: space-around;
-        align-items: end;
-        padding: 0 10px;
-        flex: 1;
+    .primaryAppBar .headerBurger{
+        display: inline-flex;
+        grid-column: 1;
+        grid-row: 1;
+        z-index: 2;
     }
 
-    .menuBar > div .position{
-        display: flex;
-        align-items: end;
+    .primaryAppBar__logo{
+        grid-column: 1 / -1;
+        grid-row: 1;
+        justify-self: center;
+        z-index: 1;
+        pointer-events: auto;
+        min-width: 0;
+        justify-content: center;
     }
 
-    .menuBar > div .position .icon{
-        transform: translateY(-2px);
+    .primaryAppBar__actions{
+        display: none;
     }
 
-    .menuBar > div .position h1{
-        margin: 0;
+    .primaryAppBar .user{
+        grid-column: 3;
+        grid-row: 1;
+        z-index: 2;
+        width: 36px;
+        height: 36px;
+        min-width: 36px;
+        max-width: 36px;
+        padding: 0;
+        justify-content: center;
+        flex-shrink: 0;
+        border: 1px solid rgba(255, 255, 255, 0.7);
+        background: linear-gradient(135deg, #FFF9F0 0%, #ffffff 100%);
+        box-shadow: 0 4px 14px rgba(51, 51, 51, 0.12);
     }
 
-    .menuBar > .icon{
-        width: 100%;
-        height: 40px;
-        cursor: pointer;
+    .primaryAppBar .user__avatar{
+        width: 30px;
+        height: 30px;
+        font-size: 14px;
+        background: #B75F6D;
+        color: #ffffff;
     }
 
-    .hidden{
-        transform: translate(0, 40px);
+    .primaryAppBar .user__name{
+        display: none;
     }
 
-    .position h1{
-        color: #B75F6D;
+    .primaryAppBar > a.position{
+        display: none;
     }
 
-    .menuBar .position:nth-child(1){
-        max-width: 122px;
+    .primaryAppBar h2{
+        font-size: clamp(24px, 6vw, 30px);
+        letter-spacing: 0;
+        justify-content: center;
+        line-height: 1;
     }
 
-    .menuBar .position:nth-child(2){
-        max-width: 115px;
+    .primaryAppBar h2 img{
+        height: clamp(42px, 10vw, 54px);
+        width: auto;
+        padding: 0 4px;
     }
+}
 
-    .menuBar .position:nth-child(3){
-        max-width: 130px;
-    }
-
-    .menuBar .position:nth-child(4){
-        max-width: 127px;
-    }
-
-    .menuBar .position:nth-child(5){
-        max-width: 108px;
+@media screen and (max-width: 768px) {
+    header.header--with-loyalty{
+        min-height: 184px;
     }
 }
 
 @media screen and (max-width: 576px) {
+    header.header--with-loyalty{
+        min-height: 180px;
+    }
+
+    .bar--with-loyalty .primaryAppBar,
+    .bar--with-loyalty .loyaltyBanner,
     .primaryAppBar{
-        padding: 10px;
-    }
-
-    .menuBar .position:nth-child(1) .icon,
-    .menuBar .position:nth-child(2) .icon,
-    .menuBar .position:nth-child(3) .icon,
-    .menuBar .position:nth-child(4) .icon,
-    .menuBar .position:nth-child(5) .icon{
-        background-color: #B75F6D;
-        border-radius: 10px;
-        padding: 4px;
-    }
-
-    .menuBar .position:nth-child(1) h1,
-    .menuBar .position:nth-child(2) h1,
-    .menuBar .position:nth-child(3) h1,
-    .menuBar .position:nth-child(4) h1,
-    .menuBar .position:nth-child(5) h1{
-        display: none;
+        padding-left: 10px;
+        padding-right: 10px;
     }
 
     .primaryAppBar h2{
@@ -323,39 +513,7 @@ header{
     }
 
     .primaryAppBar h2 img{
-        height: 50px;
-        width: 50px;
-    }
-
-    .primaryAppBar .user{
-        height: auto;
+        height: 46px;
         width: auto;
-        height: 30px;
-        width: 30px;
-    }
-
-    .primaryAppBar .user p{
-        display: none;
-    }
-
-    .primaryAppBar .position:nth-child(1) .icon{
-        background-color: #F1C232;
-        border: solid 2px #333333;
-        box-sizing: border-box;
-        border-radius: 100%;
-        height: 34px;
-        width: 34px;
-        padding: 2px;
-        
-    }
-
-    .primaryAppBar .position:nth-child(1) h1{
-        display: none;
-    }
-
-    .primaryAppBar .position:nth-child(1) select{
-        display: none;
-        font-size: 16px;
-        padding: 0;
     }
 }

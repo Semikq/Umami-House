@@ -3,10 +3,15 @@ import {setCount, incrementCount, decrementCount, delDish} from "../../../redux/
 import {useState, useEffect, useRef} from "react";
 import {useDispatch} from "react-redux";
 import getImage from "../../../utils/getImage.ts";
+import {getCartLinePricing, getWholesaleCartLabel} from "../../../utils/corporateOffer.ts";
 
 function ChangeQuantity ({ dish }) {
     const [countDish, setCountDish] = useState(dish.count)
     const dispatch = useDispatch()
+
+    useEffect(() => {
+        setCountDish(dish.count)
+    }, [dish.count])
 
     const handleSetCount = (e) =>{
         let newCount = Number(e.target.value) || 1
@@ -33,15 +38,24 @@ function ChangeQuantity ({ dish }) {
     }
 
     return (
-        <div className="product__quantity">
-            <Icon className="icon" icon="stash:minus-solid" onClick={handleDecrementCount}/>
-            <input className="count" type="number" value={countDish} onChange={handleSetCount}/>
-            <Icon className="icon" icon="stash:plus-solid" onClick={handleIncrementCount}/>
+        <div className="cart__quantity">
+            <button type="button" className="cart__quantity-btn" onClick={handleDecrementCount} aria-label="Зменшити">
+                <Icon icon="stash:minus-solid"/>
+            </button>
+            <input className="cart__quantity-input" type="number" min={1} max={100} value={countDish} onChange={handleSetCount}/>
+            <button type="button" className="cart__quantity-btn" onClick={handleIncrementCount} aria-label="Збільшити">
+                <Icon icon="stash:plus-solid"/>
+            </button>
         </div>
     )
 }
 
-export default function CartListDishes({ cartDishes }){
+type CartListDishesProps = {
+    cartDishes: { dishes: unknown[], totalPrice?: number },
+    variant?: "default" | "checkout",
+}
+
+export default function CartListDishes({ cartDishes, variant = "default" }: CartListDishesProps){
     const [openMenu, setOpenMenu] = useState(null)
     const dispatch = useDispatch()
     const menuRef = useRef(null);
@@ -61,38 +75,77 @@ export default function CartListDishes({ cartDishes }){
         else document.removeEventListener("mousedown", handleClickOutside)
 
         return () => document.removeEventListener("mousedown", handleClickOutside)
-    }, [menuRef]);
+    }, [openMenu]);
+
+    if (cartDishes.dishes.length === 0) {
+        return (
+            <div className="cart__list-dishes cart__list-dishes--empty">
+                <p className="cart__empty-text">Кошик пустий</p>
+            </div>
+        );
+    }
+
+    const listClassName = variant === "checkout"
+        ? "cart__list-dishes cart__list-dishes--checkout"
+        : "cart__list-dishes";
 
     return(
-        <div className="cart__list-dishes">
-            {cartDishes.dishes.map(dish =>
-                <div className="cart__dish">
+        <div className={listClassName}>
+            {cartDishes.dishes.map(dish => {
+                const { retailTotal, lineTotal, wholesaleActive } = getCartLinePricing(dish);
+                const wholesaleLabel = getWholesaleCartLabel(dish);
+
+                return (
+                <div className="cart__dish" key={dish.uuid}>
                     <div className="cart__dish-header">
                         <img className="cart__dish-image" src={getImage(dish.dish_images[0].image_url)} alt={dish.name}/>
-                        <h2 className="cart__dish-title">
-                            <span className="cart__dish-name">{dish.name}</span>
-                            <span className="cart__dish-weight">({dish.weight}/10г)</span>
-                        </h2>
+                        <div className="cart__dish-info">
+                            <h2 className="cart__dish-name">{dish.name}</h2>
+                            <p className="cart__dish-weight">({dish.weight}/10г)</p>
+                            {wholesaleLabel && (
+                                <span className="cart__dish-wholesale">{wholesaleLabel}</span>
+                            )}
+                        </div>
                     </div>
                     <div className="cart__dish-controls">
                         <ChangeQuantity dish={dish}/>
-                        <p className="dish__controls-price">{(dish.price * dish.count).toLocaleString('uk-UA')} ₴</p>
+                        {wholesaleActive ? (
+                            <div className="cart__dish-prices">
+                                <span className="cart__dish-price-old">
+                                    {retailTotal.toLocaleString("uk-UA")} ₴
+                                </span>
+                                <p className="cart__dish-price">{lineTotal.toLocaleString("uk-UA")} ₴</p>
+                            </div>
+                        ) : (
+                            <p className="cart__dish-price">{lineTotal.toLocaleString("uk-UA")} ₴</p>
+                        )}
+                        <button
+                            type="button"
+                            className="cart__dish-menu-btn"
+                            onClick={() => handleToggleMenu(dish.uuid)}
+                            aria-label="Додаткові дії"
+                        >
+                            <Icon icon="bi:three-dots-vertical"/>
+                        </button>
                     </div>
-                    <Icon className="dish__controls-threeDots" onClick={() => handleToggleMenu(dish.uuid)} icon="bi:three-dots-vertical"/>
                     {openMenu === dish.uuid &&
-                        <div className="dish__controls-additionalMenu" ref={menuRef}>
-                            <div className="dish__controls-additionalMenu-item">
+                        <div className="cart__dish-menu" ref={menuRef}>
+                            <button type="button" className="cart__dish-menu-item">
                                 <Icon icon="line-md:heart"/>
-                                <p>Улюблене</p>
-                            </div>
-                            <div className="dish__controls-additionalMenu-item" onClick={() => {dispatch(delDish(dish.uuid)); setOpenMenu(null)}}>
+                                <span>Улюблене</span>
+                            </button>
+                            <button
+                                type="button"
+                                className="cart__dish-menu-item cart__dish-menu-item--danger"
+                                onClick={() => {dispatch(delDish(dish.uuid)); setOpenMenu(null)}}
+                            >
                                 <Icon icon="iconamoon:trash-duotone"/>
-                                <p>Видалити</p>
-                            </div>
+                                <span>Видалити</span>
+                            </button>
                         </div>
                     }
                 </div>
-            )}
+            )})}
         </div>
     )
 }

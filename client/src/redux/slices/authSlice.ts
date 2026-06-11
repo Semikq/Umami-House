@@ -7,6 +7,11 @@ interface UserData {
     surname: string,
     phone: string,
     role: string,
+    bonuses?: number,
+    company_type?: string | null,
+    company_name?: string | null,
+    city_uuid?: string | null,
+    cities?: { uuid: string, name: string } | null,
     created_at: string
 }
 
@@ -36,9 +41,14 @@ const authSlice = createSlice({
         logOut: (state) => {
             state.user = null;
             state.token = "";
+        },
+        updateUserProfile: (state, action: PayloadAction<Partial<UserData>>) => {
+            if (state.user) {
+                state.user = { ...state.user, ...action.payload };
+            }
         }
     }
 })
 
-export const { logIn, logOut } = authSlice.actions
+export const { logIn, logOut, updateUserProfile } = authSlice.actions
 export default authSlice.reducer

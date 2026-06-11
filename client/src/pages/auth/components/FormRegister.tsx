@@ -1,10 +1,12 @@
-import {Icon} from "@iconify/react";
 import React, {useState} from "react";
 import CreateTelLabel from "./CreateTelLabel.tsx";
 import {useDispatch, useSelector} from "react-redux";
 import {logIn} from "../../../redux/slices/authSlice.ts";
 import {useRegisterMutation} from "../../../redux/api/usersApi.ts";
-import {showAuth} from "../../../redux/slices/uiSlice.ts";
+import {closeAuth} from "../../../redux/slices/uiSlice.ts";
+import {CORPORATE_TYPE_OPTIONS} from "../../../utils/corporateOffer.ts";
+
+const DEFAULT_COMPANY_TYPE = CORPORATE_TYPE_OPTIONS[0].value;
 
 export default function FormRegister(){
     const [role, setRole] = useState(true)
@@ -13,32 +15,60 @@ export default function FormRegister(){
     const [phone, setPhone] = useState("")
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
-    const [company_type, setCompany_type] = useState("")
+    const [company_type, setCompany_type] = useState(DEFAULT_COMPANY_TYPE)
     const [company_name, setCompany_name] = useState("")
     const [registerApi, {isLoading}] = useRegisterMutation()
     const dispatch = useDispatch()
+    const userCity = useSelector((state: { userCity: { uuid: string | null } }) => state.userCity)
 
     const handleRegister = async (e) => {
         e.preventDefault();
         try {
-            const result = await registerApi({ email, password, name, surname, phone, company_type, company_name }).unwrap()
+            const isLegalEntity = !role;
+            const result = await registerApi({
+                email,
+                password,
+                name,
+                surname,
+                phone,
+                company_type: isLegalEntity ? company_type : undefined,
+                company_name: isLegalEntity ? company_name : undefined,
+                city_uuid: userCity.uuid ?? undefined,
+            }).unwrap()
             dispatch(logIn({ user: result.user, token: result.accessToken }))
-            dispatch(showAuth())
+            dispatch(closeAuth())
         }catch(err){
             console.log(err)
         }
     }
     return (
         <form className="form__body" onSubmit={handleRegister}>
-            <div className="body__user-selection">
-                <div className={`body__user ${role ? "active" : ""}`} onClick={() => setRole(true)}>
-                    <Icon icon="radix-icons:dot-filled"/>
-                    <h3>Гість</h3>
-                </div>
-                <div className={`body__user ${!role ? "active" : ""}`} onClick={() => setRole(false)}>
-                    <Icon icon="radix-icons:dot-filled"/>
-                    <h3>Юридична особа</h3>
-                </div>
+            <div className="body__user-selection" role="radiogroup" aria-label="Тип користувача">
+                <button
+                    type="button"
+                    className={`body__user-radio${role ? " active" : ""}`}
+                    onClick={() => {
+                        setRole(true);
+                        setCompany_type(DEFAULT_COMPANY_TYPE);
+                        setCompany_name("");
+                    }}
+                    role="radio"
+                    aria-checked={role}
+                >
+                    Гість
+                </button>
+                <button
+                    type="button"
+                    className={`body__user-radio${!role ? " active" : ""}`}
+                    onClick={() => {
+                        setRole(false);
+                        setCompany_type((prev) => prev || DEFAULT_COMPANY_TYPE);
+                    }}
+                    role="radio"
+                    aria-checked={!role}
+                >
+                    Юридична особа
+                </button>
             </div>
             <div className="body__name-surname">
                 <label htmlFor="name">
@@ -62,12 +92,15 @@ export default function FormRegister(){
             {!role && <>
                 <label htmlFor="select">
                     <p>Тип закладу<span title="Обов'язкове поле">*</span></p>
-                    <select id="select" onChange={(e) => setCompany_type(e.target.value)}>
-                        <option value="restaurant">Ресторан</option>
-                        <option value="cafe">Кафе</option>
-                        <option value="hotel">Готель</option>
-                        <option value="coffee">Кав'ярня</option>
-                        <option value="other">Інше...</option>
+                    <select
+                        id="select"
+                        value={company_type}
+                        onChange={(e) => setCompany_type(e.target.value)}
+                        required
+                    >
+                        {CORPORATE_TYPE_OPTIONS.map((option) => (
+                            <option key={option.value} value={option.value}>{option.label}</option>
+                        ))}
                     </select>
                 </label>
                 <label htmlFor="legalEntity">
@@ -75,7 +108,7 @@ export default function FormRegister(){
                     <input id="legalEntity" value={company_name} onChange={(e) => setCompany_name(e.target.value)} placeholder="Назва юридичної особи"/>
                 </label>
             </>}
-            <button>Увійти</button>
+            <button type="submit" className="form__submit">Зареєструватись</button>
         </form>
     )
 }

@@ -11,12 +11,20 @@ import saleRoutes from "./routes/saleRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 dotenv.config();
 const app = express();
+// 1. CORS МАЄ СТОЯТИ НАЙПЕРШИМ
+app.use(cors({
+    origin: [
+        "http://localhost:3000",
+        "http://localhost:3001",
+        "http://localhost:5173",
+        "https://umami-house-client.vercel.app"
+    ],
+    credentials: true,
+    optionsSuccessStatus: 200
+}));
+// 2. Усі інші мідлвари йдуть СТРОГО ПІСЛЯ CORS
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors({
-    origin: process.env.FRONTEND_URL,
-    credentials: true,
-}));
 app.use("/uploads", express.static("uploads"));
 app.use("/dishes", dishesRouter);
 app.use("/favorites", favoritesRoutes);

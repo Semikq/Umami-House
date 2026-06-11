@@ -8,6 +8,7 @@ import {partnersApi} from "./api/partnersApi.ts";
 import {dishesApi} from "./api/dishesApi.ts";
 import {saleApi} from "./api/saleApi.ts";
 import {ordersApi} from "./api/ordersApi.ts";
+import {favoritesApi} from "./api/favoritesApi.ts";
 import userCity from "./slices/userCity.ts";
 import { FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from 'redux-persist'
 
@@ -22,6 +23,7 @@ export const store = configureStore({
         [dishesApi.reducerPath]: dishesApi.reducer,
         [saleApi.reducerPath]: saleApi.reducer,
         [ordersApi.reducerPath]: ordersApi.reducer,
+        [favoritesApi.reducerPath]: favoritesApi.reducer,
         userCity
     },
     middleware: (getDefaultMiddleware) =>
@@ -29,7 +31,7 @@ export const store = configureStore({
             serializableCheck: {
                 ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
             },
-        }).concat(usersApi.middleware).concat(restaurantsApi.middleware).concat(partnersApi.middleware).concat(dishesApi.middleware).concat(saleApi.middleware).concat(ordersApi.middleware)
+        }).concat(usersApi.middleware).concat(restaurantsApi.middleware).concat(partnersApi.middleware).concat(dishesApi.middleware).concat(saleApi.middleware).concat(ordersApi.middleware).concat(favoritesApi.middleware)
 });
 
 store.subscribe(() => {

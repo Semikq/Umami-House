@@ -16,15 +16,16 @@ const app = express();
 app.use(cors({
     origin: [
         "http://localhost:3000",
-        "http://localhost:5173", // про всяк випадок для Vite
-        "https://umami-house-client.vercel.app" // Твій основний домен фронту (якщо є)
+        "http://localhost:3001",
+        "http://localhost:5173",
+        "https://umami-house-client.vercel.app"
     ],
     credentials: true,
     optionsSuccessStatus: 200
 }));
 
 // 2. Усі інші мідлвари йдуть СТРОГО ПІСЛЯ CORS
-app.use(express.json());
+app.use(express.json({ limit: "10mb" }));
 app.use(cookieParser());
 
 app.use("/uploads", express.static("uploads"));

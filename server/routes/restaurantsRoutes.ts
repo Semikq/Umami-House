@@ -1,5 +1,12 @@
 import { Router } from "express";
-import { handleAddRestaurant, handleUpdateRestaurant, handleDeleteRestaurant, handleAddCity, handleDeleteCity } from "../controllers/restaurants/restaurantsAdminControllers.js";
+import {
+    handleAddRestaurant,
+    handleUpdateRestaurant,
+    handleDeleteRestaurant,
+    handleAddCity,
+    handleDeleteCity,
+    handleUploadRestaurantImage,
+} from "../controllers/restaurants/restaurantsAdminControllers.js";
 import {handleAllCities, handleAllRestaurants, handleRestaurantsByCity} from "../controllers/restaurants/restaurantsUserControllers.js";
 import { validate } from "../middleware/validation.js";
 import { authenticateToken, authorizeAdmin } from "../middleware/authMiddleware.js";
@@ -13,6 +20,7 @@ route.delete("/deleteRestaurant/:uuid", authenticateToken, authorizeAdmin, valid
 
 route.post("/addCity", authenticateToken, authorizeAdmin, validate({ body: restaurantsSchemas.addCity.body }), handleAddCity)
 route.delete("/deleteCity/:uuid", authenticateToken, authorizeAdmin, validate({ params: restaurantsSchemas.deleteCity.params }), handleDeleteCity)
+route.post("/uploadImage", authenticateToken, authorizeAdmin, validate({ body: restaurantsSchemas.uploadImage.body }), handleUploadRestaurantImage)
 
 route.get("/cities", handleAllCities)
 route.get("/city/:city_uuid", handleRestaurantsByCity)

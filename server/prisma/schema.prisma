@@ -19,9 +19,10 @@ model cities {
   uuid        String        @id(map: "city_pkey") @default(uuid()) @db.Uuid
   name        String        @db.VarChar(128)
   created_at  DateTime      @default(now()) @db.Timestamptz(6)
-  longitude   Decimal?      @db.Decimal(10, 8)
+  longitude   Decimal?      @db.Decimal(11, 8)
   latitude    Decimal?      @db.Decimal(10, 8)
   restaurants restaurants[]
+  users       users[]
 }
 
 model dish_comments {
@@ -54,6 +55,9 @@ model dishes {
   ingredients        String
   sub_category_uuid  String          @db.Uuid
   active             Boolean         @default(false)
+  corporate_type     String?         @db.VarChar(64)
+  wholesale_min_qty  Int?
+  wholesale_price    Int?
   created_at         DateTime        @default(now()) @db.Timestamptz(6)
   dish_comments      dish_comments[]
   dish_images        dish_images[]
@@ -112,7 +116,7 @@ model restaurants {
   address          String   @db.VarChar(255)
   phone            String   @db.VarChar(64)
   latitude         Decimal  @db.Decimal(10, 8)
-  longitude        Decimal  @db.Decimal(10, 8)
+  longitude        Decimal  @db.Decimal(11, 8)
   active           Boolean  @default(false)
   created_at       DateTime @default(now()) @db.Timestamptz(6)
   time_work        String
@@ -147,9 +151,26 @@ model users {
   role          String          @default("user")
   company_name  String?         @db.VarChar(255)
   company_type  String?         @db.VarChar(255)
+  city_uuid     String?         @db.Uuid
   created_at    DateTime        @default(now()) @db.Timestamptz(6)
   bonuses       Int             @default(0)
+  cities        cities?         @relation(fields: [city_uuid], references: [uuid], onDelete: SetNull, onUpdate: NoAction, map: "fk_users_cities")
   dish_comments dish_comments[]
   favorites     favorites[]
   orders        orders[]
+  bonus_cards   bonus_cards[]
+}
+
+model bonus_cards {
+  uuid         String   @id @default(uuid()) @db.Uuid
+  user_uuid    String   @db.Uuid
+  name         String   @db.VarChar(128)
+  amount       Int
+  description  String   @db.VarChar(512)
+  active_until DateTime @db.Timestamptz(6)
+  is_active    Boolean  @default(true)
+  created_at   DateTime @default(now()) @db.Timestamptz(6)
+  users        users    @relation(fields: [user_uuid], references: [uuid], onDelete: Cascade, map: "fk_bonus_cards_users")
+
+  @@index([user_uuid], map: "idx_bonus_cards_user")
 }

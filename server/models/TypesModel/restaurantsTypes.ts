@@ -26,5 +26,5 @@ export interface RestaurantsByCity {
 }
 
 export interface addCity {
-    city_name: string
+    name: string
 }

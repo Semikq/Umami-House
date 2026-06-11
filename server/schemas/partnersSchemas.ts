@@ -21,5 +21,12 @@ export const partnersSchemas = {
     },
     delete: {
         params: uuidParamsSchema
-    }
+    },
+    uploadImage: {
+        body: z.object({
+            data: z.string().min(1),
+            mimeType: z.enum(["image/jpeg", "image/png", "image/webp"]),
+            title: z.string().optional(),
+        }),
+    },
 }

@@ -1,13 +1,15 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {CartPricingMeta, recalcCartDishUnitPrice} from "../../utils/corporateOffer.ts";
 
-interface DishDate {
+interface DishDate extends CartPricingMeta {
     uuid: string,
     name: string,
     weight: number,
     frozen: boolean,
     spicy: boolean,
     price: number,
-    count?: number
+    count?: number,
+    dish_images?: { image_url: string }[],
 }
 
 interface cartState {
@@ -25,8 +27,34 @@ interface SetCountPayload {
     count: number
 }
 
+function syncDishUnitPrice(dish: DishDate): void {
+    if (dish.retailPrice == null) {
+        dish.retailPrice = dish.price;
+        dish.wholesalePrice = dish.wholesalePrice ?? null;
+        dish.wholesaleMinQty = dish.wholesaleMinQty ?? null;
+        dish.corporateMatched = dish.corporateMatched ?? false;
+    }
+
+    dish.price = recalcCartDishUnitPrice({
+        retailPrice: dish.retailPrice,
+        wholesalePrice: dish.wholesalePrice,
+        wholesaleMinQty: dish.wholesaleMinQty,
+        corporateMatched: dish.corporateMatched,
+        count: dish.count ?? 1,
+    });
+}
+
+function mergeCartPricing(target: DishDate, source: DishDate): void {
+    if (source.retailPrice != null) {
+        target.retailPrice = source.retailPrice;
+        target.wholesalePrice = source.wholesalePrice;
+        target.wholesaleMinQty = source.wholesaleMinQty;
+        target.corporateMatched = source.corporateMatched;
+    }
+}
+
 const recalcTotalPrice = (state): void => {
-    state.totalPrice = state.dishes.reduce((sum, d) => sum + d.price * d.count, 0)
+    state.totalPrice = state.dishes.reduce((sum, d) => sum + d.price * (d.count ?? 1), 0)
 }
 
 const cartSlice = createSlice({
@@ -34,19 +62,31 @@ const cartSlice = createSlice({
     initialState,
     reducers: {
         addDish: (state, action: PayloadAction<DishDate>): void => {
-            let checkDish = state.dishes.find(d => d.uuid === action.payload.uuid)
-            if (checkDish?.count >= 100) return
-            if(checkDish){
-                checkDish.count += 1
-            }else {
-                state.dishes.push(action.payload)
+            const checkDish = state.dishes.find(d => d.uuid === action.payload.uuid)
+            if (checkDish?.count && checkDish.count >= 100) return
+
+            if (checkDish) {
+                checkDish.count = (checkDish.count ?? 1) + 1
+                mergeCartPricing(checkDish, action.payload)
+                syncDishUnitPrice(checkDish)
+            } else {
+                const dish = { ...action.payload }
+                if (dish.retailPrice == null) {
+                    dish.retailPrice = dish.price
+                    dish.wholesalePrice = dish.wholesalePrice ?? null
+                    dish.wholesaleMinQty = dish.wholesaleMinQty ?? null
+                    dish.corporateMatched = dish.corporateMatched ?? false
+                }
+                syncDishUnitPrice(dish)
+                state.dishes.push(dish)
             }
             recalcTotalPrice(state)
         },
         setCount: (state, action: PayloadAction<SetCountPayload>): void => {
             const dish = state.dishes.find(d => d.uuid === action.payload.uuid)
-            if (dish){
+            if (dish) {
                 dish.count = action.payload.count
+                syncDishUnitPrice(dish)
                 recalcTotalPrice(state)
             }
         },
@@ -56,24 +96,50 @@ const cartSlice = createSlice({
         },
         incrementCount: (state, action: PayloadAction<string>): void => {
             const dish = state.dishes.find(d => d.uuid === action.payload)
-            if(dish && dish.count < 100){
-                dish.count += 1
+            if (dish && (dish.count ?? 1) < 100) {
+                dish.count = (dish.count ?? 1) + 1
+                syncDishUnitPrice(dish)
                 recalcTotalPrice(state)
             }
         },
-        decrementCount: (state, action: PayloadAction<string>): void=> {
+        decrementCount: (state, action: PayloadAction<string>): void => {
             const dish = state.dishes.find(d => d.uuid === action.payload)
-            if(dish && dish.count > 1){
-                dish.count -= 1
+            if (dish && (dish.count ?? 1) > 1) {
+                dish.count = (dish.count ?? 1) - 1
+                syncDishUnitPrice(dish)
                 recalcTotalPrice(state)
             }
         },
         clearCart: (state): void => {
             state.dishes = []
             state.totalPrice = 0
-        }
+        },
+        addOrderDishes: (state, action: PayloadAction<DishDate[]>): void => {
+            for (const dish of action.payload) {
+                const countToAdd = Math.min(dish.count ?? 1, 100)
+                const existing = state.dishes.find((d) => d.uuid === dish.uuid)
+
+                if (existing) {
+                    existing.count = Math.min(100, (existing.count ?? 1) + countToAdd)
+                    mergeCartPricing(existing, dish)
+                    syncDishUnitPrice(existing)
+                } else {
+                    const nextDish = { ...dish, count: countToAdd }
+                    if (nextDish.retailPrice == null) {
+                        nextDish.retailPrice = nextDish.price
+                        nextDish.wholesalePrice = nextDish.wholesalePrice ?? null
+                        nextDish.wholesaleMinQty = nextDish.wholesaleMinQty ?? null
+                        nextDish.corporateMatched = nextDish.corporateMatched ?? false
+                    }
+                    syncDishUnitPrice(nextDish)
+                    state.dishes.push(nextDish)
+                }
+            }
+
+            recalcTotalPrice(state)
+        },
     }
 })
 
-export const { addDish, setCount, delDish, incrementCount, decrementCount, clearCart } = cartSlice.actions
+export const { addDish, setCount, delDish, incrementCount, decrementCount, clearCart, addOrderDishes } = cartSlice.actions
 export default cartSlice.reducer

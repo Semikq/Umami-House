@@ -2,7 +2,7 @@ import { fetchAllUsers, choiceRoleUser, deleteUser } from "../../models/user/adm
 export async function handleAllUsers(req, res) {
     try {
         const result = await fetchAllUsers();
-        res.status(200).json(result);
+        res.status(200).json({ data: result });
     }
     catch (error) {
         res.status(500).json(error.message);

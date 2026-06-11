@@ -1,10 +1,15 @@
 import bcrypt from "bcryptjs";
 import { PrismaClient } from "@prisma/client";
+import { createWelcomeBonusCard } from "./bonusCardsModel.js";
 const prisma = new PrismaClient();
-export async function registerUser({ email, password, name, surname, phone, company_type, company_name }) {
+export async function registerUser({ email, password, name, surname, phone, company_type, company_name, city_uuid }) {
     try {
-        return await prisma.users.create({
-            data: { email, password, name, surname: surname ?? "", phone, company_type, company_name }
+        return await prisma.$transaction(async (tx) => {
+            const user = await tx.users.create({
+                data: { email, password, name, surname: surname ?? "", phone, company_type, company_name, city_uuid: city_uuid ?? null },
+            });
+            await createWelcomeBonusCard(user.uuid, tx);
+            return user;
         });
     }
     catch (error) {
@@ -14,7 +19,7 @@ export async function registerUser({ email, password, name, surname, phone, comp
 export async function loginUser({ userInput, password }) {
     try {
         const user = await prisma.users.findFirstOrThrow({
-            where: { OR: [{ email: userInput }, { phone: userInput }] }
+            where: { email: userInput }
         });
         const isPasswordCorrect = await bcrypt.compare(password, user.password);
         if (!isPasswordCorrect)

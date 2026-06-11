@@ -9,6 +9,7 @@ export interface AddSale {
 }
 
 export interface UpdateSale {
+    title: string,
+    image_url: string,
     active: boolean,
-    uuid: string
 }

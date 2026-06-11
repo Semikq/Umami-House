@@ -1,34 +1,61 @@
 import {Icon} from "@iconify/react";
 
-interface NewItemsProps {
+interface InfoItemProps {
     title: string;
     icon: string;
 }
 
-function NewItems ({title, icon}: NewItemsProps) {
-    return <div title={title}>
-        <Icon className="icon" icon={icon} width={55} height={50} color="#333333"></Icon>
-        <p>{title}</p>
-    </div>
+const INFO_ITEMS: InfoItemProps[] = [
+    {title: "Розумні ціни для гостей за найкращу якість", icon: "material-symbols:price-check-rounded"},
+    {title: "Справжня азійська кухня — смачно, безпечно, автентично", icon: "hugeicons:noodles"},
+    {title: "Оптові пропозиції для компаній", icon: "icon-park-outline:delivery"},
+    {title: "Працюємо щодня з 10:00 до 21:00", icon: "fluent-emoji-high-contrast:two-oclock"},
+    {title: "Швидка доставка та сезонні оновлення меню", icon: "material-symbols:delivery-truck-speed-outline-rounded"},
+    {title: "Сертифіковане виробництво та високі стандарти якості", icon: "icon-park-outline:certificate"},
+];
+
+function InfoItem({title, icon}: InfoItemProps) {
+    return (
+        <div className="fieldInformation__item">
+            <span className="fieldInformation__iconWrap" aria-hidden="true">
+                <Icon className="fieldInformation__icon" icon={icon} width={26} height={26}/>
+            </span>
+            <p>{title}</p>
+        </div>
+    );
 }
 
-export default function CreateFieldInformation(){
-    const newItem: NewItemsProps[] = [
-        {title: "Розумні ціни для гостей за найкращу якість", icon: "material-symbols:price-check-rounded"},
-        {title: "Справжня азійська кухня - смачно, безпечно, автентично", icon: "hugeicons:noodles"},
-        {title: "Оптові пропозиції для компаній", icon: "icon-park-outline:delivery"},
-        {title: "Працюємо щодня з 10:00 до 21:00", icon: "fluent-emoji-high-contrast:two-oclock"},
-        {title: "Швидка доставка та сезонні оновлення меню", icon: "material-symbols:delivery-truck-speed-outline-rounded"},
-        {title: "Сертифіковане виробництво та високі стандарти якості", icon: "icon-park-outline:certificate"},
-    ]
+function scrollToMenu(event: React.MouseEvent<HTMLAnchorElement>) {
+    event.preventDefault();
 
+    const menu = document.getElementById("menu");
+    if (!menu) return;
+
+    const headerOffset = 96;
+    const top = menu.getBoundingClientRect().top + window.scrollY - headerOffset;
+
+    window.scrollTo({top, behavior: "smooth"});
+}
+
+export default function CreateFieldInformation() {
     return (
         <div className="fieldInformation">
-            {newItem.slice(0, 3).map((item, i) => <NewItems key={i} {...item}/>)}
-            <a href="#menu" className="link">
-                <Icon className="icon" icon="radix-icons:double-arrow-down" width={60} height={60} color="#333333" />
+            {INFO_ITEMS.slice(0, 3).map((item) => (
+                <InfoItem key={item.title} {...item}/>
+            ))}
+
+            <a
+                href="#menu"
+                className="link fieldInformation__scroll"
+                aria-label="Перейти до меню"
+                onClick={scrollToMenu}
+            >
+                <Icon icon="radix-icons:double-arrow-down" width={28} height={28}/>
             </a>
-            {newItem.slice(3, 6).map((item, i) => <NewItems key={i} {...item}/>)}
+
+            {INFO_ITEMS.slice(3, 6).map((item) => (
+                <InfoItem key={item.title} {...item}/>
+            ))}
         </div>
-    )
+    );
 }

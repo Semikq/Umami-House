@@ -11,15 +11,14 @@ import useCheckRefresh from "./hooks/useCheckRefresh";
 import CreateRestaurantPages from "./pages/restaurant/Restaurant";
 import CreateAuthFrom from "./pages/auth/Auth";
 import CreateCartBloc from "./pages/cart/Cart";
-import CreateMobileCart from "./components/mobileCart/MobileCart";
 import CreateUserPage from "./pages/user/User";
 import CreateCompanyPage from "./pages/company/Company";
+import CreateActionPage from "./pages/action/Action";
 import './App.css';
 
 function App() {
     const showAuth = useSelector((state) => state.ui.showAuth)
     const showCart = useSelector((state) => state.ui.showCart)
-    const cart = useSelector(state => state.cart.dishes)
     useCheckRefresh()
     useDetectUserCity()
 
@@ -29,16 +28,18 @@ function App() {
             <CreateHeader/>
             { showAuth  && <CreateAuthFrom/> }
             { showCart && <CreateCartBloc/> }
-            { cart.length > 0 && <CreateMobileCart/> }
-            <Routes>
-                <Route path="/" element={<CreateMainPage/>}></Route>
-                <Route path="category/:uuid" element={<CreateCategoryWithDishes/>}></Route>
-                <Route path="dish/:uuid" element={<CreateDish/>}></Route>
-                <Route path="contact" element={<CreateContactPage/>}></Route>
-                <Route path="restaurants/city/:name" element={<CreateRestaurantPages/>}></Route>
-                <Route path="user" element={<CreateUserPage/>}></Route>
-                <Route path="company" element={<CreateCompanyPage/>}></Route>
-            </Routes>
+            <div className="App__content">
+                <Routes>
+                    <Route path="/" element={<CreateMainPage/>}></Route>
+                    <Route path="category/:uuid" element={<CreateCategoryWithDishes/>}></Route>
+                    <Route path="dish/:uuid" element={<CreateDish/>}></Route>
+                    <Route path="contact" element={<CreateContactPage/>}></Route>
+                    <Route path="restaurants/city/:name" element={<CreateRestaurantPages/>}></Route>
+                    <Route path="user" element={<CreateUserPage/>}></Route>
+                    <Route path="company" element={<CreateCompanyPage/>}></Route>
+                    <Route path="action" element={<CreateActionPage/>}></Route>
+                </Routes>
+            </div>
             <CreateFooter/>
         </div>
       </Router>

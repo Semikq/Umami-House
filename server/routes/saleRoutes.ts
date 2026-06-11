@@ -1,5 +1,10 @@
 import { Router } from "express";
-import { handleAddSale, handleUpdateSale, handleDeleteSale } from "../controllers/sale/saleAdminControllers.js";
+import {
+    handleAddSale,
+    handleUpdateSale,
+    handleDeleteSale,
+    handleUploadSaleImage,
+} from "../controllers/sale/saleAdminControllers.js";
 import { handleAllSale } from "../controllers/sale/saleUserControllers.js";
 import { validate } from "../middleware/validation.js";
 import { authenticateToken, authorizeAdmin } from "../middleware/authMiddleware.js";
@@ -12,5 +17,6 @@ route.get("/all", handleAllSale)
 route.post("/addSale", authenticateToken, authorizeAdmin, validate({ body: saleSchemas.create.body }), handleAddSale)
 route.put("/updateSale/:uuid", authenticateToken, authorizeAdmin, validate({ params: saleSchemas.update.params, body: saleSchemas.update.body }), handleUpdateSale)
 route.delete("/deleteSale/:uuid", authenticateToken, authorizeAdmin, validate({ params: saleSchemas.delete.params }), handleDeleteSale)
+route.post("/uploadImage", authenticateToken, authorizeAdmin, validate({ body: saleSchemas.uploadImage.body }), handleUploadSaleImage)
 
 export default route

@@ -15,6 +15,9 @@ export const dishesSchemas = {
             ingredients: z.string(),
             sub_category_uuid: uuidSchema,
             active: z.boolean(),
+            corporate_type: z.string().nullable().optional(),
+            wholesale_min_qty: z.number().int().positive().nullable().optional(),
+            wholesale_price: z.number().int().positive().nullable().optional(),
             images: z.array(z.object({
                 title: z.string(),
                 image_url: z.string()
@@ -32,6 +35,9 @@ export const dishesSchemas = {
             ingredients: z.string(),
             sub_category_uuid: uuidSchema,
             active: z.boolean(),
+            corporate_type: z.string().nullable().optional(),
+            wholesale_min_qty: z.number().int().positive().nullable().optional(),
+            wholesale_price: z.number().int().positive().nullable().optional(),
             images: z.array(z.object({
                 title: z.string(),
                 image_url: z.string()
@@ -57,5 +63,27 @@ export const dishesSchemas = {
             user_uuid: uuidSchema,
             uuid: uuidSchema
         }),
-    }
+    },
+    uploadImage: {
+        body: z.object({
+            data: z.string().min(1),
+            mimeType: z.enum(["image/jpeg", "image/png", "image/webp"]),
+            title: z.string().optional(),
+        }),
+    },
+    subCategoryCreate: {
+        body: z.object({
+            name: z.string().min(1),
+            category_uuid: uuidSchema,
+        }),
+    },
+    subCategoryUpdate: {
+        params: uuidParamsSchema,
+        body: z.object({
+            name: z.string().min(1),
+        }),
+    },
+    subCategoryDelete: {
+        params: uuidParamsSchema,
+    },
 }

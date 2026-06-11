@@ -6,7 +6,12 @@ export async function fetchAllFavorites({ user_uuid }: AllFavorites): Promise<Pr
     try {
         return await prisma.favorites.findMany({
             where: { user_uuid },
-            include: { users: true, dishes: true }
+            include: {
+                users: true,
+                dishes: {
+                    include: { dish_images: true },
+                },
+            },
         })
     } catch (error) {
         throw new Error((error as Error).message)

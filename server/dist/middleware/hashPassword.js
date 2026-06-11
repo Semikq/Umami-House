@@ -1,6 +1,11 @@
 import bcrypt from "bcryptjs";
 export async function hashPassword(req, res, next) {
     try {
+        if (!req.body.password) {
+            delete req.body.password;
+            next();
+            return;
+        }
         const hashedPassword = await bcrypt.hash(req.body.password, 10);
         req.body.password = hashedPassword;
         next();

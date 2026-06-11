@@ -1,6 +1,7 @@
 import bcrypt from "bcryptjs"
 import { LoginUser } from "../TypesModel/userTypes.js"
-import { PrismaClient, Prisma } from "@prisma/client"
+import { Prisma, PrismaClient } from "@prisma/client"
+import { createWelcomeBonusCard } from "./bonusCardsModel.js"
 const prisma = new PrismaClient()
 
 type RegisterUserInput = {
@@ -11,13 +12,32 @@ type RegisterUserInput = {
     phone: string
     company_type?: string | null
     company_name?: string | null
+    city_uuid?: string | null
 }
 
-export async function registerUser({ email, password, name, surname, phone, company_type, company_name }: RegisterUserInput): Promise<Prisma.usersGetPayload<{}>> {
+export async function registerUser({ email, password, name, surname, phone, company_type, company_name, city_uuid }: RegisterUserInput) {
     try {
-        return await prisma.users.create({
-            data: { email, password, name, surname: surname ?? "", phone, company_type, company_name }
-        })
+        const isCompany = Boolean(company_type?.trim() || company_name?.trim());
+
+        return await prisma.$transaction(async (tx) => {
+            const user = await tx.users.create({
+                data: {
+                    email,
+                    password,
+                    name,
+                    surname: surname ?? "",
+                    phone,
+                    company_type: isCompany ? company_type?.trim() || null : null,
+                    company_name: isCompany ? company_name?.trim() || null : null,
+                    city_uuid: city_uuid ?? null,
+                    role: isCompany ? "company" : "user",
+                },
+            });
+
+            await createWelcomeBonusCard(user.uuid, tx);
+
+            return user;
+        });
     } catch (error) {
         throw new Error((error as Error).message)
     }
@@ -26,7 +46,7 @@ export async function registerUser({ email, password, name, surname, phone, comp
 export async function loginUser({ userInput, password }: LoginUser): Promise<Prisma.usersGetPayload<{}>> {
     try {
         const user = await prisma.users.findFirstOrThrow({
-            where: { OR:[{email: userInput}, {phone: userInput}] }
+            where: { email: userInput }
         })
 
         const isPasswordCorrect = await bcrypt.compare(password, user.password)

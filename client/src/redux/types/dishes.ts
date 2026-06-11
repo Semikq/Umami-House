@@ -25,12 +25,18 @@ export interface Dish {
     spicy: boolean
     sub_category_uuid: string
     weight: number
+    corporate_type?: string | null
+    wholesale_min_qty?: number | null
+    wholesale_price?: number | null
+}
+
+export interface SubCategory {
+    uuid: string
+    name: string
+    dishes: Dish[]
 }
 
 export interface Category {
     title: string
-    sub_categories: {
-        name: string
-        dishes: Dish[]
-    }[]
+    sub_categories: SubCategory[]
 }

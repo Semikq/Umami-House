@@ -4,7 +4,12 @@ export async function fetchAllFavorites({ user_uuid }) {
     try {
         return await prisma.favorites.findMany({
             where: { user_uuid },
-            include: { users: true, dishes: true }
+            include: {
+                users: true,
+                dishes: {
+                    include: { dish_images: true },
+                },
+            },
         });
     }
     catch (error) {

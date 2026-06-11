@@ -10,6 +10,7 @@ export async function fetchCategoryWithDishes({ uuid }: Uuid): Promise<any> {
         title: true,
         sub_categories:{
           select: {
+            uuid: true,
             name: true,
             dishes: {
               include: {

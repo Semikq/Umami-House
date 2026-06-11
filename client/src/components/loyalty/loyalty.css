@@ -1,0 +1,120 @@
+.loyaltyPanel{
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.loyaltyStatus{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 0;
+}
+
+.loyaltyStatus__row{
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.loyaltyStatus__text{
+    font-family: Roboto, sans-serif;
+    font-size: 14px;
+    color: #333333;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.loyaltyStatus__badge{
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 12px;
+    border-radius: 20px;
+    background-color: #B75F6D;
+    color: #FFFFFF;
+    font-family: Roboto, sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    white-space: nowrap;
+}
+
+.loyaltyStatus__hint{
+    font-family: Roboto, sans-serif;
+    font-size: 14px;
+    line-height: 1.35;
+    color: #333333;
+    font-weight: 500;
+}
+
+.loyaltyTierPills{
+    display: flex;
+    width: 100%;
+    gap: 8px;
+}
+
+.loyaltyTierPills__pill{
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 12px 8px;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.62);
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.loyaltyTierPills__pill--active{
+    background: #ffffff;
+    box-shadow: 0 2px 10px rgba(183, 95, 109, 0.16);
+}
+
+.loyaltyTierPills__value{
+    font-family: Roboto, sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: #B75F6D;
+    line-height: 1;
+}
+
+.loyaltyTierPills__label{
+    font-family: Roboto, sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    color: #333333;
+    line-height: 1.2;
+}
+
+.loyaltyTierPills--onDark .loyaltyTierPills__pill{
+    background: rgba(255, 255, 255, 0.78);
+}
+
+.loyaltyTierPills--onDark .loyaltyTierPills__pill--active{
+    background: #ffffff;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.14);
+}
+
+@media screen and (max-width: 576px) {
+    .loyaltyStatus__badge{
+        font-size: 12px;
+        padding: 4px 10px;
+    }
+
+    .loyaltyStatus__hint{
+        font-size: 13px;
+    }
+
+    .loyaltyTierPills__value{
+        font-size: 16px;
+    }
+
+    .loyaltyTierPills__label{
+        font-size: 11px;
+    }
+}

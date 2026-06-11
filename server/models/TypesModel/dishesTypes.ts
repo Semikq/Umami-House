@@ -32,6 +32,9 @@ interface DishType {
   ingredients: string,
   sub_category_uuid: string,
   active: boolean,
+  corporate_type?: string | null,
+  wholesale_min_qty?: number | null,
+  wholesale_price?: number | null,
 }
 
 export interface AddDish extends DishType {

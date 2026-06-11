@@ -1,20 +1,78 @@
  .App {
   display: flex;
   flex-direction: column;
-  width: 100vw;
+  min-height: 100vh;
+  min-height: 100dvh;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: clip;
   background-color: #FFF9F0;
+  --sticky-header-offset: 86px;
+}
+
+.App:has(header.header--with-loyalty){
+  --sticky-header-offset: 168px;
+}
+
+@media screen and (max-width: 1199px){
+  .App:has(header.header--with-loyalty){
+    --sticky-header-offset: 168px;
+  }
+}
+
+@media screen and (max-width: 992px){
+  .App:has(header.header--with-loyalty){
+    --sticky-header-offset: 188px;
+  }
+}
+
+@media screen and (max-width: 855px){
+  .App{
+    --sticky-header-offset: 70px;
+  }
+}
+
+@media screen and (max-width: 576px){
+  .App:has(header.header--with-loyalty){
+    --sticky-header-offset: 180px;
+  }
+}
+
+.App__content{
+  flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  overflow-x: clip;
+}
+
+footer{
+  flex-shrink: 0;
+  margin-top: auto;
 }
 
 main{
   display: grid;
   margin: 40px 40px;
-  grid-template-columns: repeat(12, 1fr);
+  grid-template-columns: repeat(12, minmax(0, 1fr));
   column-gap: 20px;
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+@media screen and (max-width: 855px){
+  main {
+    margin: 16px 12px;
+    column-gap: 12px;
+  }
 }
 
 @media screen and (max-width: 800px){
   main {
-    margin: 40px 15px;
+    margin: 16px 12px;
   }
 }
 

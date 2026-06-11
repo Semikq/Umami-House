@@ -7,7 +7,6 @@ import jwt, { JwtPayload } from "jsonwebtoken";
 export async function handleRegisterUser(req: Request , res: Response): Promise<void> {
     try {
         const result = await registerUser(req.body)
-        const { password, ...user } = result
 
         const accessToken = generateAccessToken(result.uuid, result.role);
         const refreshToken = generateRefreshToken(result.uuid, result.role);
@@ -18,6 +17,8 @@ export async function handleRegisterUser(req: Request , res: Response): Promise<
             sameSite: "none",
             maxAge: 7*24*60*60*1000,
         })
+
+        const user = await findUserByUuid({ uuid: result.uuid })
 
         res.status(200).json({ user, accessToken })
     } catch (error) {
@@ -28,7 +29,6 @@ export async function handleRegisterUser(req: Request , res: Response): Promise<
 export async function handleLoginUsers(req: Request , res: Response): Promise<void> {
     try {
         const result = await loginUser(req.body)
-        const { password, ...user } = result
 
         const accessToken = generateAccessToken(result.uuid, result.role);
         const refreshToken = generateRefreshToken(result.uuid, result.role);
@@ -39,6 +39,8 @@ export async function handleLoginUsers(req: Request , res: Response): Promise<vo
             sameSite: "none",
             maxAge: 7*24*60*60*1000,
         })
+
+        const user = await findUserByUuid({ uuid: result.uuid })
 
         res.status(200).json({ user, accessToken })
     } catch (error) {

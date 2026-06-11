@@ -8,47 +8,830 @@
     font-family: Roboto, sans-serif;
     font-weight: 500;
     color: #333333;
-    font-size: clamp(22px, 2vw, 34px);
+    font-size: 34px;
 }
 
 .company__aboutUs{
     grid-column: 2 / 12;
-    height: 730px;
+    min-height: 730px;
     border-radius: 30px;
-    display: grid;
-    grid-template-columns: repeat(10, 1fr);
     position: relative;
     overflow: hidden;
     background-size: cover;
-    padding: 50px;
+    background-position: center;
+    background-repeat: no-repeat;
     box-sizing: border-box;
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    align-items: start;
+    padding: 50px;
 }
 
 .company__aboutUs::after{
     content: "";
     position: absolute;
-    height: 100%;
-    width: 100%;
-    background-color: #000000;
-    opacity: 45%;
+    inset: 0;
+    background: linear-gradient(
+        90deg,
+        rgba(0, 0, 0, 0.7) 0%,
+        rgba(0, 0, 0, 0.55) 42%,
+        rgba(0, 0, 0, 0.15) 72%,
+        rgba(0, 0, 0, 0) 100%
+    );
+    pointer-events: none;
+}
+
+.company__aboutUs-content{
+    position: relative;
+    z-index: 1;
+    grid-column: 1 / 6;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    /* padding-right: 20px; */
+    margin-left: 60px;
 }
 
 .aboutUs__title{
-    color: white;
-    grid-column: 2 / 6;
+    color: #FFFFFF;
     font-size: 32px;
     font-family: Roboto, sans-serif;
     font-weight: 400;
-    margin: 0 0 50px 0;
-    z-index: 1;
-    background: #DF1322;
+    margin: 0 0 0px 0;
+    line-height: 1.2;
 }
 
 .aboutUs__info{
-    grid-column: 2 / 6;
-    background-color: #F1C232;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
 }
 
 .aboutUs__info--text{
     margin: 0;
+    color: #FFFFFF;
+    font-family: Roboto, sans-serif;
+    font-size: 20px;
+    line-height: 1.35;
+    font-weight: 400;
+}
+
+.aboutUs__list{
+    margin: 0;
+    padding-left: 26px;
+    color: #FFFFFF;
+    font-family: Roboto, sans-serif;
+    font-size: 20px;
+    line-height: 1.35;
+    list-style-type: disc;
+}
+
+.aboutUs__list li{
+    margin-bottom: 8px;
+    padding-left: 4px;
+}
+
+.aboutUs__list li:last-child{
+    margin-bottom: 0;
+}
+
+.aboutUs__button{
+    align-self: flex-start;
+    margin-top: 6px;
+    padding: 10px 24px;
+    border: none;
+    border-radius: 30px;
+    background: linear-gradient(90deg, #F1C232 0%, #B75F6D 100%);
+    color: #FFFFFF;
+    font-family: Roboto, sans-serif;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 1.2;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
+}
+
+.aboutUs__button:hover{
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.24);
+}
+
+.aboutUs__footer{
+    margin: 0;
+    color: #FFFFFF;
+    font-family: Roboto, sans-serif;
+    font-size: 20px;
+    line-height: 1.35;
+    font-weight: 400;
+}
+
+@media screen and (max-width: 1400px) {
+    .company__aboutUs-content{
+        grid-column: 1 / 7;
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    .company__title,
+    .company__aboutUs{
+        grid-column: 1 / -1;
+    }
+
+    .company__aboutUs{
+        padding: 40px;
+    }
+
+    .company__aboutUs-content{
+        grid-column: 1 / 8;
+        margin-left: 0;
+    }
+}
+
+@media screen and (max-width: 992px) {
+    .company__aboutUs{
+        min-height: auto;
+        padding: 36px 32px;
+    }
+
+    .company__aboutUs-content{
+        grid-column: 1 / -1;
+        padding-right: 0;
+        gap: 24px;
+        margin-left: 0;
+    }
+
+    .aboutUs__title{
+        font-size: 28px;
+    }
+
+    .aboutUs__info--text,
+    .aboutUs__list,
+    .aboutUs__footer,
+    .aboutUs__button{
+        font-size: 20px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .company__aboutUs{
+        border-radius: 24px;
+        padding: 28px 24px;
+    }
+
+    .company__aboutUs::after{
+        background: linear-gradient(
+            180deg,
+            rgba(0, 0, 0, 0.75) 0%,
+            rgba(0, 0, 0, 0.62) 100%
+        );
+    }
+
+    .aboutUs__title{
+        font-size: 26px;
+    }
+
+    .aboutUs__info--text,
+    .aboutUs__list,
+    .aboutUs__footer,
+    .aboutUs__button{
+        font-size: 18px;
+    }
+
+    .aboutUs__button{
+        width: 100%;
+        text-align: center;
+    }
+}
+
+.company__aboutCompany{
+    grid-column: 2 / 12;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    margin-top: 50px;
+}
+
+.company__sectionTitle{
+    margin: 0;
+    text-align: center;
+    font-family: Roboto, sans-serif;
+    font-weight: 500;
+    font-size: 34px;
+    color: #333333;
+}
+
+.company__row{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: center;
+}
+
+.company__row-text{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.company__row-text p{
+    margin: 0;
+    font-family: Roboto, sans-serif;
+    font-size: 20px;
+    line-height: 1.35;
+    font-weight: 400;
+    color: #333333;
+}
+
+.company__features-list{
+    margin: 0;
+    padding-left: 26px;
+    font-family: Roboto, sans-serif;
+    font-size: 20px;
+    line-height: 1.35;
+    color: #333333;
+    list-style-type: disc;
+}
+
+.company__features-list li{
+    margin-bottom: 12px;
+}
+
+.company__features-list li:last-child{
+    margin-bottom: 0;
+}
+
+.company__features-list strong{
+    font-weight: 600;
+}
+
+.company__row-image{
+    width: 100%;
+    height: 100%;
+    min-height: 320px;
+    max-height: 420px;
+    object-fit: cover;
+    border-radius: 30px 60px;
+}
+
+.company__priorities{
+    grid-column: 2 / 12;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    margin-top: 50px;
+}
+
+.company__priorities-grid{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+}
+
+.company__priority-card{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+.company__priority-header{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-height: 40px;
+}
+
+.company__priority-title{
+    margin: 0;
+    font-family: Roboto, sans-serif;
+    font-weight: 400;
+    font-size: 26px;
+    color: #333333;
+}
+
+.company__priority-icons{
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.company__priority-content{
+    width: 100%;
+    min-height: 340px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.company__priority-text{
+    margin: 0;
+    padding: 24px 28px;
+    font-family: Roboto, sans-serif;
+    font-size: 20px;
+    line-height: 1.35;
+    font-weight: 400;
+    color: #ffffff;
+    text-align: center;
+}
+
+.company__partnership{
+    grid-column: 2 / 12;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    margin-top: 50px;
+}
+
+.company__productAdvantages{
+    grid-column: 2 / 12;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    margin-top: 50px;
+}
+
+.company__cooperation{
+    grid-column: 2 / 12;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    border-radius: 40px;
+    overflow: hidden;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 60px 40px;
+    box-sizing: border-box;
+}
+
+.company__cooperation-content{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 24px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.company__cooperation-logo{
+    display: flex;
+    align-items: center;
+    font-family: Delius, sans-serif;
+    font-size: 34px;
+    letter-spacing: 2px;
+    color: #ffffff;
+    line-height: 1;
+}
+
+.company__cooperation-logo img{
+    padding: 0 4px;
+    height: 56px;
+    width: auto;
+}
+
+.company__cooperation-title{
+    margin: 0;
+    font-family: Roboto, sans-serif;
+    font-weight: 400;
+    font-size: 28px;
+    line-height: 1.2;
+    color: #ffffff;
+}
+
+.company__cooperation-text{
+    margin: 0;
+    font-family: Roboto, sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 1.35;
+    color: #ffffff;
+    max-width: 820px;
+}
+
+.company__cooperation-button{
+    margin-top: 8px;
+    padding: 10px 24px;
+    border: none;
+    border-radius: 12px;
+    background-color: #F1C232;
+    color: #333333;
+    font-family: Roboto, sans-serif;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 1.2;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.company__cooperation-button:hover{
+    background-color: #e5b82e;
+    transform: translateY(-1px);
+}
+
+.company__advantages-grid{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+}
+
+.company__advantage-text{
+    padding: 24px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 12px;
+    min-height: 220px;
+    box-sizing: border-box;
+    border-radius: 20px;    
+}
+
+.company__advantage-text--burgundy{
+    background-color: #B75F6D;
+    border-top-left-radius: 70px;
+}
+
+.company__advantage-text--burgundy .company__advantage-title{
+    color: #F1C232;
+}
+
+.company__advantage-text--burgundy .company__advantage-description{
+    color: #ffffff;
+}
+
+.company__advantage-text--yellow{
+    background-color: #F1C232;
+    border-bottom-right-radius: 70px;
+}
+
+.company__advantage-text--yellow .company__advantage-title,
+.company__advantage-text--yellow .company__advantage-description{
+    color: #333333;
+}
+
+.company__advantage-title{
+    margin: 0;
+    font-family: Roboto, sans-serif;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 1.2;
+    text-align: center;
+}
+
+.company__advantage-description{
+    margin: 0;
+    font-family: Roboto, sans-serif;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 1.35;
+    text-align: center;
+}
+
+.company__advantage-image{
+    width: 100%;
+    min-height: 220px;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 20px;
+    display: block;
+}
+
+.company__partnership-row{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: center;
+}
+
+.company__partnership-image{
+    width: 100%;
+    min-height: 320px;
+    max-height: 480px;
+    object-fit: cover;
+    border-radius: 20px;
+}
+
+.company__partnership-benefits{
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.company__partnership-subheader{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    text-align: center;
+}
+
+.company__partnership-subtitle{
+    margin: 0;
+    font-family: Roboto, sans-serif;
+    font-weight: 600;
+    font-size: 22px;
+    line-height: 1.3;
+    color: #333333;
+}
+
+.company__benefits-grid{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px 16px;
+}
+
+.company__benefit-item{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    text-align: center;
+}
+
+.company__benefit-icon{
+    flex-shrink: 0;
+}
+
+.company__benefit-text{
+    margin: 0;
+    font-family: Roboto, sans-serif;
+    font-size: 16px;
+    line-height: 1.35;
+    font-weight: 400;
+    color: #333333;
+}
+
+@media screen and (max-width: 1200px) {
+    .company__aboutCompany,
+    .company__priorities,
+    .company__partnership,
+    .company__productAdvantages,
+    .company__cooperation{
+        grid-column: 1 / -1;
+    }
+
+    .company__row{
+        gap: 28px;
+    }
+
+    .company__advantages-grid{
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media screen and (max-width: 992px) {
+    .company__aboutCompany,
+    .company__priorities,
+    .company__partnership,
+    .company__productAdvantages,
+    .company__cooperation{
+        margin-top: 40px;
+        gap: 32px;
+    }
+
+    .company__cooperation{
+        padding: 50px 32px;
+        border-radius: 32px;
+    }
+
+    .company__partnership-row{
+        grid-template-columns: 1fr;
+    }
+
+    .company__partnership-row .company__partnership-image{
+        order: -1;
+    }
+
+    .company__benefits-grid{
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .company__row{
+        grid-template-columns: 1fr;
+    }
+
+    .company__row--reverse{
+        display: flex;
+        flex-direction: column-reverse;
+    }
+
+    .company__row-image{
+        min-height: 280px;
+        max-height: 360px;
+    }
+
+    .company__priorities-grid{
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .company__priority-card:last-child{
+        grid-column: 1 / -1;
+        max-width: 520px;
+        justify-self: center;
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .company__sectionTitle{
+        font-size: 28px;
+    }
+
+    .company__row-text p,
+    .company__features-list{
+        font-size: 18px;
+    }
+
+    .company__priority-title{
+        font-size: 22px;
+    }
+
+    .company__priority-text{
+        font-size: 18px;
+    }
+
+    .company__partnership-subtitle{
+        font-size: 18px;
+    }
+
+    .company__benefit-text{
+        font-size: 15px;
+    }
+
+    .company__advantage-title{
+        font-size: 22px;
+    }
+
+    .company__advantage-description{
+        font-size: 18px;
+    }
+
+    .company__cooperation-title{
+        font-size: 28px;
+    }
+
+    .company__cooperation-text,
+    .company__cooperation-button{
+        font-size: 18px;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .company__benefits-grid,
+    .company__advantages-grid{
+        grid-template-columns: 1fr;
+    }
+
+    .company__priorities-grid{
+        grid-template-columns: 1fr;
+    }
+
+    .company__priority-card:last-child{
+        max-width: none;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .company__aboutCompany,
+    .company__priorities,
+    .company__partnership,
+    .company__productAdvantages,
+    .company__cooperation{
+        margin-top: 30px;
+        gap: 24px;
+    }
+
+    .company__cooperation{
+        margin-bottom: 30px;
+        padding: 40px 20px;
+        border-radius: 24px;
+    }
+
+    .company__cooperation-logo{
+        font-size: 28px;
+    }
+
+    .company__cooperation-logo img{
+        height: 44px;
+    }
+
+    .company__cooperation-title{
+        font-size: 24px;
+    }
+
+    .company__cooperation-text,
+    .company__cooperation-button{
+        font-size: 16px;
+    }
+
+    .company__cooperation-button{
+        width: 100%;
+        max-width: 360px;
+        padding: 12px 24px;
+    }
+
+    .company__advantage-text,
+    .company__advantage-image{
+        min-height: 200px;
+    }
+
+    .company__advantage-title{
+        font-size: 20px;
+    }
+
+    .company__advantage-description{
+        font-size: 16px;
+    }
+
+    .company__partnership-row{
+        gap: 24px;
+    }
+
+    .company__partnership-image{
+        min-height: 220px;
+        max-height: 300px;
+    }
+
+    .company__partnership-subtitle{
+        font-size: 16px;
+    }
+
+    .company__benefit-text{
+        font-size: 14px;
+    }
+
+    .company__sectionTitle{
+        font-size: 26px;
+    }
+
+    .company__row{
+        gap: 20px;
+    }
+
+    .company__row-text{
+        gap: 16px;
+    }
+
+    .company__row-text p,
+    .company__features-list{
+        font-size: 16px;
+    }
+
+    .company__row-image{
+        min-height: 220px;
+        max-height: 280px;
+        border-radius: 24px 40px;
+    }
+
+    .company__priority-title{
+        font-size: 20px;
+    }
+
+    .company__priority-content{
+        min-height: 280px;
+    }
+
+    .company__priority-text{
+        font-size: 16px;
+        padding: 20px;
+    }
+
+    .company__title{
+        font-size: 28px;
+        margin-bottom: 12px;
+    }
+
+    .company__aboutUs{
+        border-radius: 20px;
+        padding: 22px 18px;
+    }
+
+    .company__aboutUs-content{
+        gap: 20px;
+    }
+
+    .aboutUs__title{
+        font-size: 24px;
+    }
+
+    .aboutUs__info--text,
+    .aboutUs__list,
+    .aboutUs__footer,
+    .aboutUs__button{
+        font-size: 16px;
+    }
+
+    .aboutUs__list{
+        padding-left: 20px;
+    }
+
+    .aboutUs__button{
+        padding: 12px 22px;
+    }
 }
