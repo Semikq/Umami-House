@@ -11,11 +11,37 @@ import {isCorporateClient} from "../../utils/corporateOffer.ts"
 
 const PRIMARY_ICON_COLOR = "#333333"
 
-function NavItem({to, icon, label}: {to: string, icon: string, label: string}) {
-    return <Link to={to} className="position">
-        <Icon className="icon" icon={icon} width={32} height={32} color={PRIMARY_ICON_COLOR}></Icon>
-        <h1>{label}</h1>
-    </Link>
+const COMING_SOON_HINT = "У розробці · скоро буде"
+
+type HeaderNavItem = {
+    to: string,
+    icon: string,
+    label: string,
+    disabled?: boolean,
+}
+
+function NavItem({to, icon, label, disabled}: HeaderNavItem) {
+    if (disabled) {
+        return (
+            <span
+                className="position position--disabled"
+                tabIndex={0}
+                aria-disabled="true"
+                title={COMING_SOON_HINT}
+            >
+                <Icon className="icon" icon={icon} width={32} height={32} color={PRIMARY_ICON_COLOR}/>
+                <h1>{label}</h1>
+                <span className="position__soon-tip" role="tooltip">{COMING_SOON_HINT}</span>
+            </span>
+        )
+    }
+
+    return (
+        <Link to={to} className="position">
+            <Icon className="icon" icon={icon} width={32} height={32} color={PRIMARY_ICON_COLOR}/>
+            <h1>{label}</h1>
+        </Link>
+    )
 }
 
 function isMenuOrDishPage(pathname: string) {
@@ -32,12 +58,12 @@ export function RenderHeader(){
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
     const citySelectRef = useRef<CitySelectHandle>(null)
 
-    const navItems: { to: string, icon: string, label: string}[] = [
+    const navItems: HeaderNavItem[] = [
         {to: "/company", icon: "lsicon:work-order-info-filled", label: "Компанія і франшиза"},
         {to: "/action", icon: "mingcute:sale-line", label: "Акції та бонуси"},
         {to: "/contact", icon: "material-symbols:delivery-truck-speed-outline-rounded", label: "Контакти та доставка"},
         {to: `/restaurants/city/${userCity.name}`, icon: "hugeicons:restaurant-01", label: "Наші ресторани"},
-        {to: "/yourRoll", icon: "token:sushi", label: "Створи свій рол"}
+        {to: "/yourRoll", icon: "token:sushi", label: "Створи свій рол", disabled: true},
     ]
 
     return (

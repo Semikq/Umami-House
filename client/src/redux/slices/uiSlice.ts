@@ -1,4 +1,5 @@
 import {createSlice} from "@reduxjs/toolkit"
+import {logOut} from "./authSlice.ts"
 
 interface UIState {
     showAuth: boolean
@@ -32,7 +33,13 @@ const uiSlice = createSlice({
         closeCart: (state) => {
             state.showCart = false
         },
-    }
+    },
+    extraReducers: (builder) => {
+        builder.addCase(logOut, (state) => {
+            state.showCart = false
+            state.showAuth = false
+        })
+    },
 })
 
 export const {showAuth, openAuth, closeAuth, showCart, openCart, closeCart} = uiSlice.actions

@@ -1300,7 +1300,8 @@
     border: 1px solid rgba(183, 95, 109, 0.12);
     font-size: 14px;
     color: #555555;
-    word-break: break-all;
+    word-break: break-word;
+    overflow-wrap: anywhere;
 }
 
 .user__admin-chip--registered{
@@ -2676,9 +2677,15 @@
         justify-content: space-between;
     }
 
-    .user__admin-grid{
+    .user__admin-grid:not(.user__admin-grid--flow){
         grid-template-columns: 1fr;
         max-height: min(560px, 65vh);
+    }
+
+    .user__admin-grid--flow{
+        max-height: none;
+        overflow: visible;
+        padding-right: 0;
     }
 
     .user__admin-card-metrics{
@@ -3900,6 +3907,79 @@
     }
 }
 
+@media screen and (max-width: 1100px){
+    .user__admin-grid--flow{
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .user__admin-card--order .user__admin-card-contacts{
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .user__admin-card--order .user__admin-chip{
+        width: 100%;
+        box-sizing: border-box;
+        border-radius: 12px;
+        align-items: flex-start;
+    }
+
+    .user__admin-card--order .user__admin-chip svg{
+        flex-shrink: 0;
+        margin-top: 2px;
+    }
+
+    .user__admin-card--order .user__admin-chip--registered{
+        margin-left: 0;
+        white-space: normal;
+    }
+}
+
+@media screen and (max-width: 992px){
+    .user__admin-title{
+        font-size: 26px;
+    }
+
+    .user__admin-subtitle{
+        font-size: 15px;
+    }
+
+    .user__order-admin-filters{
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        gap: 10px;
+        margin-bottom: 18px;
+        padding-bottom: 4px;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+    }
+
+    .user__order-admin-filters::-webkit-scrollbar{
+        display: none;
+    }
+
+    .user__order-admin-filter{
+        flex-shrink: 0;
+        font-size: 14px;
+        padding: 9px 14px;
+    }
+
+    .user__admin-card--order{
+        padding: 16px;
+        gap: 14px;
+        border-radius: 18px;
+    }
+
+    .user__admin-card--order .user__admin-card-name{
+        font-size: 18px;
+    }
+
+    .user__admin-card--order .user__admin-card-metrics{
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
 @media screen and (max-width: 768px){
     .user__order-action-pills{
         flex-direction: column;
@@ -3914,9 +3994,10 @@
 @media screen and (max-width: 855px){
     main:has(.user__select--admin){
         margin-top: 10px;
-        margin-bottom: 12px;
+        margin-bottom: 24px;
         margin-left: 16px;
         margin-right: 16px;
+        padding-bottom: 8px;
     }
 
     .user__select--admin{
@@ -4140,6 +4221,82 @@
     .user__admin{
         padding-left: 0;
         margin-top: 12px;
+    }
+
+    .user__admin-title{
+        font-size: 22px;
+    }
+
+    .user__admin-subtitle{
+        font-size: 14px;
+    }
+
+    .user__order-admin-filter{
+        font-size: 13px;
+        padding: 8px 12px;
+    }
+
+    .user__admin-card--order{
+        padding: 14px;
+        gap: 12px;
+        border-radius: 16px;
+    }
+
+    .user__admin-card--order .user__admin-card-top{
+        gap: 10px;
+        padding-right: 40px;
+    }
+
+    .user__admin-card--order .user__admin-card-avatar{
+        width: 48px;
+        height: 48px;
+        font-size: 17px;
+        border-radius: 14px;
+    }
+
+    .user__admin-card--order .user__admin-card-name{
+        font-size: 17px;
+    }
+
+    .user__admin-card--order .user__admin-chip{
+        font-size: 14px;
+        padding: 8px 12px;
+    }
+
+    .user__admin-card--order .user__admin-card-metrics{
+        grid-template-columns: 1fr;
+    }
+
+    .user__admin-card--order .user__admin-metric{
+        padding: 10px 12px;
+    }
+
+    .user__admin-card--order .user__admin-metric strong{
+        font-size: 16px;
+    }
+
+    .user__admin-card--order .user__admin-delete-icon{
+        top: 10px;
+        right: 10px;
+        width: 36px;
+        height: 36px;
+    }
+
+    .user__order-admin-dishes{
+        padding: 10px;
+    }
+
+    .user__order-admin-dish-name{
+        font-size: 15px;
+    }
+
+    .user__order-admin-dish-meta{
+        font-size: 14px;
+    }
+
+    .user__order-status-select{
+        font-size: 15px;
+        padding: 11px 12px;
     }
 
     .user__menu--standalone{

@@ -101,6 +101,29 @@
     min-width: 0;
 }
 
+.mobileMenuModal__link--disabled{
+    cursor: not-allowed;
+}
+
+.mobileMenuModal__link--disabled:hover,
+.mobileMenuModal__link--disabled:focus-visible{
+    background: transparent;
+}
+
+.mobileMenuModal__link-text{
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1;
+    min-width: 0;
+}
+
+.mobileMenuModal__link-text small{
+    font-size: 12px;
+    font-weight: 400;
+    color: #888888;
+}
+
 .mobileMenuModal__divider{
     height: 1px;
     margin: 6px 8px;

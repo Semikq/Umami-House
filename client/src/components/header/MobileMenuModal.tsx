@@ -5,7 +5,7 @@ import {Link, useLocation} from "react-router-dom"
 import {useSelector} from "react-redux"
 import "./mobileMenuModal.css"
 
-type NavItem = {to: string, icon: string, label: string}
+type NavItem = {to: string, icon: string, label: string, disabled?: boolean}
 
 type MobileMenuModalProps = {
     isOpen: boolean
@@ -115,15 +115,29 @@ export default function MobileMenuModal({
                     <div className="mobileMenuModal__divider" role="presentation"/>
 
                     {navItems.map((item) => (
-                        <Link
-                            key={item.label}
-                            to={item.to}
-                            className="mobileMenuModal__link"
-                            onClick={onClose}
-                        >
-                            <Icon icon={item.icon} width={24} height={24} color="#B75F6D"/>
-                            <span>{item.label}</span>
-                        </Link>
+                        item.disabled ? (
+                            <span
+                                key={item.label}
+                                className="mobileMenuModal__link mobileMenuModal__link--disabled"
+                                aria-disabled="true"
+                            >
+                                <Icon icon={item.icon} width={24} height={24} color="#B75F6D"/>
+                                <span className="mobileMenuModal__link-text">
+                                    <span>{item.label}</span>
+                                    <small>У розробці · скоро буде</small>
+                                </span>
+                            </span>
+                        ) : (
+                            <Link
+                                key={item.label}
+                                to={item.to}
+                                className="mobileMenuModal__link"
+                                onClick={onClose}
+                            >
+                                <Icon icon={item.icon} width={24} height={24} color="#B75F6D"/>
+                                <span>{item.label}</span>
+                            </Link>
+                        )
                     ))}
                 </nav>
             </div>

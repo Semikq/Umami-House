@@ -77,6 +77,49 @@ header.header--with-loyalty{
     opacity: 0.92;
 }
 
+.position--disabled{
+    cursor: not-allowed;
+    pointer-events: auto;
+}
+
+.position--disabled:hover,
+.position--disabled:focus-visible{
+    transform: none;
+}
+
+.position__soon-tip{
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 50%;
+    z-index: 20;
+    transform: translateX(-50%) translateY(4px);
+    min-width: max-content;
+    max-width: 220px;
+    padding: 8px 12px;
+    border-radius: 10px;
+    background: #FFF9F0;
+    border: 1px solid rgba(183, 95, 109, 0.28);
+    box-shadow: 0 8px 20px rgba(45, 45, 45, 0.18);
+    color: #666666;
+    font-family: Roboto, sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.35;
+    text-align: center;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s ease;
+}
+
+.position--disabled:hover .position__soon-tip,
+.position--disabled:focus-visible .position__soon-tip{
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+}
+
 .primaryAppBar .city-block{
     gap: 6px;
     max-width: 130px;
@@ -468,11 +511,17 @@ header.header--with-loyalty{
         color: #ffffff;
     }
 
+    .primaryAppBar .user__avatar--guest{
+        background: rgba(183, 95, 109, 0.14);
+        color: #B75F6D;
+    }
+
     .primaryAppBar .user__name{
         display: none;
     }
 
-    .primaryAppBar > a.position{
+    .primaryAppBar > a.position,
+    .primaryAppBar > .position--disabled{
         display: none;
     }
 

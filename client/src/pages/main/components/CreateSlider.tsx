@@ -1,5 +1,12 @@
 import {useCallback, useEffect, useRef, useState} from "react";
+import {Link} from "react-router-dom";
 import getImage from "../../../utils/getImage.ts";
+import {Sale} from "../../../redux/types/sale.ts";
+
+type CreateSliderProps = {
+    sale?: Sale[],
+    activeLinkTo?: string,
+};
 
 const SLIDE_ANIM_MS = 700;
 const AUTOPLAY_MS = 15000;
@@ -35,7 +42,7 @@ function rectStyle(rect) {
     };
 }
 
-export default function CreateSlider({ sale = [] }) {
+export default function CreateSlider({ sale = [], activeLinkTo }: CreateSliderProps) {
     const [index, setIndex] = useState(0);
     const [isMobile, setIsMobile] = useState(() => window.innerWidth < 500);
     const [animPhase, setAnimPhase] = useState("idle");
@@ -44,6 +51,7 @@ export default function CreateSlider({ sale = [] }) {
     const [paused, setPaused] = useState(false);
     const isAnimating = useRef(false);
     const touchStartX = useRef(0);
+    const touchMoved = useRef(false);
     const stageRef = useRef(null);
     const prevRef = useRef(null);
     const activeRef = useRef(null);
@@ -59,7 +67,7 @@ export default function CreateSlider({ sale = [] }) {
         if (index >= sale.length) setIndex(0);
     }, [index, sale.length]);
 
-    const navigate = useCallback((delta) => {
+    const slideBy = useCallback((delta) => {
         if (isAnimating.current || sale.length <= 1) return;
 
         if (isMobile) {
@@ -168,27 +176,50 @@ export default function CreateSlider({ sale = [] }) {
     useEffect(() => {
         if (sale.length <= 1 || isMobile || paused) return;
 
-        const id = window.setInterval(() => navigate(1), AUTOPLAY_MS);
+        const id = window.setInterval(() => slideBy(1), AUTOPLAY_MS);
         return () => window.clearInterval(id);
-    }, [navigate, sale.length, isMobile, paused]);
+    }, [slideBy, sale.length, isMobile, paused]);
 
     if (!sale.length) return null;
 
-    const prevSlide = () => navigate(-1);
-    const nextSlide = () => navigate(1);
+    const prevSlide = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        slideBy(-1);
+    };
+
+    const nextSlide = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        slideBy(1);
+    };
 
     const getSlide = (offset) => sale[(index + offset + sale.length) % sale.length];
     const activeSlide = sale[index];
+    const activeSlideImage = (
+        <img src={getImage(activeSlide.image_url)} alt={activeSlide.title} decoding="async"/>
+    );
 
     const handleTouchStart = (e) => {
+        touchMoved.current = false;
         touchStartX.current = e.touches[0].clientX;
+    };
+
+    const handleTouchMove = () => {
+        touchMoved.current = true;
     };
 
     const handleTouchEnd = (e) => {
         const diff = touchStartX.current - e.changedTouches[0].clientX;
         if (Math.abs(diff) < 40) return;
-        if (diff > 0) nextSlide();
-        else prevSlide();
+        e.preventDefault();
+        slideBy(diff > 0 ? 1 : -1);
+    };
+
+    const handleActiveLinkClick = (e) => {
+        if (touchMoved.current) {
+            e.preventDefault();
+        }
     };
 
     const stageClass = [
@@ -208,6 +239,7 @@ export default function CreateSlider({ sale = [] }) {
                 ref={stageRef}
                 className={stageClass}
                 onTouchStart={handleTouchStart}
+                onTouchMove={handleTouchMove}
                 onTouchEnd={handleTouchEnd}
             >
                 {!isMobile && sale.length > 1 && (
@@ -222,12 +254,25 @@ export default function CreateSlider({ sale = [] }) {
                     </button>
                 )}
 
-                <article
-                    ref={activeRef}
-                    className="saleSlider__slide saleSlider__slide--active"
-                >
-                    <img src={getImage(activeSlide.image_url)} alt={activeSlide.title} decoding="async"/>
-                </article>
+                {activeLinkTo ? (
+                    <Link
+                        ref={activeRef}
+                        to={activeLinkTo}
+                        className="saleSlider__slide saleSlider__slide--active saleSlider__slide--link"
+                        aria-label={`Переглянути акції: ${activeSlide.title}`}
+                        onClick={handleActiveLinkClick}
+                    >
+                        {activeSlideImage}
+                    </Link>
+                ) : (
+                    <div
+                        ref={activeRef}
+                        className="saleSlider__slide saleSlider__slide--active"
+                        aria-label={activeSlide.title}
+                    >
+                        {activeSlideImage}
+                    </div>
+                )}
 
                 {!isMobile && sale.length > 1 && (
                     <button

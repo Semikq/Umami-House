@@ -135,6 +135,17 @@
     transform-origin: center center;
 }
 
+.saleSlider__slide--link{
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.saleSlider__slide--link:hover{
+    opacity: 0.96;
+}
+
 .saleSlider__stage--flying .saleSlider__slide{
     opacity: 0;
     pointer-events: none;

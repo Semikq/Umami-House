@@ -1,5 +1,6 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {CartPricingMeta, recalcCartDishUnitPrice} from "../../utils/corporateOffer.ts";
+import {logOut} from "./authSlice.ts";
 
 interface DishDate extends CartPricingMeta {
     uuid: string,
@@ -138,7 +139,13 @@ const cartSlice = createSlice({
 
             recalcTotalPrice(state)
         },
-    }
+    },
+    extraReducers: (builder) => {
+        builder.addCase(logOut, (state) => {
+            state.dishes = []
+            state.totalPrice = 0
+        })
+    },
 })
 
 export const { addDish, setCount, delDish, incrementCount, decrementCount, clearCart, addOrderDishes } = cartSlice.actions
