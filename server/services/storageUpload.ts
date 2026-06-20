@@ -37,6 +37,10 @@ export function isSupabaseStorageEnabled(): boolean {
     return getSupabaseClient() !== null;
 }
 
+function isVercelDeployment(): boolean {
+    return process.env.VERCEL === "1";
+}
+
 export async function uploadImageToStorage({
     data,
     mimeType,
@@ -72,6 +76,12 @@ export async function uploadImageToStorage({
             image_url: publicData.publicUrl,
             title: displayTitle,
         };
+    }
+
+    if (isVercelDeployment()) {
+        throw new Error(
+            "Supabase Storage не налаштовано на Vercel. Додайте SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY та SUPABASE_STORAGE_BUCKET у Environment Variables backend-проєкту і зробіть redeploy.",
+        );
     }
 
     const uploadsDir = path.join("uploads", folder);
