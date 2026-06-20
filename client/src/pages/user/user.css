@@ -101,9 +101,14 @@
     transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 }
 
-.user__select--admin .user__select-block--clickable:hover{
+.user__select--admin .user__select-block--clickable:hover:not(.user__select-block--active){
     background: rgba(183, 95, 109, 0.06);
     border-color: rgba(183, 95, 109, 0.28);
+}
+
+.user__select--admin .user__select-block--active:hover{
+    background: #a85664;
+    border-color: #a85664;
 }
 
 .user__select--admin .user__select-block--active{

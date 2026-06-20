@@ -61,11 +61,6 @@ function SaleImageUpload({
             return;
         }
 
-        if (file.size > 5 * 1024 * 1024) {
-            window.alert("Файл занадто великий (макс. 5 МБ)");
-            return;
-        }
-
         try {
             const data = await fileToBase64(file);
             const uploaded = await uploadImage({ data, mimeType, title }).unwrap();
