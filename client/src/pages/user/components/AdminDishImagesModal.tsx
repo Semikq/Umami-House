@@ -84,7 +84,7 @@ export default function AdminDishImagesModal({
     }, [images]);
 
     const handleDelete = (index: number) => {
-        setLocalImages((prev) => prev.filter((_, i) => i !== index));
+        setLocalImages((prev) => sanitizeDishImages(prev.filter((_, i) => i !== index)));
     };
 
     const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
@@ -111,10 +111,10 @@ export default function AdminDishImagesModal({
                 return;
             }
 
-            setLocalImages((prev) => [...prev, {
+            setLocalImages((prev) => sanitizeDishImages([...prev, {
                 title: uploaded.title?.trim() || dishName,
                 image_url: uploaded.image_url,
-            }]);
+            }]));
         } catch (err) {
             setError(getErrorMessage(err));
         }
@@ -134,6 +134,8 @@ export default function AdminDishImagesModal({
             setError(getErrorMessage(err));
         }
     };
+
+    const visibleImages = sanitizeDishImages(localImages);
 
     return (
         <div className="user__admin-modal-backdrop">
@@ -188,11 +190,11 @@ export default function AdminDishImagesModal({
                 )}
 
                 <div className="user__menu-images-list">
-                    {localImages.length === 0 && (
+                    {visibleImages.length === 0 && (
                         <p className="user__admin-modal-empty">Немає зображень. Додайте перше фото.</p>
                     )}
 
-                    {localImages.map((image, index) => (
+                    {visibleImages.map((image, index) => (
                         <article key={`${image.image_url}-${index}`} className="user__menu-images-item">
                             <img
                                 src={resolveImageSrc(image.image_url)}

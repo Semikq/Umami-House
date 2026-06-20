@@ -1,7 +1,12 @@
 import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react";
 import {Categories, Category, Dish, SubCategory} from "../types/dishes.ts";
 import getApiUrl from "../../utils/getApiUrl.ts";
-import {parseUploadedImage} from "../../utils/dishImages.ts";
+import {
+    normalizeCategoryWithDishes,
+    normalizeDish,
+    parseUploadedImage,
+    sanitizeCategories,
+} from "../../utils/dishImages.ts";
 
 export const dishesApi = createApi({
     reducerPath: "dishesApi",
@@ -15,17 +20,27 @@ export const dishesApi = createApi({
         },
     }),
     endpoints: (builder) => ({
-        allDishes: builder.query<Dish[], void>({ query: () => "" }),
+        allDishes: builder.query<Dish[], void>({
+            query: () => "",
+            transformResponse: (response: Dish[]) => (
+                Array.isArray(response)
+                    ? response.filter(Boolean).map((dish) => normalizeDish(dish))
+                    : []
+            ),
+        }),
         categories: builder.query<Categories[], void>({
             query: () => "categories",
+            transformResponse: (response: Categories[]) => sanitizeCategories(response),
             providesTags: ["MenuCategory"],
         }),
         categoryWithDishes: builder.query<Category, string>({
             query: (uuid) => `category/${uuid}`,
+            transformResponse: (response: Category) => normalizeCategoryWithDishes(response),
             providesTags: (_result, _error, uuid) => [{ type: "MenuCategory", id: uuid }],
         }),
         dish: builder.query<Dish, string>({
             query: (uuid) => `dish/${uuid}`,
+            transformResponse: (response: Dish) => normalizeDish(response),
             providesTags: (_result, _error, uuid) => [{ type: "Dish", id: uuid }],
         }),
         addComment: builder.mutation({
@@ -69,7 +84,7 @@ export const dishesApi = createApi({
                 method: "PUT",
                 body,
             }),
-            transformResponse: (response: { data: Dish }) => response.data,
+            transformResponse: (response: { data: Dish }) => normalizeDish(response.data),
             invalidatesTags: (_result, _error, arg) => [
                 { type: "Dish", id: arg.uuid },
                 "MenuCategory",
@@ -94,7 +109,7 @@ export const dishesApi = createApi({
                 method: "POST",
                 body,
             }),
-            transformResponse: (response: { data: Dish }) => response.data,
+            transformResponse: (response: { data: Dish }) => normalizeDish(response.data),
             invalidatesTags: ["MenuCategory"],
         }),
         deleteDish: builder.mutation<void, string>({

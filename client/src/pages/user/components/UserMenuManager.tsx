@@ -423,6 +423,8 @@ function AdminDishEditCard({
 
     const subCategoryName = subCategories.find((s) => s.uuid === subCategoryUuid)?.name ?? "";
 
+    const displayImages = sanitizeDishImages(images);
+
     return (
 
         <>
@@ -449,8 +451,8 @@ function AdminDishEditCard({
                 <div className="user__menu-dish-body">
                     <aside className="user__menu-dish-gallery">
                         <div className="user__menu-dish-images">
-                            {images.length > 0 ? (
-                                images.map((image, index) => (
+                            {displayImages.length > 0 ? (
+                                displayImages.map((image, index) => (
                                     <img
                                         key={`${image.image_url}-${index}`}
                                         src={resolveImageSrc(image.image_url)}
@@ -748,6 +750,7 @@ function CategorySidebar({
         <nav className="user__menu-sidebar-nav" aria-label="Категорії меню">
 
             {categories.map((category) => {
+                if (!category?.image_url) return null;
 
                 const imageSrc = category.image_url.startsWith("http")
 
@@ -1010,9 +1013,9 @@ export default function UserMenuManager() {
 
 
     const dishes = subCategories.flatMap((sub) =>
-
-        sub.dishes.map((dish) => ({ dish })),
-
+        (sub.dishes ?? [])
+            .filter((dish): dish is Dish => Boolean(dish?.uuid))
+            .map((dish) => ({ dish })),
     );
 
     const selectedCategoryMeta = categories.find((c) => c.uuid === selectedCategoryUuid);

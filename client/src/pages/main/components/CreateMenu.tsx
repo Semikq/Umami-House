@@ -5,6 +5,8 @@ export default function CreateMenu({categories}) {
     return (
         <div className="menu" id="menu">
             {categories.slice(0, 10).map((category) => {
+                if (!category?.image_url) return null;
+
                 return (
                     <Link to={`/category/${category.uuid}`} key={category.uuid} style={{ 
                         backgroundImage: `url(${

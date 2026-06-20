@@ -1,3 +1,5 @@
+import {Categories, Category, Dish} from "../redux/types/dishes.ts";
+
 export type DishImageItem = {
     title: string,
     image_url: string,
@@ -39,4 +41,50 @@ export function parseUploadedImage(response: unknown): DishImageItem {
     }
 
     throw new Error("Invalid image upload response");
+}
+
+export function normalizeDish(dish: Dish): Dish {
+    return {
+        ...dish,
+        dish_images: sanitizeDishImages(dish.dish_images) as Dish["dish_images"],
+    };
+}
+
+export function normalizeCategoryWithDishes(category: Category): Category {
+    return {
+        ...category,
+        sub_categories: (category.sub_categories ?? [])
+            .filter(Boolean)
+            .map((sub) => ({
+                ...sub,
+                dishes: (sub.dishes ?? [])
+                    .filter((dish): dish is Dish => Boolean(dish?.uuid))
+                    .map((dish) => normalizeDish(dish)),
+            })),
+    };
+}
+
+export function getDishPrimaryImageUrl(dish: Pick<Dish, "dish_images">): string {
+    return sanitizeDishImages(dish.dish_images)[0]?.image_url ?? "";
+}
+
+export function dishHasVisibleImage(
+    dish: Pick<Dish, "dish_images" | "uuid"> | null | undefined,
+): dish is Pick<Dish, "dish_images" | "uuid"> & { uuid: string } {
+    return Boolean(dish?.uuid && getDishPrimaryImageUrl(dish).length > 0);
+}
+
+export function sanitizeCategories(categories: unknown): Categories[] {
+    if (!Array.isArray(categories)) return [];
+
+    return categories.filter(
+        (category): category is Categories => (
+            Boolean(category)
+            && typeof category === "object"
+            && typeof (category as Categories).uuid === "string"
+            && typeof (category as Categories).title === "string"
+            && typeof (category as Categories).image_url === "string"
+            && (category as Categories).image_url.trim().length > 0
+        ),
+    );
 }

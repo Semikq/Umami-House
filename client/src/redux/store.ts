@@ -34,7 +34,7 @@ export const store = configureStore({
         }).concat(usersApi.middleware).concat(restaurantsApi.middleware).concat(partnersApi.middleware).concat(dishesApi.middleware).concat(saleApi.middleware).concat(ordersApi.middleware).concat(favoritesApi.middleware)
 });
 
-store.subscribe(() => {
-    const state = store.getState();
-    console.log(state);
-});
+// store.subscribe(() => {
+//     const state = store.getState();
+//     console.log(state);
+// });
