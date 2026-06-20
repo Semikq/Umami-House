@@ -8,6 +8,7 @@ import {useNavigate, useParams} from "react-router-dom";
 import CreateCardsRestaurants from "./components/CreateCardsRestaurants.tsx"
 import PageLoader from "../../components/PageLoader/PageLoader.tsx";
 import RestaurantMarker from "../../components/map/RestaurantMarker.tsx";
+import RestaurantMapInfo from "../../components/map/RestaurantMapInfo.tsx";
 import {parseRestaurantCoords} from "../../utils/restaurantMapMarker.ts";
 import "./restaurant.css"
 
@@ -33,25 +34,24 @@ function RestaurantMap({restaurantsToShow, currentCity, selected, setSelected, m
                     lng: currentCity ? Number(currentCity.longitude) : 31.638236495038726,
                 }}
                 zoom={currentCity ? 11.5 : 6}
+                onClick={() => setSelected(null)}
             >
                 {restaurantsToShow.map((item, index) => (
                     <RestaurantMarker
                         key={item.uuid}
                         restaurant={item}
                         colorIndex={index}
+                        onClick={() => setSelected(item)}
+                        onMouseOver={() => setSelected(item)}
                     />
                 ))}
                 {selectedPosition && (
                     <InfoWindow
                         position={selectedPosition}
                         onCloseClick={() => setSelected(null)}
+                        options={{maxWidth: 320}}
                     >
-                        <div className="restaurant__map--infoWindow">
-                            <h3>{selected.name}</h3>
-                            <p>{selected.time_work}</p>
-                            <p>{selected.address}</p>
-                            <p>{selected.phone}</p>
-                        </div>
+                        <RestaurantMapInfo restaurant={selected}/>
                     </InfoWindow>
                 )}
             </GoogleMap>

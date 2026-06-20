@@ -1,3 +1,4 @@
+import {useEffect} from "react";
 import {useSaleQuery} from "../../redux/api/saleApi.ts";
 import {useCategoriesQuery} from "../../redux/api/dishesApi.ts";
 import {usePartnersQuery} from "../../redux/api/partnersApi"
@@ -40,6 +41,14 @@ export default function CreateMainPage(){
     const {data: categories, isLoading: categoriesLoading} = useCategoriesQuery()
     const {data: sale, isLoading: saleLoading} = useSaleQuery()
     const {data: partners, isLoading: partnersLoading} = usePartnersQuery()
+
+    useEffect(() => {
+        if (categoriesLoading || window.location.hash !== "#menu") return;
+        const timer = window.setTimeout(() => {
+            document.getElementById("menu")?.scrollIntoView({behavior: "smooth", block: "start"});
+        }, 200);
+        return () => window.clearTimeout(timer);
+    }, [categoriesLoading, categories]);
 
     if (categoriesLoading || partnersLoading || saleLoading) return <PageLoader/>
 

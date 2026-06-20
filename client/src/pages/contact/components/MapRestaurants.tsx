@@ -2,6 +2,7 @@ import {useMemo, useState} from "react";
 import {GoogleMap, InfoWindow} from "@react-google-maps/api";
 import {Restaurants} from "../../../redux/types/restaurants.ts";
 import RestaurantMarker from "../../../components/map/RestaurantMarker.tsx";
+import RestaurantMapInfo from "../../../components/map/RestaurantMapInfo.tsx";
 import {parseRestaurantCoords} from "../../../utils/restaurantMapMarker.ts";
 
 export default function MapRestaurants({restaurants}: { restaurants: Restaurants[] }) {
@@ -31,19 +32,23 @@ export default function MapRestaurants({restaurants}: { restaurants: Restaurants
         ? parseRestaurantCoords(selected.latitude, selected.longitude)
         : null;
 
+    const openRestaurant = (restaurant: Restaurants) => setSelected(restaurant);
+
     return (
         <div className="map-wrapper">
             <GoogleMap
                 mapContainerStyle={{width: "100%", height: "100%", borderRadius: "30px 60px 30px 60px"}}
                 center={mapCenter}
                 zoom={visibleRestaurants.length === 1 ? 14 : 12}
+                onClick={() => setSelected(null)}
             >
                 {visibleRestaurants.map((item, index) => (
                     <RestaurantMarker
                         key={item.uuid}
                         restaurant={item}
                         colorIndex={index}
-                        onClick={() => setSelected(item)}
+                        onClick={() => openRestaurant(item)}
+                        onMouseOver={() => openRestaurant(item)}
                     />
                 ))}
 
@@ -51,11 +56,9 @@ export default function MapRestaurants({restaurants}: { restaurants: Restaurants
                     <InfoWindow
                         position={selectedPosition}
                         onCloseClick={() => setSelected(null)}
+                        options={{maxWidth: 320}}
                     >
-                        <div>
-                            <h3>{selected.name}</h3>
-                            <p>{selected.address}</p>
-                        </div>
+                        <RestaurantMapInfo restaurant={selected}/>
                     </InfoWindow>
                 )}
             </GoogleMap>
