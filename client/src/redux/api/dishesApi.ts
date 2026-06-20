@@ -1,6 +1,7 @@
 import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react";
 import {Categories, Category, Dish, SubCategory} from "../types/dishes.ts";
 import getApiUrl from "../../utils/getApiUrl.ts";
+import {parseUploadedImage} from "../../utils/dishImages.ts";
 
 export const dishesApi = createApi({
     reducerPath: "dishesApi",
@@ -46,7 +47,7 @@ export const dishesApi = createApi({
                 method: "POST",
                 body,
             }),
-            transformResponse: (response: { data: { title: string, image_url: string } }) => response.data,
+            transformResponse: (response: unknown) => parseUploadedImage(response),
         }),
         updateDish: builder.mutation<Dish, {
             uuid: string,

@@ -4,12 +4,8 @@ import {
     useUpdateDishMutation,
     useUploadDishImageMutation,
 } from "../../../redux/api/dishesApi.ts";
+import {DishImageItem, sanitizeDishImages} from "../../../utils/dishImages.ts";
 import getImage from "../../../utils/getImage.ts";
-
-export type DishImageItem = {
-    title: string,
-    image_url: string,
-}
 
 type AdminDishImagesModalProps = {
     dishUuid: string,
@@ -77,14 +73,14 @@ export default function AdminDishImagesModal({
     onSaved,
 }: AdminDishImagesModalProps) {
     const fileInputRef = useRef<HTMLInputElement>(null);
-    const [localImages, setLocalImages] = useState<DishImageItem[]>(images);
+    const [localImages, setLocalImages] = useState<DishImageItem[]>(() => sanitizeDishImages(images));
     const [uploadImage, { isLoading: isUploading }] = useUploadDishImageMutation();
     const [updateDish, { isLoading: isSaving }] = useUpdateDishMutation();
     const [newTitle, setNewTitle] = useState(dishName);
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
-        setLocalImages(images);
+        setLocalImages(sanitizeDishImages(images));
     }, [images]);
 
     const handleDelete = (index: number) => {
@@ -109,7 +105,16 @@ export default function AdminDishImagesModal({
                 mimeType,
                 title: newTitle.trim() || dishName,
             }).unwrap();
-            setLocalImages((prev) => [...prev, uploaded]);
+
+            if (!uploaded?.image_url) {
+                setError("Не вдалося отримати URL зображення");
+                return;
+            }
+
+            setLocalImages((prev) => [...prev, {
+                title: uploaded.title?.trim() || dishName,
+                image_url: uploaded.image_url,
+            }]);
         } catch (err) {
             setError(getErrorMessage(err));
         }
@@ -121,9 +126,9 @@ export default function AdminDishImagesModal({
             await updateDish({
                 uuid: dishUuid,
                 ...buildUpdateBody(),
-                images: localImages,
+                images: sanitizeDishImages(localImages),
             }).unwrap();
-            onSaved(localImages);
+            onSaved(sanitizeDishImages(localImages));
             onClose();
         } catch (err) {
             setError(getErrorMessage(err));

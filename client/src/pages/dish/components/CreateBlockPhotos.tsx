@@ -7,8 +7,15 @@ function scrollToTop() {
 }
 
 export default function CreateBlockPhotos ({dish}) {
+    const photos = (dish.dish_images ?? []).filter((image) => image?.image_url);
     const [photo, setPhoto] = useState(0)
     const myRef = useRef(null);
+
+    useEffect(() => {
+        if (photo >= photos.length) {
+            setPhoto(0);
+        }
+    }, [photo, photos.length]);
 
     useEffect(() => {
         const container = myRef.current;
@@ -32,16 +39,16 @@ export default function CreateBlockPhotos ({dish}) {
         <div className="product__photos">
             <div className="product__photo-spicy">
                 <img
-                    src={getImage(dish.dish_images[photo]?.image_url)}
-                    alt={dish.dish_images[photo]?.title}
+                    src={getImage(photos[photo]?.image_url)}
+                    alt={photos[photo]?.title}
                 />
                 {dish.spicy === true && <Icon icon="mdi:fire" className="icon"/>}
             </div>
             <div className="product__additional-photos" ref={myRef}>
-                {dish.dish_images.map((image, i) =>
+                {photos.map((image, i) =>
                     <button
                         type="button"
-                        key={image.uuid}
+                        key={image.uuid ?? `${image.image_url}-${i}`}
                         className={`product__photo-thumb${photo === i ? " is-active" : ""}`}
                         onClick={() => selectPhoto(i)}
                         aria-label={`Показати фото ${i + 1}`}

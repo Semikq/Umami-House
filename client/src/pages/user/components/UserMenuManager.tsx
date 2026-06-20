@@ -24,7 +24,8 @@ import {Categories, Dish, SubCategory} from "../../../redux/types/dishes.ts";
 
 import getImage from "../../../utils/getImage.ts";
 
-import AdminDishImagesModal, {DishImageItem} from "./AdminDishImagesModal.tsx";
+import AdminDishImagesModal from "./AdminDishImagesModal.tsx";
+import {DishImageItem, sanitizeDishImages} from "../../../utils/dishImages.ts";
 
 import AdminSubCategoryPanel from "./AdminSubCategoryPanel.tsx";
 import {CORPORATE_TYPE_OPTIONS} from "../../../utils/corporateOffer.ts";
@@ -98,15 +99,7 @@ function dishToForm(dish: Dish): DishForm {
 
 
 function dishToImages(dish: Dish): DishImageItem[] {
-
-    return dish.dish_images.map((image) => ({
-
-        title: image.title,
-
-        image_url: image.image_url,
-
-    }));
-
+    return sanitizeDishImages(dish.dish_images);
 }
 
 
@@ -392,7 +385,7 @@ function AdminDishEditCard({
 
                 ...buildUpdateBody(),
 
-                images,
+                images: sanitizeDishImages(images),
 
             }).unwrap();
 
@@ -520,7 +513,7 @@ function AdminDishEditCard({
 
                     onClose={() => setImagesModalOpen(false)}
 
-                    onSaved={setImages}
+                    onSaved={(nextImages) => setImages(sanitizeDishImages(nextImages))}
 
                 />
 
