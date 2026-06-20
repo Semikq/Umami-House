@@ -6,6 +6,9 @@ import RestaurantMarker from "../../../components/map/RestaurantMarker.tsx";
 import RestaurantMapInfo from "../../../components/map/RestaurantMapInfo.tsx";
 import {parseRestaurantCoords} from "../../../utils/restaurantMapMarker.ts";
 
+const UKRAINE_MAP_CENTER = {lat: 48.68960588712109, lng: 31.638236495038726};
+const UKRAINE_MAP_ZOOM = 6;
+
 export default function MapRestaurants({restaurants}: { restaurants: Restaurants[] }) {
     const [searchParams] = useSearchParams();
     const [selected, setSelected] = useState<Restaurants | null>(null);
@@ -32,23 +35,6 @@ export default function MapRestaurants({restaurants}: { restaurants: Restaurants
         return () => window.clearTimeout(timer);
     }, [restaurantUuidFromUrl, visibleRestaurants]);
 
-    const mapCenter = useMemo(() => {
-        if (visibleRestaurants.length === 0) {
-            return {lat: 49.588, lng: 34.554};
-        }
-
-        const coords = visibleRestaurants.map((item) =>
-            parseRestaurantCoords(item.latitude, item.longitude)!,
-        );
-
-        const lat = coords.reduce((sum, point) => sum + point.lat, 0) / coords.length;
-        const lng = coords.reduce((sum, point) => sum + point.lng, 0) / coords.length;
-
-        return {lat, lng};
-    }, [visibleRestaurants]);
-
-    const mapZoom = visibleRestaurants.length === 1 ? 14 : 12;
-
     const selectedPosition = selected
         ? parseRestaurantCoords(selected.latitude, selected.longitude)
         : null;
@@ -59,8 +45,8 @@ export default function MapRestaurants({restaurants}: { restaurants: Restaurants
         <div className="map-wrapper" id="contact-map">
             <GoogleMap
                 mapContainerStyle={{width: "100%", height: "100%", borderRadius: "30px 60px 30px 60px"}}
-                defaultCenter={mapCenter}
-                defaultZoom={mapZoom}
+                defaultCenter={UKRAINE_MAP_CENTER}
+                defaultZoom={UKRAINE_MAP_ZOOM}
                 onClick={() => setSelected(null)}
             >
                 {visibleRestaurants.map((item, index) => (
