@@ -341,7 +341,7 @@
 
     .product__additional-photos{
         flex-direction: row;
-        height: 96px;
+        height: 120px;
         flex: none;
     }
 
