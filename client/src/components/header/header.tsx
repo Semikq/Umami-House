@@ -24,11 +24,8 @@ function isMenuOrDishPage(pathname: string) {
 }
 
 function shouldShowLoyaltyBanner(pathname: string, user: AuthUser) {
-    if (user?.role === "admin") {
-        return isMenuOrDishPage(pathname) || pathname === "/user"
-    }
-
     if (!isMenuOrDishPage(pathname)) return false
+    if (user?.role === "admin") return true
     return !isCorporateClient(user)
 }
 
