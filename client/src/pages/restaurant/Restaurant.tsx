@@ -1,5 +1,6 @@
-import {GoogleMap, useLoadScript, InfoWindow} from "@react-google-maps/api";
+import {GoogleMap, InfoWindow} from "@react-google-maps/api";
 import {useCitiesQuery, useRestaurantsByCityQuery, useRestaurantsQuery} from "../../redux/api/restaurantsApi.ts";
+import useGoogleMapsLoader, {UKRAINE_MAP_CENTER, UKRAINE_MAP_ZOOM} from "../../hooks/useGoogleMapsLoader.ts";
 import CreateCitiesBloc from "./components/CreateCitiesBloc.tsx";
 import {useState, useEffect} from "react";
 import {changeCity} from "../../redux/slices/userCity.ts";
@@ -28,12 +29,12 @@ function RestaurantMap({restaurantsToShow, currentCity, selected, setSelected, m
     return (
         <div className="restaurant__map" id="infoWindow">
             <GoogleMap
-                mapContainerStyle={{height: "100%", width: "100%", borderRadius: "30px 60px 30px 60px"}}
+                mapContainerStyle={{height: "100%", width: "100%"}}
                 center={{
-                    lat: currentCity ? Number(currentCity.latitude) : 48.68960588712109,
-                    lng: currentCity ? Number(currentCity.longitude) : 31.638236495038726,
+                    lat: currentCity ? Number(currentCity.latitude) : UKRAINE_MAP_CENTER.lat,
+                    lng: currentCity ? Number(currentCity.longitude) : UKRAINE_MAP_CENTER.lng,
                 }}
-                zoom={currentCity ? 11.5 : 6}
+                zoom={currentCity ? 11.5 : UKRAINE_MAP_ZOOM}
                 onClick={() => setSelected(null)}
             >
                 {restaurantsToShow.map((item, index) => (
@@ -130,7 +131,7 @@ function RenderRestaurantPage({urlCityName, cities, mapLoaded}) {
 export default function CreateRestaurantPages() {
     const { name } = useParams()
     const {data: cities, isLoading: citiesLoading, isError: citiesError} = useCitiesQuery()
-    const { isLoaded } = useLoadScript({googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY})
+    const {isLoaded, loadError} = useGoogleMapsLoader();
 
     if (citiesLoading) return <PageLoader/>
 

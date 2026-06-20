@@ -11,6 +11,17 @@
     font-size: clamp(22px, 2vw, 34px);
 }
 
+.contact__map-error{
+    grid-column: 2 / 12;
+    margin: 0;
+    padding: 24px;
+    border-radius: 16px;
+    background: #fff5f5;
+    color: #B75F6D;
+    text-align: center;
+    font-family: Roboto, sans-serif;
+}
+
 /* Contact */
 
 .contact{
@@ -27,6 +38,7 @@
     height: 600px;
     border-radius: 30px 60px 30px 60px;
     border: 0;
+    overflow: hidden;
 }
 
 /* Contact info */

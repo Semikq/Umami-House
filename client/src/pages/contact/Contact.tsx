@@ -1,7 +1,5 @@
-import React, {useEffect, useState} from "react";
-import {useLoadScript} from "@react-google-maps/api";
+import useGoogleMapsLoader from "../../hooks/useGoogleMapsLoader.ts";
 import {useRestaurantsQuery} from "../../redux/api/restaurantsApi.ts";
-import {useCitiesQuery} from "../../redux/api/restaurantsApi.ts";
 import CreateCompanyDetails from "./components/CreateCompanyDetails.tsx";
 import CreateAdditionalDetails from "./components/CreateAdditionalDetails.tsx";
 import CreateAdditionalInformationCards from "./components/CreateAdditionalInformationCards.tsx";
@@ -26,12 +24,21 @@ function RenderContactPage({restaurants}){
 }
 
 export default function CreateContactPage() {
-    const { isLoaded } = useLoadScript({googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY});
-    const { data: restaurants, isLoading: restaurantsLoading } = useRestaurantsQuery()
+    const {isLoaded, loadError} = useGoogleMapsLoader();
+    const {data: restaurants, isLoading: restaurantsLoading} = useRestaurantsQuery();
 
     if (restaurantsLoading || !isLoaded) return <PageLoader/>;
 
-    return(
-        <RenderContactPage restaurants={restaurants}/>
-    )
+    if (loadError) {
+        return (
+            <main>
+                <h1 className="contact__title">Контакти та доставка</h1>
+                <p className="contact__map-error">Не вдалося завантажити Google Maps. Перевірте API-ключ.</p>
+            </main>
+        );
+    }
+
+    return (
+        <RenderContactPage restaurants={restaurants ?? []}/>
+    );
 }

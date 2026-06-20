@@ -5,9 +5,7 @@ import {Restaurants} from "../../../redux/types/restaurants.ts";
 import RestaurantMarker from "../../../components/map/RestaurantMarker.tsx";
 import RestaurantMapInfo from "../../../components/map/RestaurantMapInfo.tsx";
 import {parseRestaurantCoords} from "../../../utils/restaurantMapMarker.ts";
-
-const UKRAINE_MAP_CENTER = {lat: 48.68960588712109, lng: 31.638236495038726};
-const UKRAINE_MAP_ZOOM = 6;
+import {UKRAINE_MAP_CENTER, UKRAINE_MAP_ZOOM} from "../../../hooks/useGoogleMapsLoader.ts";
 
 export default function MapRestaurants({restaurants}: { restaurants: Restaurants[] }) {
     const [searchParams] = useSearchParams();
@@ -44,9 +42,9 @@ export default function MapRestaurants({restaurants}: { restaurants: Restaurants
     return (
         <div className="map-wrapper" id="contact-map">
             <GoogleMap
-                mapContainerStyle={{width: "100%", height: "100%", borderRadius: "30px 60px 30px 60px"}}
-                defaultCenter={UKRAINE_MAP_CENTER}
-                defaultZoom={UKRAINE_MAP_ZOOM}
+                mapContainerStyle={{width: "100%", height: "100%"}}
+                center={UKRAINE_MAP_CENTER}
+                zoom={UKRAINE_MAP_ZOOM}
                 onClick={() => setSelected(null)}
             >
                 {visibleRestaurants.map((item, index) => (

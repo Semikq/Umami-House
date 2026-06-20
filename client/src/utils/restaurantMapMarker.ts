@@ -32,18 +32,9 @@ export function createRestaurantMarkerIcon(color: string) {
         <path fill="${color}" stroke="#FFF9F0" stroke-width="2" d="M18 0C8.06 0 0 8.06 0 18c0 13.5 18 30 18 30s18-16.5 18-30C36 8.06 27.94 0 18 0z"/>
         <circle cx="18" cy="18" r="6.5" fill="#FFF9F0"/>
     </svg>`;
-    const url = `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
-
-    if (typeof google !== "undefined" && google.maps) {
-        return {
-            url,
-            scaledSize: new google.maps.Size(36, 48),
-            anchor: new google.maps.Point(18, 48),
-        };
-    }
 
     return {
-        url,
+        url: `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`,
         scaledSize: {width: 36, height: 48},
         anchor: {x: 18, y: 48},
     };
