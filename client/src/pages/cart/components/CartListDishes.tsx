@@ -98,7 +98,7 @@ export default function CartListDishes({ cartDishes, variant = "default" }: Cart
                 return (
                 <div className="cart__dish" key={dish.uuid}>
                     <div className="cart__dish-header">
-                        <img className="cart__dish-image" src={getImage(dish.dish_images?.[0]?.image_url ?? "")} alt={dish.name}/>
+                        <img className="cart__dish-image" src={getImage(dish.dish_images[0].image_url)} alt={dish.name}/>
                         <div className="cart__dish-info">
                             <h2 className="cart__dish-name">{dish.name}</h2>
                             <p className="cart__dish-weight">({dish.weight}/10г)</p>

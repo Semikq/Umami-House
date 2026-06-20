@@ -10,8 +10,6 @@ import {
     getCorporateDishPrice,
     prepareCartDish,
 } from "../../../utils/corporateOffer.ts";
-import {Category, Dish} from "../../../redux/types/dishes.ts";
-import {dishHasVisibleImage, getDishPrimaryImageUrl} from "../../../utils/dishImages.ts";
 import "../../../components/dishCard/dishCard.css";
 
 type AuthUser = { role?: string; company_type?: string | null; company_name?: string | null } | null;
@@ -36,27 +34,14 @@ function DishButton ({dish, user}: { dish: { uuid: string; price: number; count?
     );
 }
 
-function getOfferDishes(additionalDish: Category | undefined): Dish[] {
-    const dishes = additionalDish?.sub_categories?.flatMap((sub) => sub.dishes ?? []) ?? [];
-    return dishes.filter((dish): dish is Dish => dishHasVisibleImage(dish));
-}
-
-export default function CreateAdditionalOffers({
-    categoryName,
-    additionalDish,
-}: {
-    categoryName: string,
-    additionalDish?: Category,
-}) {
-    const myRef = useRef<HTMLDivElement | null>(null);
+export default function CreateAdditionalOffers({categoryName, additionalDish}){
+    const myRef = useRef(null);
     const user = useSelector((state: { auth: { user: AuthUser } }) => state.auth.user);
-    const dishes = getOfferDishes(additionalDish);
 
     useEffect(() => {
         const container = myRef.current;
-        if (!container) return;
 
-        const handleWheel = (e: WheelEvent) => {
+        const handleWheel = (e) => {
             e.preventDefault();
             container.scrollLeft += e.deltaY;
         };
@@ -65,27 +50,17 @@ export default function CreateAdditionalOffers({
         return () => container.removeEventListener("wheel", handleWheel);
     }, []);
 
-    if (dishes.length === 0) return null;
-
     return(
         <div className="additionalOffers__block">
             <div className="additionalOffers__header">
                 <h2>{categoryName}</h2>
             </div>
             <div className="additionalOffers__list" ref={myRef}>
-                {dishes.map((dish) => {
+                {additionalDish.sub_categories[0].dishes.map((dish) => {
                     const corporateLabel = getCorporateOfferBadgeLabel(dish, user);
-                    const imageUrl = getDishPrimaryImageUrl(dish);
 
                     return (
-                    <Link
-                        to={`/dish/${dish.uuid}`}
-                        key={dish.uuid}
-                        className="cardDish"
-                        style={{
-                            backgroundImage: `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(${getImage(imageUrl)})`,
-                        }}
-                    >
+                    <Link to={`/dish/${dish.uuid}`} key={dish.uuid} className="cardDish" style={{ backgroundImage: `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(${getImage(dish.dish_images[0].image_url)})` }}>
                         {corporateLabel && (
                             <span className="cardDish__corporate-badge">{corporateLabel}</span>
                         )}

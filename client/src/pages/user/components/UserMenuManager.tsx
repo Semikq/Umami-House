@@ -25,7 +25,7 @@ import {Categories, Dish, SubCategory} from "../../../redux/types/dishes.ts";
 import getImage from "../../../utils/getImage.ts";
 
 import AdminDishImagesModal from "./AdminDishImagesModal.tsx";
-import {DishImageItem, sanitizeDishImages} from "../../../utils/dishImages.ts";
+import {DishImageItem, sanitizeCategories, sanitizeDishImages} from "../../../utils/dishImages.ts";
 
 import AdminSubCategoryPanel from "./AdminSubCategoryPanel.tsx";
 import {CORPORATE_TYPE_OPTIONS} from "../../../utils/corporateOffer.ts";

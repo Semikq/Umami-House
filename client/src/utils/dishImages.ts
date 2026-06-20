@@ -64,16 +64,6 @@ export function normalizeCategoryWithDishes(category: Category): Category {
     };
 }
 
-export function getDishPrimaryImageUrl(dish: Pick<Dish, "dish_images">): string {
-    return sanitizeDishImages(dish.dish_images)[0]?.image_url ?? "";
-}
-
-export function dishHasVisibleImage(
-    dish: Pick<Dish, "dish_images" | "uuid"> | null | undefined,
-): dish is Pick<Dish, "dish_images" | "uuid"> & { uuid: string } {
-    return Boolean(dish?.uuid && getDishPrimaryImageUrl(dish).length > 0);
-}
-
 export function sanitizeCategories(categories: unknown): Categories[] {
     if (!Array.isArray(categories)) return [];
 
