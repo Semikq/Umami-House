@@ -9,6 +9,7 @@ import partnersRoutes from "./routes/partnersRoutes.js";
 import restaurantsRoutes from "./routes/restaurantsRoutes.js";
 import saleRoutes from "./routes/saleRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
+import { isSupabaseStorageEnabled } from "./services/storageUpload.js";
 dotenv.config();
 const app = express();
 const corsOrigins = [
@@ -27,7 +28,7 @@ app.use(cors({
     optionsSuccessStatus: 200
 }));
 // 2. Усі інші мідлвари йдуть СТРОГО ПІСЛЯ CORS
-app.use(express.json({ limit: "10mb" }));
+app.use(express.json({ limit: "50mb" }));
 app.use(cookieParser());
 app.use("/uploads", express.static("uploads"));
 app.use("/dishes", dishesRouter);
@@ -40,4 +41,5 @@ app.use("/users", userRoutes);
 const PORT = process.env.PORT || 3200;
 app.listen(PORT, () => {
     console.log(`${PORT}`);
+    console.log(`Storage: ${isSupabaseStorageEnabled() ? "Supabase (menu bucket)" : "local uploads/ folder"}`);
 });

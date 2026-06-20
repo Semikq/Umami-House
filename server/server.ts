@@ -9,6 +9,7 @@ import partnersRoutes from "./routes/partnersRoutes.js";
 import restaurantsRoutes from "./routes/restaurantsRoutes.js";
 import saleRoutes from "./routes/saleRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
+import { isSupabaseStorageEnabled } from "./services/storageUpload.js";
 dotenv.config();
 const app = express();
 
@@ -45,4 +46,5 @@ app.use("/users", userRoutes);
 const PORT = process.env.PORT || 3200;
 app.listen(PORT, () => {
     console.log(`${PORT}`);
+    console.log(`Storage: ${isSupabaseStorageEnabled() ? "Supabase (menu bucket)" : "local uploads/ folder"}`);
 });

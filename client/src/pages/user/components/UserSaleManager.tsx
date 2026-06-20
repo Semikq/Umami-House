@@ -45,7 +45,7 @@ function SaleImageUpload({
 }: {
     title: string,
     imageUrl: string,
-    onUploaded: (url: string) => void,
+    onUploaded: (url: string) => void | Promise<void>,
 }) {
     const fileInputRef = useRef<HTMLInputElement>(null);
     const [uploadImage, { isLoading }] = useUploadSaleImageMutation();
@@ -64,9 +64,10 @@ function SaleImageUpload({
         try {
             const data = await fileToBase64(file);
             const uploaded = await uploadImage({ data, mimeType, title }).unwrap();
-            onUploaded(uploaded.image_url);
+            await onUploaded(uploaded.image_url);
         } catch (err) {
-            console.log(err);
+            console.error(err);
+            window.alert("Не вдалося завантажити фото. Перевірте SUPABASE ключ у server/.env і перезапустіть сервер.");
         }
     };
 
@@ -145,6 +146,23 @@ function AdminSaleEditCard({ sale }: { sale: Sale }) {
         }
     };
 
+    const handleImageUploaded = async (url: string) => {
+        setImageUrl(url);
+        try {
+            await updateSale({
+                uuid: sale.uuid,
+                title: title.trim(),
+                image_url: url,
+                active,
+            }).unwrap();
+            setSaved(true);
+            setTimeout(() => setSaved(false), 2000);
+        } catch (err) {
+            console.error(err);
+            window.alert("Фото завантажено, але не вдалося зберегти в базу даних.");
+        }
+    };
+
     return (
         <form className="user__menu-dish" onSubmit={handleSubmit}>
             <header className="user__menu-dish-head">
@@ -166,7 +184,7 @@ function AdminSaleEditCard({ sale }: { sale: Sale }) {
             </header>
 
             <div className="user__menu-dish-body">
-                <SaleImageUpload title={title} imageUrl={imageUrl} onUploaded={setImageUrl}/>
+                <SaleImageUpload title={title} imageUrl={imageUrl} onUploaded={handleImageUploaded}/>
                 <div className="user__menu-dish-fields">
                     <label>
                         Назва акції

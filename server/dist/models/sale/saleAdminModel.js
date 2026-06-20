@@ -2,7 +2,7 @@ import { uploadImageToStorage } from "../../services/storageUpload.js";
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 export async function uploadSaleImage({ data, mimeType, title, }) {
-    return uploadImageToStorage({ data, mimeType, title, folder: "action" });
+    return uploadImageToStorage({ data, mimeType, title, folder: "sales" });
 }
 export async function addSale({ title, image_url, active }) {
     try {
