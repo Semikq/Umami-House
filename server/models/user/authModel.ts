@@ -15,14 +15,28 @@ type RegisterUserInput = {
     city_uuid?: string | null
 }
 
+export const EMAIL_ALREADY_EXISTS = "EMAIL_ALREADY_EXISTS"
+
 export async function registerUser({ email, password, name, surname, phone, company_type, company_name, city_uuid }: RegisterUserInput) {
     try {
+        const normalizedEmail = email.trim().toLowerCase()
+        const existingUser = await prisma.users.findFirst({
+            where: { email: { equals: normalizedEmail, mode: "insensitive" } },
+            select: { uuid: true },
+        })
+
+        if (existingUser) {
+            const error = new Error("Таку пошту вже зареєстровано")
+            error.name = EMAIL_ALREADY_EXISTS
+            throw error
+        }
+
         const isCompany = Boolean(company_type?.trim() || company_name?.trim());
 
         return await prisma.$transaction(async (tx) => {
             const user = await tx.users.create({
                 data: {
-                    email,
+                    email: normalizedEmail,
                     password,
                     name,
                     surname: surname ?? "",
@@ -39,6 +53,16 @@ export async function registerUser({ email, password, name, surname, phone, comp
             return user;
         });
     } catch (error) {
+        if ((error as Error).name === EMAIL_ALREADY_EXISTS) {
+            throw error
+        }
+
+        if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === "P2002") {
+            const duplicateError = new Error("Таку пошту вже зареєстровано")
+            duplicateError.name = EMAIL_ALREADY_EXISTS
+            throw duplicateError
+        }
+
         throw new Error((error as Error).message)
     }
 }

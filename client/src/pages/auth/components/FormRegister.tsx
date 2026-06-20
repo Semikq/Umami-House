@@ -8,6 +8,24 @@ import {CORPORATE_TYPE_OPTIONS} from "../../../utils/corporateOffer.ts";
 
 const DEFAULT_COMPANY_TYPE = CORPORATE_TYPE_OPTIONS[0].value;
 
+function getRegisterErrorMessage(err: unknown) {
+    if (!err || typeof err !== "object" || !("data" in err)) {
+        return "Не вдалося зареєструватись. Спробуйте ще раз."
+    }
+
+    const data = (err as { data?: unknown }).data
+
+    if (typeof data === "string") {
+        return data
+    }
+
+    if (data && typeof data === "object" && "error" in data && typeof data.error === "string") {
+        return data.error
+    }
+
+    return "Не вдалося зареєструватись. Спробуйте ще раз."
+}
+
 export default function FormRegister(){
     const [role, setRole] = useState(true)
     const [name, setName] = useState("")
@@ -17,16 +35,18 @@ export default function FormRegister(){
     const [password, setPassword] = useState("")
     const [company_type, setCompany_type] = useState(DEFAULT_COMPANY_TYPE)
     const [company_name, setCompany_name] = useState("")
+    const [formError, setFormError] = useState("")
     const [registerApi, {isLoading}] = useRegisterMutation()
     const dispatch = useDispatch()
     const userCity = useSelector((state: { userCity: { uuid: string | null } }) => state.userCity)
 
     const handleRegister = async (e) => {
         e.preventDefault();
+        setFormError("")
         try {
             const isLegalEntity = !role;
             const result = await registerApi({
-                email,
+                email: email.trim(),
                 password,
                 name,
                 surname,
@@ -37,8 +57,8 @@ export default function FormRegister(){
             }).unwrap()
             dispatch(logIn({ user: result.user, token: result.accessToken }))
             dispatch(closeAuth())
-        }catch(err){
-            console.log(err)
+        } catch (err) {
+            setFormError(getRegisterErrorMessage(err))
         }
     }
     return (
@@ -83,7 +103,18 @@ export default function FormRegister(){
             <CreateTelLabel setUserInput={setPhone}/>
             <label htmlFor="email">
                 <p>E-mail<span title="Обов'язкове поле">*</span></p>
-                <input id="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="plaksiuk@gmail.com" type="email"/>
+                <input
+                    id="email"
+                    value={email}
+                    onChange={(e) => {
+                        setEmail(e.target.value)
+                        if (formError) setFormError("")
+                    }}
+                    placeholder="plaksiuk@gmail.com"
+                    type="email"
+                    required
+                    aria-invalid={Boolean(formError)}
+                />
             </label>
             <label htmlFor="password">
                 <p>Пароль<span title="Обов'язкове поле">*</span></p>
@@ -108,7 +139,12 @@ export default function FormRegister(){
                     <input id="legalEntity" value={company_name} onChange={(e) => setCompany_name(e.target.value)} placeholder="Назва юридичної особи"/>
                 </label>
             </>}
-            <button type="submit" className="form__submit">Зареєструватись</button>
+            {formError && (
+                <p className="form__error" role="alert">{formError}</p>
+            )}
+            <button type="submit" className="form__submit" disabled={isLoading}>
+                {isLoading ? "Реєстрація..." : "Зареєструватись"}
+            </button>
         </form>
     )
 }

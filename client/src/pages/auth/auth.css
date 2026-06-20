@@ -179,10 +179,29 @@
     transition: background-color 0.22s ease, transform 0.18s ease, box-shadow 0.22s ease;
 }
 
+.form__error{
+    margin: 0;
+    padding: 10px 12px;
+    border-radius: 12px;
+    background: rgba(223, 19, 34, 0.08);
+    border: 1px solid rgba(223, 19, 34, 0.22);
+    color: #b42318;
+    font-size: 14px;
+    line-height: 1.4;
+    text-align: center;
+}
+
 .form__submit:hover{
     background-color: #c06a78;
     transform: translateY(-1px);
     box-shadow: 0 8px 22px rgba(183, 95, 109, 0.28);
+}
+
+.form__submit:disabled{
+    opacity: 0.65;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
 }
 
 .form__submit:active{
