@@ -1,4 +1,4 @@
-import { addRestaurant, updateRestaurant, deleteRestaurant, addCity, deleteCity } from "../../models/restaurants/restaurantsAdminModel.js";
+import { addRestaurant, updateRestaurant, deleteRestaurant, addCity, deleteCity, uploadRestaurantImage, } from "../../models/restaurants/restaurantsAdminModel.js";
 export async function handleAddRestaurant(req, res) {
     try {
         const result = await addRestaurant(req.body);
@@ -30,6 +30,15 @@ export async function handleAddCity(req, res) {
     try {
         const result = await addCity(req.body);
         res.status(201).json({ message: "City successfully added", data: result });
+    }
+    catch (error) {
+        res.status(500).json(error.message);
+    }
+}
+export async function handleUploadRestaurantImage(req, res) {
+    try {
+        const result = await uploadRestaurantImage(req.body);
+        res.status(201).json({ message: "Image uploaded", data: result });
     }
     catch (error) {
         res.status(500).json(error.message);

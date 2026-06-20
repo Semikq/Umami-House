@@ -118,7 +118,7 @@
     gap: 14px;
     width: 100%;
     min-width: 0;
-    overflow: hidden;
+    overflow: visible;
 }
 
 .form__body label{
@@ -189,6 +189,7 @@
     font-size: 14px;
     line-height: 1.4;
     text-align: center;
+    flex-shrink: 0;
 }
 
 .form__submit:hover{

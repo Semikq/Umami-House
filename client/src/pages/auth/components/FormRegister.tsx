@@ -5,26 +5,9 @@ import {logIn} from "../../../redux/slices/authSlice.ts";
 import {useRegisterMutation} from "../../../redux/api/usersApi.ts";
 import {closeAuth} from "../../../redux/slices/uiSlice.ts";
 import {CORPORATE_TYPE_OPTIONS} from "../../../utils/corporateOffer.ts";
+import getAuthErrorMessage from "../../../utils/getAuthErrorMessage.ts";
 
 const DEFAULT_COMPANY_TYPE = CORPORATE_TYPE_OPTIONS[0].value;
-
-function getRegisterErrorMessage(err: unknown) {
-    if (!err || typeof err !== "object" || !("data" in err)) {
-        return "Не вдалося зареєструватись. Спробуйте ще раз."
-    }
-
-    const data = (err as { data?: unknown }).data
-
-    if (typeof data === "string") {
-        return data
-    }
-
-    if (data && typeof data === "object" && "error" in data && typeof data.error === "string") {
-        return data.error
-    }
-
-    return "Не вдалося зареєструватись. Спробуйте ще раз."
-}
 
 export default function FormRegister(){
     const [role, setRole] = useState(true)
@@ -58,11 +41,14 @@ export default function FormRegister(){
             dispatch(logIn({ user: result.user, token: result.accessToken }))
             dispatch(closeAuth())
         } catch (err) {
-            setFormError(getRegisterErrorMessage(err))
+            setFormError(getAuthErrorMessage(err, "Не вдалося зареєструватись. Спробуйте ще раз."))
         }
     }
     return (
         <form className="form__body" onSubmit={handleRegister}>
+            {formError && (
+                <p className="form__error" role="alert">{formError}</p>
+            )}
             <div className="body__user-selection" role="radiogroup" aria-label="Тип користувача">
                 <button
                     type="button"
@@ -139,9 +125,6 @@ export default function FormRegister(){
                     <input id="legalEntity" value={company_name} onChange={(e) => setCompany_name(e.target.value)} placeholder="Назва юридичної особи"/>
                 </label>
             </>}
-            {formError && (
-                <p className="form__error" role="alert">{formError}</p>
-            )}
             <button type="submit" className="form__submit" disabled={isLoading}>
                 {isLoading ? "Реєстрація..." : "Зареєструватись"}
             </button>

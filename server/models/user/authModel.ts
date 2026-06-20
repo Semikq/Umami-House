@@ -16,6 +16,8 @@ type RegisterUserInput = {
 }
 
 export const EMAIL_ALREADY_EXISTS = "EMAIL_ALREADY_EXISTS"
+export const USER_NOT_FOUND = "USER_NOT_FOUND"
+export const INVALID_PASSWORD = "INVALID_PASSWORD"
 
 export async function registerUser({ email, password, name, surname, phone, company_type, company_name, city_uuid }: RegisterUserInput) {
     try {
@@ -68,16 +70,24 @@ export async function registerUser({ email, password, name, surname, phone, comp
 }
 
 export async function loginUser({ userInput, password }: LoginUser): Promise<Prisma.usersGetPayload<{}>> {
-    try {
-        const user = await prisma.users.findFirstOrThrow({
-            where: { email: userInput }
-        })
+    const normalizedInput = userInput.trim().toLowerCase()
 
-        const isPasswordCorrect = await bcrypt.compare(password, user.password)
-        if (!isPasswordCorrect) throw new Error('Invalid password')
+    const user = await prisma.users.findFirst({
+        where: { email: { equals: normalizedInput, mode: "insensitive" } },
+    })
 
-        return user
-    } catch (error) {
-        throw new Error((error as Error).message)
+    if (!user) {
+        const error = new Error("Такого акаунту не існує")
+        error.name = USER_NOT_FOUND
+        throw error
     }
+
+    const isPasswordCorrect = await bcrypt.compare(password, user.password)
+    if (!isPasswordCorrect) {
+        const error = new Error("Невірний пароль")
+        error.name = INVALID_PASSWORD
+        throw error
+    }
+
+    return user
 }

@@ -52,4 +52,16 @@ export const userSchemas = {
     bonusCardsByUser: {
         params: uuidParamsSchema,
     },
+    createBonusCard: {
+        params: uuidParamsSchema,
+        body: z.object({
+            name: z.string().min(1).max(128),
+            amount: z.number().int().positive(),
+            description: z.string().min(1).max(512),
+            active_until: z.string().datetime(),
+        }),
+    },
+    deleteBonusCard: {
+        params: uuidParamsSchema,
+    },
 };

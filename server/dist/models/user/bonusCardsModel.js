@@ -46,6 +46,27 @@ export async function fetchActiveBonusCardsByUser({ uuid }) {
         throw new Error(error.message);
     }
 }
+export async function createBonusCardForUser({ user_uuid, name, amount, description, active_until, }) {
+    const user = await prisma.users.findUnique({ where: { uuid: user_uuid }, select: { uuid: true } });
+    if (!user)
+        throw new Error("Користувача не знайдено");
+    return prisma.bonus_cards.create({
+        data: {
+            user_uuid,
+            name,
+            amount,
+            description,
+            active_until,
+            is_active: true,
+        },
+    });
+}
+export async function deleteBonusCardByUuid(uuid) {
+    const card = await prisma.bonus_cards.findUnique({ where: { uuid } });
+    if (!card)
+        throw new Error("Бонусну картку не знайдено");
+    await prisma.bonus_cards.delete({ where: { uuid } });
+}
 export async function deactivateBonusCard(uuid, user_uuid) {
     const card = await prisma.bonus_cards.findFirst({
         where: {

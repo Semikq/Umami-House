@@ -1,4 +1,4 @@
-import { registerUser, loginUser } from "../../models/user/authModel.js";
+import { EMAIL_ALREADY_EXISTS, INVALID_PASSWORD, USER_NOT_FOUND, registerUser, loginUser } from "../../models/user/authModel.js";
 import { findUserByUuid } from "../../models/user/userModel.js";
 import { generateAccessToken, generateRefreshToken } from "../../config/jwtToken.js";
 import jwt from "jsonwebtoken";
@@ -17,7 +17,11 @@ export async function handleRegisterUser(req, res) {
         res.status(200).json({ user, accessToken });
     }
     catch (error) {
-        res.status(500).json(error.message);
+        if (error.name === EMAIL_ALREADY_EXISTS) {
+            res.status(409).json({ error: error.message });
+            return;
+        }
+        res.status(500).json({ error: error.message });
     }
 }
 export async function handleLoginUsers(req, res) {
@@ -35,7 +39,15 @@ export async function handleLoginUsers(req, res) {
         res.status(200).json({ user, accessToken });
     }
     catch (error) {
-        res.status(500).json(error.message);
+        if (error.name === USER_NOT_FOUND) {
+            res.status(404).json({ error: error.message });
+            return;
+        }
+        if (error.name === INVALID_PASSWORD) {
+            res.status(401).json({ error: error.message });
+            return;
+        }
+        res.status(500).json({ error: error.message || "Помилка входу" });
     }
 }
 export async function handleRefreshToken(req, res) {

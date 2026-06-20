@@ -23,7 +23,7 @@ app.use(cors({
     optionsSuccessStatus: 200
 }));
 // 2. Усі інші мідлвари йдуть СТРОГО ПІСЛЯ CORS
-app.use(express.json());
+app.use(express.json({ limit: "10mb" }));
 app.use(cookieParser());
 app.use("/uploads", express.static("uploads"));
 app.use("/dishes", dishesRouter);

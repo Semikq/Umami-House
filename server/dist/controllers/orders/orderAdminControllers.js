@@ -1,8 +1,20 @@
-import { fetchOrdersByFilter, updateStatusOrder, deleteOrder } from "../../models/orders/ordersAdminModel.js";
+import { fetchAllOrders, fetchOrdersByFilter, updateStatusOrder, deleteOrder, } from "../../models/orders/ordersAdminModel.js";
+export async function handleAllOrders(req, res) {
+    try {
+        const status = typeof req.query.status === "string" && req.query.status !== "all"
+            ? req.query.status
+            : undefined;
+        const result = await fetchAllOrders(status);
+        res.status(200).json({ data: result });
+    }
+    catch (error) {
+        res.status(500).json(error.message);
+    }
+}
 export async function handleOrdersByFilter(req, res) {
     try {
         const result = await fetchOrdersByFilter(req.body);
-        res.status(200).json(result);
+        res.status(200).json({ data: result });
     }
     catch (error) {
         res.status(500).json(error.message);

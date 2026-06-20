@@ -1,4 +1,4 @@
-import { EMAIL_ALREADY_EXISTS, registerUser, loginUser } from "../../models/user/authModel.js";
+import { EMAIL_ALREADY_EXISTS, INVALID_PASSWORD, USER_NOT_FOUND, registerUser, loginUser } from "../../models/user/authModel.js";
 import { findUserByUuid } from "../../models/user/userModel.js";
 import { Request, Response } from "express";
 import { generateAccessToken, generateRefreshToken } from "../../config/jwtToken.js";
@@ -49,7 +49,17 @@ export async function handleLoginUsers(req: Request , res: Response): Promise<vo
 
         res.status(200).json({ user, accessToken })
     } catch (error) {
-        res.status(500).json((error as Error).message)
+        if ((error as Error).name === USER_NOT_FOUND) {
+            res.status(404).json({ error: (error as Error).message })
+            return
+        }
+
+        if ((error as Error).name === INVALID_PASSWORD) {
+            res.status(401).json({ error: (error as Error).message })
+            return
+        }
+
+        res.status(500).json({ error: (error as Error).message || "Помилка входу" })
     }
 }
 

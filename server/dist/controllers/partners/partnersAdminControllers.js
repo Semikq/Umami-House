@@ -1,4 +1,4 @@
-import { addPartners, updatePartners, deletePartners } from "../../models/partners/partnersAdminModel.js";
+import { addPartners, updatePartners, deletePartners, uploadPartnerLogo, } from "../../models/partners/partnersAdminModel.js";
 export async function handleAddPartners(req, res) {
     try {
         const result = await addPartners(req.body);
@@ -10,8 +10,17 @@ export async function handleAddPartners(req, res) {
 }
 export async function handleUpdatePartners(req, res) {
     try {
-        const result = await updatePartners(req.body);
+        const result = await updatePartners({ uuid: req.params.uuid, ...req.body });
         res.status(200).json({ message: "Partners successfully update", data: result });
+    }
+    catch (error) {
+        res.status(500).json(error.message);
+    }
+}
+export async function handleUploadPartnerLogo(req, res) {
+    try {
+        const result = await uploadPartnerLogo(req.body);
+        res.status(201).json({ message: "Logo uploaded", data: result });
     }
     catch (error) {
         res.status(500).json(error.message);
@@ -19,7 +28,7 @@ export async function handleUpdatePartners(req, res) {
 }
 export async function handleDeletePartners(req, res) {
     try {
-        await deletePartners(req.body);
+        await deletePartners({ uuid: req.params.uuid });
         res.status(204).send();
     }
     catch (error) {
