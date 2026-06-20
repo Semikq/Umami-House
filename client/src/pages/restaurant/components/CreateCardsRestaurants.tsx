@@ -1,12 +1,19 @@
 import {Icon} from "@iconify/react";
+import {useNavigate} from "react-router-dom";
 import getImage from "../../../utils/getImage.ts";
+import {Restaurants} from "../../../redux/types/restaurants.ts";
 
-export default function CreateCardsRestaurants({ restaurantsToShow, setSelected }){
-    const handleInfoRestaurant = (restaurant) => {
-        const element = document.getElementById("infoWindow");
-        if (element) element.scrollIntoView({ behavior: "smooth", block: "start" });
-        setSelected(restaurant)
-    }
+export default function CreateCardsRestaurants({
+    restaurantsToShow,
+}: {
+    restaurantsToShow: Restaurants[],
+    setSelected?: (restaurant: Restaurants) => void,
+}) {
+    const navigate = useNavigate();
+
+    const handleInfoRestaurant = (restaurant: Restaurants) => {
+        navigate(`/contact?restaurant=${restaurant.uuid}`);
+    };
 
     return (
         <div className="restaurant__body">
@@ -19,7 +26,7 @@ export default function CreateCardsRestaurants({ restaurantsToShow, setSelected 
                             <a className="information__breadcrumbs--tel" href={`tel:+38${restaurant.phone}`}><Icon icon="mynaui:telephone-call"/><span>{restaurant.phone}</span></a>
                         </div>
                         <p className="restaurant___information--description">{restaurant.description}</p>
-                        <button className="restaurant___information--button" onClick={() => handleInfoRestaurant(restaurant)}>На мапі <Icon icon="majesticons:map-marker-line"/></button>
+                        <button type="button" className="restaurant___information--button" onClick={() => handleInfoRestaurant(restaurant)}>На мапі <Icon icon="majesticons:map-marker-line"/></button>
                     </div>
                     <img className="card__restaurant--image" src={getImage(restaurant.restaurant_image)} alt={restaurant.name} />
                 </div>)}
