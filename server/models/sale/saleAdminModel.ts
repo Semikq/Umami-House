@@ -12,7 +12,7 @@ export async function uploadSaleImage({
     mimeType: string,
     title?: string,
 }): Promise<{ image_url: string, title: string }> {
-    return uploadImageToStorage({ data, mimeType, title, folder: "action" });
+    return uploadImageToStorage({ data, mimeType, title, folder: "sales" });
 }
 
 export async function addSale({ title, image_url, active}: AddSale): Promise<Prisma.saleGetPayload<{}>> {

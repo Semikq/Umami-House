@@ -9,7 +9,7 @@ const MIME_TO_EXT: Record<string, string> = {
     "image/webp": "webp",
 };
 
-export type StorageFolder = "menu" | "dishes" | "action" | "restaurants" | "partners";
+export type StorageFolder = "menu" | "dishes" | "sales" | "restaurants" | "partners";
 
 let supabaseClient: SupabaseClient | null | undefined;
 

@@ -69,7 +69,7 @@ export const dishesSchemas = {
             data: z.string().min(1),
             mimeType: z.enum(["image/jpeg", "image/png", "image/webp"]),
             title: z.string().optional(),
-            folder: z.enum(["menu", "dishes", "action", "restaurants", "partners"]).optional(),
+            folder: z.enum(["menu", "dishes", "sales", "restaurants", "partners"]).optional(),
         }),
     },
     categoryUpdate: {

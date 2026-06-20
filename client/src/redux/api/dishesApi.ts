@@ -39,7 +39,7 @@ export const dishesApi = createApi({
             data: string,
             mimeType: "image/jpeg" | "image/png" | "image/webp",
             title?: string,
-            folder?: "menu" | "dishes" | "action" | "restaurants" | "partners",
+            folder?: "menu" | "dishes" | "sales" | "restaurants" | "partners",
         }>({
             query: (body) => ({
                 url: "uploadImage",
