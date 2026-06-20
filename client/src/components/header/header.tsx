@@ -13,6 +13,25 @@ const PRIMARY_ICON_COLOR = "#333333"
 
 const COMING_SOON_HINT = "У розробці · скоро буде"
 
+type AuthUser = {
+    role?: string,
+    company_type?: string | null,
+    company_name?: string | null,
+} | null
+
+function isMenuOrDishPage(pathname: string) {
+    return pathname.startsWith("/category/") || pathname.startsWith("/dish/")
+}
+
+function shouldShowLoyaltyBanner(pathname: string, user: AuthUser) {
+    if (user?.role === "admin") {
+        return isMenuOrDishPage(pathname) || pathname === "/user"
+    }
+
+    if (!isMenuOrDishPage(pathname)) return false
+    return !isCorporateClient(user)
+}
+
 type HeaderNavItem = {
     to: string,
     icon: string,
@@ -44,17 +63,13 @@ function NavItem({to, icon, label, disabled}: HeaderNavItem) {
     )
 }
 
-function isMenuOrDishPage(pathname: string) {
-    return pathname.startsWith("/category/") || pathname.startsWith("/dish/")
-}
-
 export function RenderHeader(){
     const dispatch = useDispatch()
     const user = useSelector((state) => state.auth.user)
     const userCity = useSelector((state) => state.userCity)
     const navigator = useNavigate()
     const { pathname } = useLocation()
-    const showLoyaltyBanner = isMenuOrDishPage(pathname) && !isCorporateClient(user)
+    const showLoyaltyBanner = shouldShowLoyaltyBanner(pathname, user)
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
     const citySelectRef = useRef<CitySelectHandle>(null)
 
@@ -150,7 +165,7 @@ export function RenderHeader(){
 export default function CreateHeader(){
     const user = useSelector((state) => state.auth.user)
     const { pathname } = useLocation()
-    const showLoyaltyBanner = isMenuOrDishPage(pathname) && !isCorporateClient(user)
+    const showLoyaltyBanner = shouldShowLoyaltyBanner(pathname, user)
 
     return (
         <header className={showLoyaltyBanner ? "header--with-loyalty" : ""}>
