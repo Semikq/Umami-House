@@ -43,6 +43,10 @@ export function parseUploadedImage(response: unknown): DishImageItem {
     throw new Error("Invalid image upload response");
 }
 
+export function getDishPrimaryImageUrl(dish: Pick<Dish, "dish_images"> | null | undefined): string {
+    return sanitizeDishImages(dish?.dish_images)[0]?.image_url ?? "";
+}
+
 export function normalizeDish(dish: Dish): Dish {
     return {
         ...dish,

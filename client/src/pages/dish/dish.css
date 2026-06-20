@@ -82,6 +82,17 @@
     will-change: transform;
 }
 
+.product__photo-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    border-radius: 25px;
+    background: #f3f3f3;
+    color: #b0b0b0;
+}
+
 .product__photo-spicy:hover img{
     transform: scale(1.1);
 }

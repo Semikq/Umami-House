@@ -5,6 +5,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {addDish} from "../../redux/slices/cartSlice.ts";
 import {showCart} from "../../redux/slices/uiSlice.ts";
 import getImage from "../../utils/getImage.ts";
+import {getDishPrimaryImageUrl} from "../../utils/dishImages.ts";
 import {Dish} from "../../redux/types/dishes.ts";
 import {
     getCorporateOfferBadgeLabel,
@@ -62,7 +63,7 @@ export default function DishCardList({
                     key={dish.uuid}
                     className="cardDish"
                     style={{
-                        backgroundImage: `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(${getImage(dish.dish_images[0]?.image_url ?? "")})`,
+                        backgroundImage: `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(${getImage(getDishPrimaryImageUrl(dish))})`,
                     }}
                 >
                     {corporateLabel && (
