@@ -1,23 +1,24 @@
-import { randomUUID } from "crypto";
-import fs from "fs/promises";
-import path from "path";
+import { uploadImageToStorage } from "../../services/storageUpload.js";
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
-const MIME_TO_EXT = {
-    "image/jpeg": "jpg",
-    "image/png": "png",
-    "image/webp": "webp",
-};
-export async function uploadDishImage({ data, mimeType, title, }) {
-    const ext = MIME_TO_EXT[mimeType] ?? "jpg";
-    const filename = `${randomUUID()}.${ext}`;
-    const uploadsDir = path.join("uploads", "dishes");
-    await fs.mkdir(uploadsDir, { recursive: true });
-    await fs.writeFile(path.join(uploadsDir, filename), Buffer.from(data, "base64"));
-    return {
-        image_url: `/uploads/dishes/${filename}`,
-        title: title?.trim() || filename,
-    };
+export async function uploadDishImage({ data, mimeType, title, folder = "dishes", }) {
+    return uploadImageToStorage({ data, mimeType, title, folder });
+}
+export async function updateCategory({ uuid }, { title, image_url }) {
+    try {
+        const data = {};
+        if (title !== undefined)
+            data.title = title.trim();
+        if (image_url !== undefined)
+            data.image_url = image_url.trim();
+        return await prisma.categories.update({
+            where: { uuid },
+            data,
+        });
+    }
+    catch (error) {
+        throw new Error(error.message);
+    }
 }
 function parseDishNumber(value) {
     return typeof value === "string" ? parseInt(value, 10) : value;

@@ -69,7 +69,18 @@ export const dishesSchemas = {
             data: z.string().min(1),
             mimeType: z.enum(["image/jpeg", "image/png", "image/webp"]),
             title: z.string().optional(),
+            folder: z.enum(["menu", "dishes", "action", "restaurants", "partners"]).optional(),
         }),
+    },
+    categoryUpdate: {
+        params: uuidParamsSchema,
+        body: z.object({
+            title: z.string().min(1).optional(),
+            image_url: z.string().min(1).optional(),
+        }).refine(
+            (data) => data.title !== undefined || data.image_url !== undefined,
+            { message: "At least one field is required" },
+        ),
     },
     subCategoryCreate: {
         body: z.object({

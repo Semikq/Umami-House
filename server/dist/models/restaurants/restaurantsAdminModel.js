@@ -1,23 +1,8 @@
-import { randomUUID } from "crypto";
-import fs from "fs/promises";
-import path from "path";
+import { uploadImageToStorage } from "../../services/storageUpload.js";
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
-const MIME_TO_EXT = {
-    "image/jpeg": "jpg",
-    "image/png": "png",
-    "image/webp": "webp",
-};
 export async function uploadRestaurantImage({ data, mimeType, title, }) {
-    const ext = MIME_TO_EXT[mimeType] ?? "jpg";
-    const filename = `${randomUUID()}.${ext}`;
-    const uploadsDir = path.join("uploads", "restaurants");
-    await fs.mkdir(uploadsDir, { recursive: true });
-    await fs.writeFile(path.join(uploadsDir, filename), Buffer.from(data, "base64"));
-    return {
-        image_url: `/uploads/restaurants/${filename}`,
-        title: title?.trim() || filename,
-    };
+    return uploadImageToStorage({ data, mimeType, title, folder: "restaurants" });
 }
 export async function addRestaurant({ city_uuid, name, address, phone, description, active, latitude, longitude, time_work, restaurant_image }) {
     try {

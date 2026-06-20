@@ -15,7 +15,10 @@ export const dishesApi = createApi({
     }),
     endpoints: (builder) => ({
         allDishes: builder.query<Dish[], void>({ query: () => "" }),
-        categories: builder.query<Categories[], void>({ query: () => "categories" }),
+        categories: builder.query<Categories[], void>({
+            query: () => "categories",
+            providesTags: ["MenuCategory"],
+        }),
         categoryWithDishes: builder.query<Category, string>({
             query: (uuid) => `category/${uuid}`,
             providesTags: (_result, _error, uuid) => [{ type: "MenuCategory", id: uuid }],
@@ -36,6 +39,7 @@ export const dishesApi = createApi({
             data: string,
             mimeType: "image/jpeg" | "image/png" | "image/webp",
             title?: string,
+            folder?: "menu" | "dishes" | "action" | "restaurants" | "partners",
         }>({
             query: (body) => ({
                 url: "uploadImage",
@@ -124,6 +128,22 @@ export const dishesApi = createApi({
             }),
             invalidatesTags: ["MenuCategory"],
         }),
+        updateCategory: builder.mutation<Categories, {
+            uuid: string,
+            title?: string,
+            image_url?: string,
+        }>({
+            query: ({ uuid, ...body }) => ({
+                url: `category/${uuid}`,
+                method: "PUT",
+                body,
+            }),
+            transformResponse: (response: { data: Categories }) => response.data,
+            invalidatesTags: (_result, _error, arg) => [
+                { type: "MenuCategory", id: arg.uuid },
+                "MenuCategory",
+            ],
+        }),
         deleteCommentAdmin: builder.mutation<void, { commentUuid: string, dishUuid: string }>({
             query: ({ commentUuid }) => ({
                 url: `admin/comment/${commentUuid}`,
@@ -148,4 +168,5 @@ export const {
     useUpdateSubCategoryMutation,
     useDeleteSubCategoryMutation,
     useDeleteCommentAdminMutation,
+    useUpdateCategoryMutation,
 } = dishesApi

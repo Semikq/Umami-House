@@ -1,15 +1,7 @@
-import { randomUUID } from "crypto";
-import fs from "fs/promises";
-import path from "path";
 import { Uuid, AddSale, UpdateSale } from "../TypesModel/saleTypes.js";
+import { uploadImageToStorage } from "../../services/storageUpload.js";
 import { PrismaClient, Prisma } from "@prisma/client";
 const prisma = new PrismaClient()
-
-const MIME_TO_EXT: Record<string, string> = {
-    "image/jpeg": "jpg",
-    "image/png": "png",
-    "image/webp": "webp",
-};
 
 export async function uploadSaleImage({
     data,
@@ -20,17 +12,7 @@ export async function uploadSaleImage({
     mimeType: string,
     title?: string,
 }): Promise<{ image_url: string, title: string }> {
-    const ext = MIME_TO_EXT[mimeType] ?? "jpg";
-    const filename = `${randomUUID()}.${ext}`;
-    const uploadsDir = path.join("uploads", "action");
-
-    await fs.mkdir(uploadsDir, { recursive: true });
-    await fs.writeFile(path.join(uploadsDir, filename), Buffer.from(data, "base64"));
-
-    return {
-        image_url: `/uploads/action/${filename}`,
-        title: title?.trim() || filename,
-    };
+    return uploadImageToStorage({ data, mimeType, title, folder: "action" });
 }
 
 export async function addSale({ title, image_url, active}: AddSale): Promise<Prisma.saleGetPayload<{}>> {

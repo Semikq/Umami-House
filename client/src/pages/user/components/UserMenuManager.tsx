@@ -1,4 +1,4 @@
-import {Dispatch, FormEvent, SetStateAction, useEffect, useState} from "react";
+import {ChangeEvent, Dispatch, FormEvent, SetStateAction, useEffect, useRef, useState} from "react";
 
 import {Icon} from "@iconify/react";
 
@@ -13,6 +13,10 @@ import {
     useDeleteDishMutation,
 
     useUpdateDishMutation,
+
+    useUploadDishImageMutation,
+
+    useUpdateCategoryMutation,
 
 } from "../../../redux/api/dishesApi.ts";
 
@@ -796,6 +800,192 @@ function CategorySidebar({
 
 
 
+function fileToBase64(file: File): Promise<string> {
+
+    return new Promise((resolve, reject) => {
+
+        const reader = new FileReader();
+
+        reader.onload = () => {
+
+            const result = reader.result as string;
+
+            const base64 = result.split(",")[1];
+
+            if (!base64) {
+
+                reject(new Error("Invalid file"));
+
+                return;
+
+            }
+
+            resolve(base64);
+
+        };
+
+        reader.onerror = () => reject(reader.error);
+
+        reader.readAsDataURL(file);
+
+    });
+
+}
+
+
+
+function getMimeType(file: File): "image/jpeg" | "image/png" | "image/webp" | null {
+
+    if (file.type === "image/jpeg" || file.type === "image/png" || file.type === "image/webp") {
+
+        return file.type;
+
+    }
+
+    return null;
+
+}
+
+
+
+function CategoryImageEditor({
+
+    categoryUuid,
+
+    title,
+
+    imageUrl,
+
+}: {
+
+    categoryUuid: string,
+
+    title: string,
+
+    imageUrl: string,
+
+}) {
+
+    const fileInputRef = useRef<HTMLInputElement>(null);
+
+    const [uploadImage, { isLoading: isUploading }] = useUploadDishImageMutation();
+
+    const [updateCategory, { isLoading: isUpdating }] = useUpdateCategoryMutation();
+
+    const isLoading = isUploading || isUpdating;
+
+    const imageSrc = imageUrl.startsWith("http") ? imageUrl : getImage(imageUrl);
+
+
+
+    const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
+
+        const file = e.target.files?.[0];
+
+        e.target.value = "";
+
+        if (!file) return;
+
+
+
+        const mimeType = getMimeType(file);
+
+        if (!mimeType) {
+
+            window.alert("Дозволені лише JPG, PNG або WEBP");
+
+            return;
+
+        }
+
+
+
+        try {
+
+            const data = await fileToBase64(file);
+
+            const uploaded = await uploadImage({ data, mimeType, title, folder: "menu" }).unwrap();
+
+            await updateCategory({ uuid: categoryUuid, image_url: uploaded.image_url }).unwrap();
+
+        } catch (err) {
+
+            console.log(err);
+
+            window.alert("Не вдалося завантажити фото");
+
+        }
+
+    };
+
+
+
+    const openFilePicker = () => {
+
+        if (!isLoading) fileInputRef.current?.click();
+
+    };
+
+
+
+    return (
+
+        <div className="user__menu-category-cover">
+
+            <input
+
+                ref={fileInputRef}
+
+                type="file"
+
+                accept="image/jpeg,image/png,image/webp"
+
+                hidden
+
+                onChange={handleFileChange}
+
+            />
+
+            <button
+
+                type="button"
+
+                className="user__rest-image-picker user__rest-image-picker--card user__menu-category-cover-btn"
+
+                onClick={openFilePicker}
+
+                disabled={isLoading}
+
+                aria-label={`Змінити фото категорії ${title}`}
+
+            >
+
+                <img src={imageSrc} alt="" className="user__rest-image-picker__img"/>
+
+                <span className="user__rest-image-edit" aria-hidden="true">
+
+                    <Icon icon="mdi:pencil" width={16}/>
+
+                </span>
+
+                {isLoading && (
+
+                    <span className="user__rest-image-picker__loading">...</span>
+
+                )}
+
+            </button>
+
+            <p className="user__menu-category-cover-hint">Натисніть, щоб змінити фото категорії</p>
+
+        </div>
+
+    );
+
+}
+
+
+
 export default function UserMenuManager() {
 
     const { data: categories = [], isLoading: categoriesLoading } = useCategoriesQuery();
@@ -831,6 +1021,8 @@ export default function UserMenuManager() {
         sub.dishes.map((dish) => ({ dish })),
 
     );
+
+    const selectedCategoryMeta = categories.find((c) => c.uuid === selectedCategoryUuid);
 
 
 
@@ -959,6 +1151,22 @@ export default function UserMenuManager() {
                     {selectedCategoryUuid && category && !categoryLoading && (
 
                         <>
+
+                            {selectedCategoryMeta && (
+
+                                <CategoryImageEditor
+
+                                    categoryUuid={selectedCategoryUuid}
+
+                                    title={category.title}
+
+                                    imageUrl={selectedCategoryMeta.image_url}
+
+                                />
+
+                            )}
+
+
 
                             <AdminSubCategoryPanel
 
