@@ -2,6 +2,7 @@ const CLIENT_STATIC_PREFIXES = [
     "/uploads/company/",
     "/uploads/photoCompany/",
     "/uploads/banners/",
+    "/uploads/action/",
 ];
 
 function isClientStaticAsset(path: string): boolean {
