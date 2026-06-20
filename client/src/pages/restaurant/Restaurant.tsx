@@ -1,4 +1,4 @@
-import {GoogleMap, Marker, useLoadScript, InfoWindow} from "@react-google-maps/api";
+import {GoogleMap, useLoadScript, InfoWindow} from "@react-google-maps/api";
 import {useCitiesQuery, useRestaurantsByCityQuery, useRestaurantsQuery} from "../../redux/api/restaurantsApi.ts";
 import CreateCitiesBloc from "./components/CreateCitiesBloc.tsx";
 import {useState, useEffect} from "react";
@@ -7,9 +7,15 @@ import {useDispatch} from "react-redux";
 import {useNavigate, useParams} from "react-router-dom";
 import CreateCardsRestaurants from "./components/CreateCardsRestaurants.tsx"
 import PageLoader from "../../components/PageLoader/PageLoader.tsx";
+import RestaurantMarker from "../../components/map/RestaurantMarker.tsx";
+import {parseRestaurantCoords} from "../../utils/restaurantMapMarker.ts";
 import "./restaurant.css"
 
 function RestaurantMap({restaurantsToShow, currentCity, selected, setSelected, mapLoaded}) {
+    const selectedPosition = selected
+        ? parseRestaurantCoords(selected.latitude, selected.longitude)
+        : null;
+
     if (!mapLoaded) {
         return (
             <div className="restaurant__map restaurant__map--placeholder" id="infoWindow">
@@ -28,12 +34,16 @@ function RestaurantMap({restaurantsToShow, currentCity, selected, setSelected, m
                 }}
                 zoom={currentCity ? 11.5 : 6}
             >
-                {restaurantsToShow.map((item) =>
-                    <Marker key={item.uuid} position={{ lat: Number(item.latitude), lng: Number(item.longitude) }}/>
-                )}
-                {selected &&
+                {restaurantsToShow.map((item, index) => (
+                    <RestaurantMarker
+                        key={item.uuid}
+                        restaurant={item}
+                        colorIndex={index}
+                    />
+                ))}
+                {selectedPosition && (
                     <InfoWindow
-                        position={{ lat: Number(selected.latitude), lng: Number(selected.longitude) }}
+                        position={selectedPosition}
                         onCloseClick={() => setSelected(null)}
                     >
                         <div className="restaurant__map--infoWindow">
@@ -43,7 +53,7 @@ function RestaurantMap({restaurantsToShow, currentCity, selected, setSelected, m
                             <p>{selected.phone}</p>
                         </div>
                     </InfoWindow>
-                }
+                )}
             </GoogleMap>
         </div>
     )
