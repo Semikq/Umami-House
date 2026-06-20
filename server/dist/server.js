@@ -11,14 +11,18 @@ import saleRoutes from "./routes/saleRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 dotenv.config();
 const app = express();
+const corsOrigins = [
+    "http://localhost:3000",
+    "http://localhost:3001",
+    "http://localhost:5173",
+    "https://umami-house-client.vercel.app",
+    ...(process.env.CLIENT_URL
+        ? process.env.CLIENT_URL.split(",").map((origin) => origin.trim()).filter(Boolean)
+        : []),
+];
 // 1. CORS МАЄ СТОЯТИ НАЙПЕРШИМ
 app.use(cors({
-    origin: [
-        "http://localhost:3000",
-        "http://localhost:3001",
-        "http://localhost:5173",
-        "https://umami-house-client.vercel.app"
-    ],
+    origin: corsOrigins,
     credentials: true,
     optionsSuccessStatus: 200
 }));

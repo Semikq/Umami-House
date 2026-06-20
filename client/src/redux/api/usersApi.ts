@@ -1,5 +1,6 @@
 import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react";
 import getApiUrl from "../../utils/getApiUrl.ts";
+import {transformAuthErrorResponse} from "../../utils/getAuthErrorMessage.ts";
 import {BonusCard} from "../types/bonusCards.ts";
 import {AdminUserListItem, UserRole} from "../types/adminUsers.ts";
 
@@ -21,14 +22,16 @@ export const usersApi = createApi({
                 url: 'login',
                 method: 'POST',
                 body
-            })
+            }),
+            transformErrorResponse: transformAuthErrorResponse,
         }),
         register: builder.mutation({
             query: ({ ...body }) => ({
                 url: 'register',
                 method: 'POST',
                 body
-            })
+            }),
+            transformErrorResponse: transformAuthErrorResponse,
         }),
         refresh: builder.query({
             query: () => ({
