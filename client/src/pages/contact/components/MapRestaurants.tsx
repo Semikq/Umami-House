@@ -33,11 +33,6 @@ export default function MapRestaurants({restaurants}: { restaurants: Restaurants
     }, [restaurantUuidFromUrl, visibleRestaurants]);
 
     const mapCenter = useMemo(() => {
-        if (selected) {
-            const selectedCoords = parseRestaurantCoords(selected.latitude, selected.longitude);
-            if (selectedCoords) return selectedCoords;
-        }
-
         if (visibleRestaurants.length === 0) {
             return {lat: 49.588, lng: 34.554};
         }
@@ -50,7 +45,9 @@ export default function MapRestaurants({restaurants}: { restaurants: Restaurants
         const lng = coords.reduce((sum, point) => sum + point.lng, 0) / coords.length;
 
         return {lat, lng};
-    }, [selected, visibleRestaurants]);
+    }, [visibleRestaurants]);
+
+    const mapZoom = visibleRestaurants.length === 1 ? 14 : 12;
 
     const selectedPosition = selected
         ? parseRestaurantCoords(selected.latitude, selected.longitude)
@@ -62,8 +59,8 @@ export default function MapRestaurants({restaurants}: { restaurants: Restaurants
         <div className="map-wrapper" id="contact-map">
             <GoogleMap
                 mapContainerStyle={{width: "100%", height: "100%", borderRadius: "30px 60px 30px 60px"}}
-                center={mapCenter}
-                zoom={selected ? 15 : visibleRestaurants.length === 1 ? 14 : 12}
+                defaultCenter={mapCenter}
+                defaultZoom={mapZoom}
                 onClick={() => setSelected(null)}
             >
                 {visibleRestaurants.map((item, index) => (
