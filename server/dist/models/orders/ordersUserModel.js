@@ -83,7 +83,10 @@ export async function addOrder({ user_uuid, delivery_address, payment_method, di
 }
 export async function deleteOrder({ uuid }) {
     try {
-        await prisma.orders.delete({ where: { uuid } });
+        await prisma.$transaction(async (tx) => {
+            await tx.order_dish.deleteMany({ where: { order_uuid: uuid } });
+            await tx.orders.delete({ where: { uuid } });
+        });
     }
     catch (error) {
         throw new Error(error.message);

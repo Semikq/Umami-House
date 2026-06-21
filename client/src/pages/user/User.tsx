@@ -16,7 +16,7 @@ import UserPartnerManager from "./components/UserPartnerManager.tsx";
 import UserOrderManager from "./components/UserOrderManager.tsx";
 import UserCorporateRecommendations from "./components/UserCorporateRecommendations.tsx";
 import "./user.css"
-import {CORPORATE_TYPE_OPTIONS, getCorporateTypeLabel, isCorporateClient} from "../../utils/corporateOffer.ts"
+import {CORPORATE_TYPE_OPTIONS, getCorporateTypeLabel, isCorporateClient, isCorporateUser} from "../../utils/corporateOffer.ts"
 
 function getRoleTitle(user: { role: string; company_type?: string | null; company_name?: string | null }) {
     if (user.role === "admin") return "Адмін";
@@ -69,7 +69,7 @@ function CreateBlocUser({
     form: ProfileForm,
     onChange: (field: keyof ProfileForm, value: string) => void,
 }) {
-    const corporateFields: { key: ProfileFieldKey, title: string, editable: boolean }[] = isCorporateClient(user)
+    const corporateFields: { key: ProfileFieldKey, title: string, editable: boolean }[] = isCorporateUser(user)
         ? [
             { key: "company_type", title: "Тип закладу", editable: true },
             { key: "company_name", title: "Назва юридичної особи", editable: true },
@@ -316,8 +316,10 @@ function RenderUserPage({ user }){
                 name: form.name,
                 surname: form.surname,
                 phone: form.phone,
-                company_type: form.company_type,
-                company_name: form.company_name,
+                ...(user.role === "company" ? {
+                    company_type: form.company_type,
+                    company_name: form.company_name,
+                } : {}),
             }).unwrap()
 
             dispatch(updateUserProfile(result.data))
