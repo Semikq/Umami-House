@@ -28,24 +28,8 @@ export const ordersSchemas = {
             bonus_card_uuid: uuidSchema.optional(),
             dishes: z.array(z.object({
                 uuid: uuidSchema,
-                name: z.string(),
-                weight: z.number(),
-                price: z.number(),
-                frozen: z.boolean(),
-                spicy: z.boolean(),
-                ingredients: z.string(),
-                sub_category_uuid: uuidSchema,
-                active: z.boolean(),
-                count: z.number(),
-                created_at: z.string().datetime(),
-                dish_images: z.array(z.object({
-                    uuid: uuidSchema,
-                    title: z.string(),
-                    image_url: z.string(),
-                    dish_uuid: uuidSchema,
-                    created_at: z.string()
-                }))
-            }))
+                count: z.number().int().positive(),
+            }).passthrough())
         })
     },
     deleteUser: {

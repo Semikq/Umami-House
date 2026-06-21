@@ -311,7 +311,10 @@ function RenderCartBloc(){
                     ? formatCorporateDeliveryAddress(corporateDelivery)
                     : getDeliveryAddress(isPickup, deliveryAddress, selectedRestaurant),
                 payment_method: getPaymentMethodValue(paymentMethod),
-                dishes: cartDishes.dishes,
+                dishes: cartDishes.dishes.map((dish) => ({
+                    uuid: dish.uuid,
+                    count: dish.count ?? 1,
+                })),
                 total_price: orderPricing.payable,
                 bonuses_spent: corporateUser ? 0 : orderPricing.bonusesSpent,
                 bonus_card_uuid: selectedBonusCardUuid || undefined,
